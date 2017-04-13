@@ -1,5 +1,6 @@
 __author__ = 'm.stanford'
 
+import sys
 import string
 from socket import error as SocketError
 import json, httplib
@@ -11,6 +12,13 @@ invalidWords = ["un-English", "Anglish/English", "attested", "unattested", "Clas
 delimiter = "\'\'\'"
 wierdfunkInSomeWords = ["\'\' \'\'\'", "\'\'\',", '\'\'\'\'\'', '\"\'\'']
 
+
+servers = {
+    'local':'localhost',
+    'remote':'anglish-server.herokuapp.com'
+}
+
+server = servers['local']
 
 def getWordPage(page):
     connection = httplib.HTTPConnection('anglish.wikia.com', 80)
@@ -100,28 +108,27 @@ def addWord(wordDef):
     wordType = wordDef['type']
 
     try:
-        connection = httplib.HTTPSConnection('https://anglishwordbook.herokuapp.com/', 443)
+        connection = httplib.HTTPConnection(server, 3000)
         connection.connect()
-        connection.request('POST', '/1/classes/Word', json.dumps({
-            "Word": word,
-            "Attested": attested,
-            "Unattested": unattested,
-            "Type": wordType
+        connection.request('POST', '/api/words', json.dumps({
+            "word": word,
+            "attested": attested,
+            "unattested": unattested,
+            "type": wordType
         }), {
-           "X-Parse-Application-Id": "ApuxkukQC9mFuLIdIjG3qC27ms5kZ4XZbopxUohp",
-           "X-Parse-Master-Key ": "ME6doa9GdB2PTGesScr8DwNQVzlzMwmoEurf3kIX",
            "Content-Type": "application/json"
         })
         result = json.loads(connection.getresponse().read())
 
-        if 'objectId' in result:
+        if result['code'] is 1:
             print result
             return True
         else:
             return False
 
     except SocketError as e:
-        return addWord(wordDef)
+        print e
+        return False
 
 
 
@@ -138,17 +145,24 @@ def isValidWord(line):
 
     return True
 
-for j in range(STARTING_PAGE, ENDING_PAGE):
-    rawPage = getWordPage(j)
-    processedPage = processRawPage(rawPage, j)
+def main():
+    for j in range(STARTING_PAGE, ENDING_PAGE):
+        rawPage = getWordPage(j)
+        processedPage = processRawPage(rawPage, j)
 
-    index = len(processedPage)
-    k = 0
-    while k < index - 1:
-        # print 'Obj 1 ' + processedPage[i]
-        # print 'Obj 2 ' + processedPage[i+1]
-        wordDef = buildWordDef(processedPage[k], processedPage[k+1])
-        if addWord(wordDef):
-            k += 2
-        else:
-            k = k
+        index = len(processedPage)
+        k = 0
+        while k < index - 1:
+            # print 'Obj 1 ' + processedPage[i]
+            # print 'Obj 2 ' + processedPage[i+1]
+            wordDef = buildWordDef(processedPage[k], processedPage[k+1])
+            if addWord(wordDef):
+                k += 2
+            else:
+                print 'failed to add: ' + wordDef['word']
+
+if __name__ == "__main__":
+    if sys.argv[1]:
+        server = servers[sys.argv[1]]
+    print 'Point towards: ' + server
+    main()

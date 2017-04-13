@@ -17,27 +17,11 @@ wordType = ['NameWord', 'FemaleName', 'MaleName']
 
 section = wordType[0]
 
-def buildNameDef(processedWord):
+def addWord(wordDef):
 
-    word = {}
-
-    word['O.E. Name'] = processedWord['oe']
-    word['N.E. Name'] = processedWord['ne']
-    word['outspeak'] = processedWord['pronounce']
-    word['meaning'] = processedWord['meaning']
-
-    return word
-
-
-def addWord(wordDef, type):
-
-    connection = httplib.HTTPSConnection('https://anglishwordbook.herokuapp.com/', 443)
+    connection = httplib.HTTPSConnection('https://anglish-server.herokuapp.com/', 3000)
     connection.connect()
-    connection.request('POST', '/1/classes/' + type, json.dumps(wordDef), {
-       "X-Parse-Application-Id": "ApuxkukQC9mFuLIdIjG3qC27ms5kZ4XZbopxUohp",
-       "X-Parse-REST-API-Key": "N6r8fxsert4JrvaGMcavcTtaYPed6Vl9qNDE8mqb",
-       "Content-Type": "application/json"
-    })
+    connection.request('POST', '/names', json.dumps(wordDef)))
     result = json.loads(connection.getresponse().read())
     print result
 
@@ -70,7 +54,7 @@ def processNameWords(lines):
     words['ne'] = ne
     words['oe'] = oe
     words['meaning'] = meaning
-    words['pronounce'] = pronounce
+    words['extra'] = pronounce
 
     print 'Word: ' + str(words)
 
@@ -100,13 +84,14 @@ def processFemaleWords(lines):
         breakdown = pieces[2:]
         explain += lines[1]
 
-    words['name'] = name
-    words['breakdown'] = breakdown
-    words['explain'] = explain
+    words['ne'] = name
+    words['oe'] = name
+    words['meaning'] = explain
+    words['extra'] = breakdown
 
     print 'Word: ' + str(words)
 
-    addWord(words, wordType[1])
+    addWord(words)
 
 def processMaleWords(lines):
     pieces = []
@@ -132,13 +117,14 @@ def processMaleWords(lines):
         breakdown = pieces[2:]
         explain += lines[1]
 
-    words['name'] = name
-    words['breakdown'] = breakdown
-    words['explain'] = explain
+    words['ne'] = name
+    words['oe'] = name
+    words['meaning'] = explain
+    words['extra'] = breakdown
 
     print 'Word: ' + str(words)
 
-    addWord(words, wordType[2])
+    addWord(words)
 
 
 
