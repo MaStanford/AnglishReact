@@ -13,10 +13,9 @@ delimiter = "\'\'\'"
 wierdfunkInSomeWords = ["\'\' \'\'\'", "\'\'\',", '\'\'\'\'\'', '\"\'\'']
 
 
-servers = {
-    'local':'localhost',
-    'remote':'anglish-server.herokuapp.com'
-}
+servers = dict()
+servers['local'] = ['localhost','3000']
+servers['remote'] = ['anglish-server.herokuapp.com','80']
 
 server = servers['local']
 
@@ -108,9 +107,9 @@ def addWord(wordDef):
     wordType = wordDef['type']
 
     try:
-        connection = httplib.HTTPConnection(server, 3000)
+        connection = httplib.HTTPConnection(server[0], server[1])
         connection.connect()
-        connection.request('POST', '/api/words', json.dumps({
+        connection.request('POST', '/api/bulkWord?bulk_token=' + sys.argv[2], json.dumps({
             "word": word,
             "attested": attested,
             "unattested": unattested,
@@ -124,6 +123,7 @@ def addWord(wordDef):
             print result
             return True
         else:
+            print result['data']
             return False
 
     except SocketError as e:
@@ -164,5 +164,5 @@ def main():
 if __name__ == "__main__":
     if sys.argv[1]:
         server = servers[sys.argv[1]]
-    print 'Point towards: ' + server
+    print 'Point towards: ' + str(server)
     main()
