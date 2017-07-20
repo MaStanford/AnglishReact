@@ -1,50 +1,71 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-import NetworkUtils from './modules/network';
-import Titlebar from './modules/titlebar';
+//React imports
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
   Text,
   View,
   TouchableHighlight,
-  TextInput
+  TextInput,
+  Button
 } from 'react-native';
+import {
+  StackNavigator,
+} from 'react-navigation';
 
+//styles
+import styles from './modules/styles';
 
+//Custom Component
+import Titlebar from './modules/titlebar';
+import ComponentWordList from './modules/componentwordlist';
+import MenuBuilder from './modules/menubuilder';
 
-export default class AnglishWordbook extends Component {
+//Store
+import {store, actions} from './modules/statemanager';
+
+//Screens
+import Login from './modules/login';
+
+export default class Homescreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      word:'',
-      response:''
+      input:'',
+      word:'language'
     }
+    store.subscribe(() => {
+      console.log('Store updated');
+    });
   }
 
+  static navigationOptions = {
+    title: 'Anglish Wordbook',
+  };
+
   onPressButton() {
-    NetworkUtils.fetchWord(this.state.word.trim())
-    .then((res) =>  {
-      console.log(res);
-      this.setState({response:JSON.stringify(res)});
-    }).catch((error) => {
-      console.log(error);
-      this.setState({response:error.toString});
-    });  
+    this.setState({word: this.state.input});
+    this.forceUpdate();
+    console.log('Button pressed');
   }
 
   render() {
+    const { navigate } = this.props.navigation;
+    let menu = MenuBuilder.build((action) => {
+      if(action === 'Logout'){
+        store.dispatch({type:actions.LOGGED_OUT});
+      }else{
+        navigate(action, { title: action });
+      }
+    });      
+    
     return (
-      <View style={styles.container}>
-        <Titlebar />
+      <View style={styles.containermain}>
+        <Text>{JSON.stringify(store.getState())}</Text>
+        <Titlebar title="Word lookup"/>
         <TextInput
           style={styles.textinput}
           placeholder="Type here to translate!"
-          onChangeText= {(text) => this.state.word = text}
+          onChangeText= {(text) => this.state.input = text}
           onSubmitEditing = {this.onPressButton.bind(this)}
         />
         <TouchableHighlight 
@@ -55,42 +76,17 @@ export default class AnglishWordbook extends Component {
             Translate
           </Text>
         </TouchableHighlight>
-        <Text style={styles.instructions}>
-          {this.state.response}
-        </Text>
+        <ComponentWordList word={this.state.word}/>
+        {menu}
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#c3c4c9',
-  },
-  instructions: {
-    textAlign: 'center',
-    color: 'black',
-    margin: 10,
-  },
-  btn_translate: {
-    backgroundColor: '#FFFFFF',
-    margin: 10,
-  },
-  text_translate: {
-    fontSize: 15,
-    color: 'black',
-    textAlign: 'center',
-    margin: 5
-  },
-  textinput:{
-    height: 40,
-    width: '50%',
-    textAlign: 'center',
-    alignItems: 'center',
-    margin: 10,
-  }
+//Navigation screens
+const AnglishWordbook = StackNavigator({
+  Home: {screen: Homescreen},
+  Login: { screen: Login }
 });
 
 AppRegistry.registerComponent('AnglishWordbook', () => AnglishWordbook);

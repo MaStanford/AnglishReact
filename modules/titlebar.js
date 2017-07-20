@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {
 	View,
-	Text
+	Text,
+	StyleSheet
 } from 'react-native';
 
 export default class Titlebar extends Component{
@@ -11,11 +12,26 @@ export default class Titlebar extends Component{
 	
 	render() {
 		return (
-			<View style={{backgroundColor: '#9aabd6', width: '100%', height: '10%'}}>
-        <Text style={{fontSize: 30, color: 'black', textAlign: 'center',margin: 10, alignItems: 'center'}}>
-          Anglish Wordbook
-        </Text>
+			<View style={styles.container}>
+				<Text style={styles.text}>
+					{this.props.title}
+				</Text>
 			</View>
 		)
 	}
 }
+
+const styles = StyleSheet.create({
+  container: {
+		height: 65,
+		width: '100%',
+		backgroundColor: 'white',
+	},
+	text: {
+		fontSize: 20, 
+		color: 'black', 
+		textAlign: 'center',
+		marginTop: 20,
+		alignItems: 'center'
+	}
+});

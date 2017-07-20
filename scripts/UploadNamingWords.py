@@ -17,11 +17,16 @@ wordType = ['NameWord', 'FemaleName', 'MaleName']
 
 section = wordType[0]
 
-def addWord(wordDef):
+servers = dict()
+servers['local'] = ['localhost','3000']
+servers['remote'] = ['anglish-server.herokuapp.com','80']
 
-    connection = httplib.HTTPSConnection('https://anglish-server.herokuapp.com/', 3000)
+server = servers['local']
+
+def addWord(wordDef):
+    connection = httplib.HTTPConnection(server[0], server[1])
     connection.connect()
-    connection.request('POST', '/names', json.dumps(wordDef)))
+    connection.request('POST', 'api/names', json.dumps(wordDef))
     result = json.loads(connection.getresponse().read())
     print result
 
