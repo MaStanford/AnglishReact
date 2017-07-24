@@ -26,7 +26,7 @@ export default class Login extends Component {
 		this.state = {
 			email: '',
 			password: '',
-			res: {}
+			error: ''
 		};
 	}
 
@@ -42,38 +42,60 @@ export default class Login extends Component {
 
 		Network.login(this.state.email, this.state.password)
 			.then((res) => {
-				this.setState({res : res.data});
-				store.dispatch({
-					type: actions.LOGGED_IN,
-					user: res.data
-				});
-				const { navigate } = this.props.navigation;
-      	navigate('home', { title: 'Anglish WordBook' });
+				if(res.code == 1){
+					store.dispatch({
+						type: actions.SESSION, 
+						session: res.data
+					});
+					return res.data;
+				}else{
+					throw new Error(res.data);
+				}
+			})
+			.then((session) => {
+					Network.getuser(this.state.email).then((res) => {
+							store.dispatch({
+								type: actions.USER, 
+								user: res.data
+							});
+							const {goBack} = this.props.navigation;
+							goBack();
+					}).catch((err) => {
+							this.setState({error: 'Unable to find user'});
+					});
 			})
 			.catch((err) => {
-				this.setState({res : err.message});
-				const { navigate } = this.props.navigation;
-      	navigate('home', { title: 'Anglish WordBook' });
+				this.setState({error: err.message});
 			});
 		
 		console.log('Login Button pressed');
-  }
+	}
 	
 	render(){
 		return (
 			<View style={styles.containermain}>
 				<Titlebar title="Account Login"/>
-				<Text>{JSON.stringify(this.state)}</Text>
+				<Text ref='error' style={styles.texterror}>
+					{this.state.error}
+				</Text>
 				<TextInput
+					returnKeyType='next'
           style={styles.textinput}
           placeholder="Email"
           onChangeText= {(text) => this.state.email = text}
+					onSubmitEditing={(event) => { 
+							this.refs.SecondInput.focus(); 
+						}
+					}					
         />
         <TextInput
-          style={styles.textinput}
+  				ref='SecondInput'
+          style={styles.textinputpassword}
           placeholder="Password"
           onChangeText= {(text) => this.state.password = text}
           onSubmitEditing = {this.onPressButton.bind(this)}
+					secureTextEntry= {true}
+					returnKeyType='go'
         />
         <TouchableHighlight 
           style={styles.btn_translate}

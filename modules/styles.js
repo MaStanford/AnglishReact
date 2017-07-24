@@ -31,6 +31,13 @@ var styles = StyleSheet.create({
 		alignItems: 'center',
 		margin: 10,
 	},
+	textinputpassword:{
+		height: 40,
+		width: '50%',
+		textAlign: 'center',
+		alignItems: 'center',
+		margin: 10,
+	},
 	row: {
 		flex:1,
 		flexDirection: 'row',
@@ -45,6 +52,12 @@ var styles = StyleSheet.create({
 		textAlign: 'left',
 		fontSize: 15,
 		flexWrap: 'wrap'
+	},
+	texterror:{
+		textAlign: 'left',
+		fontSize: 15,
+		flexWrap: 'wrap',
+		color: 'red'
 	},
 	actionButtonIcon: {
 		fontSize: 20,

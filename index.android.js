@@ -18,7 +18,7 @@ import styles from './modules/styles';
 //Custom Component
 import Titlebar from './modules/titlebar';
 import ComponentWordList from './modules/componentwordlist';
-import MenuBuilder from './modules/menubuilder';
+import Menu from './modules/menu';
 
 //Store
 import {store, actions} from './modules/statemanager';
@@ -34,7 +34,7 @@ export default class Homescreen extends React.Component {
       word:'language'
     }
     store.subscribe(() => {
-      console.log('Store updated');
+      console.log('Store updated in index');
     });
   }
 
@@ -44,30 +44,20 @@ export default class Homescreen extends React.Component {
 
   onPressButton() {
     this.setState({word: this.state.input});
-    this.forceUpdate();
     console.log('Button pressed');
   }
 
   render() {
-    const { navigate } = this.props.navigation;
-    let menu = MenuBuilder.build((action) => {
-      if(action === 'Logout'){
-        store.dispatch({type:actions.LOGGED_OUT});
-      }else{
-        navigate(action, { title: action });
-      }
-    });      
-    
+    console.log('Render');
+    const { navigate } = this.props.navigation;    
     return (
       <View style={styles.containermain}>
-        <Text>{JSON.stringify(store.getState())}</Text>
         <Titlebar title="Word lookup"/>
         <TextInput
           style={styles.textinput}
           placeholder="Type here to translate!"
           onChangeText= {(text) => this.state.input = text}
-          onSubmitEditing = {this.onPressButton.bind(this)}
-        />
+          onSubmitEditing = {this.onPressButton.bind(this)}/>
         <TouchableHighlight 
           style={styles.btn_translate}
           underlayColor="black"
@@ -77,7 +67,14 @@ export default class Homescreen extends React.Component {
           </Text>
         </TouchableHighlight>
         <ComponentWordList word={this.state.word}/>
-        {menu}
+        <Menu callback={(action) => {
+            if(action === 'Logout'){
+              store.dispatch({type:actions.LOGGED_OUT});
+            }else{
+              navigate(action, { title: action });
+            }
+          }
+        }/>
       </View>
     );
   }
@@ -86,7 +83,7 @@ export default class Homescreen extends React.Component {
 //Navigation screens
 const AnglishWordbook = StackNavigator({
   Home: {screen: Homescreen},
-  Login: { screen: Login }
+  Login: {screen: Login }
 });
 
 AppRegistry.registerComponent('AnglishWordbook', () => AnglishWordbook);
