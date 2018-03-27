@@ -7,8 +7,9 @@
     "test": "jest"
   },
   "dependencies": {
-    "react": "15.4.2",
-    "react-native": "0.42.0",
+    "create-react-native-app": "^1.0.0",
+    "react": "16.2.0",
+    "react-native": "0.54.0",
     "react-native-action-button": "^2.7.2",
     "react-native-vector-icons": "^4.2.0",
     "react-navigation": "^1.0.0-beta.11",

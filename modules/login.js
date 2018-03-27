@@ -18,6 +18,7 @@ import styles from './styles';
 import Titlebar from './titlebar';
 import Network from './network';
 import {store, actions} from './statemanager';
+import {storage, keys} from './storage';
 
 export default class Login extends Component {
 
@@ -39,36 +40,49 @@ export default class Login extends Component {
 			email: this.state.email,
 			password: this.state.password
 		});
-
-		Network.login(this.state.email, this.state.password)
-			.then((res) => {
-				if(res.code == 1){
-					store.dispatch({
-						type: actions.SESSION, 
-						session: res.data
-					});
-					return res.data;
-				}else{
-					throw new Error(res.data);
-				}
-			})
-			.then((session) => {
-					Network.getuser(this.state.email).then((res) => {
-							store.dispatch({
-								type: actions.USER, 
-								user: res.data
-							});
-							const {goBack} = this.props.navigation;
-							goBack();
-					}).catch((err) => {
-							this.setState({error: 'Unable to find user'});
-					});
-			})
-			.catch((err) => {
-				this.setState({error: err.message});
-			});
-		
+		this.getSession(this.state.email, this.state.password);
+		this.getUser(this.state.email);
 		console.log('Login Button pressed');
+	}
+
+	getSession(email, password){
+		Network.login(email, password)
+		.then((res) => {
+			if(res.code == 1){
+				storage.store(keys.session, res.data).then(()=>{}).catch(()=>{});
+				store.dispatch({
+					type: actions.SESSION, 
+					session: res.data
+				});
+				return res.data;
+			}else{
+				throw new Error(res.data);
+			}
+		})
+		.catch((err) => {
+			this.setState({error: err.message});
+		});
+	}
+
+	getUser(email){
+		Network.getuser(email)
+		.then((res) => {
+			if(res.code == 1){
+				storage.store(keys.user, res.data).then(()=>{}).catch(()=>{});
+				store.dispatch({
+					type: actions.USER, 
+					user: res.data
+				});	
+				const {goBack} = this.props.navigation;
+				goBack();
+				return res.data;
+			}else{
+				throw new Error(res.data);
+			}
+		})
+		.catch((err) => {
+				this.setState({error: 'Unable to find user'});
+		});
 	}
 	
 	render(){

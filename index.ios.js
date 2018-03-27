@@ -1,44 +1,64 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-import Titlebar from './modules/titlebar';
-import ComponentWordList from './modules/componentwordlist';
+//React imports
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
   Text,
   View,
   TouchableHighlight,
-  TextInput
+  TextInput,
+  Button
 } from 'react-native';
+import {
+  StackNavigator,
+} from 'react-navigation';
 
-export default class AnglishWordbook extends Component {
+//styles
+import styles from './modules/styles';
+
+//Custom Component
+import Titlebar from './modules/titlebar';
+import ComponentWordList from './modules/componentwordlist';
+import Menu from './modules/menu';
+
+//Store
+import {store, actions} from './modules/statemanager';
+import {storage, keys} from './modules/storage';
+
+//Screens
+import Login from './modules/login';
+
+export default class Homescreen extends React.Component {
   constructor(props){
     super(props);
     this.state = {
       input:'',
       word:'language'
     }
+    store.subscribe(() => {
+      console.log('Store updated in index');
+    });
   }
+
+  static navigationOptions = {
+    title: 'Anglish Wordbook',
+  };
 
   onPressButton() {
     this.setState({word: this.state.input});
-    this.forceUpdate();
+    console.log('Button pressed');
   }
 
   render() {
+    console.log('Render');
+    const { navigate } = this.props.navigation;    
     return (
-      <View style={styles.container}>
-        <Titlebar />
+      <View style={styles.containermain}>
+        <Titlebar title="Word lookup"/>
         <TextInput
           style={styles.textinput}
           placeholder="Type here to translate!"
           onChangeText= {(text) => this.state.input = text}
-          onSubmitEditing = {this.onPressButton.bind(this)}
-        />
+          onSubmitEditing = {this.onPressButton.bind(this)}/>
         <TouchableHighlight 
           style={styles.btn_translate}
           underlayColor="black"
@@ -47,41 +67,26 @@ export default class AnglishWordbook extends Component {
             Translate
           </Text>
         </TouchableHighlight>
-        <Text>{this.state.word}</Text>
         <ComponentWordList word={this.state.word}/>
+        <Menu callback={(action) => {
+            if(action === 'Logout'){
+              storage.clear(keys.session);
+              storage.clear(keys.user);
+              store.dispatch({type:actions.LOGGED_OUT});
+            }else{
+              navigate(action, { title: action });
+            }
+          }
+        }/>
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#c3c4c9',
-  },
-  instructions: {
-    textAlign: 'center',
-    color: 'black',
-    margin: 10,
-  },
-  btn_translate: {
-    backgroundColor: '#FFFFFF',
-    margin: 10,
-  },
-  text_translate: {
-    fontSize: 15,
-    color: 'black',
-    textAlign: 'center',
-    margin: 5
-  },
-  textinput:{
-    height: 40,
-    width: '50%',
-    textAlign: 'center',
-    alignItems: 'center',
-    margin: 10,
-  }
+//Navigation screens
+const AnglishWordbook = StackNavigator({
+  Home: {screen: Homescreen},
+  Login: {screen: Login }
 });
 
 AppRegistry.registerComponent('AnglishWordbook', () => AnglishWordbook);

@@ -22,6 +22,7 @@ import Menu from './modules/menu';
 
 //Store
 import {store, actions} from './modules/statemanager';
+import {storage, keys} from './modules/storage';
 
 //Screens
 import Login from './modules/login';
@@ -69,6 +70,8 @@ export default class Homescreen extends React.Component {
         <ComponentWordList word={this.state.word}/>
         <Menu callback={(action) => {
             if(action === 'Logout'){
+              storage.clear(keys.session);
+              storage.clear(keys.user);
               store.dispatch({type:actions.LOGGED_OUT});
             }else{
               navigate(action, { title: action });
