@@ -20,18 +20,25 @@ export default class ListViewBasics extends Component {
 	}
 
 	template = [{
-		word:'',
-		type:'',
-		attested:'',
-		unattested:''
+		word:'word',
+		type:'type',
+		attested:'attested',
+		unattested:'unattested'
 	}]
 
 	fetchData(word) {
 		if(word != null || word != ''){
 			NetworkUtils.fetchWord(word)
 			.then((res) =>  {
-				const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-				this.setState({dataSource: ds.cloneWithRows(res.data)});
+				if(res.data.length > 0){
+					const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+					console.log(res.data);
+					this.setState({dataSource: ds.cloneWithRows(res.data)});
+				}else{
+					const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+					console.log(res.data);
+					this.setState({dataSource: ds.cloneWithRows(this.template)});
+					}
 			}).catch((error) => {
 				console.log(error);
 			});

@@ -40,7 +40,7 @@ class Homescreen extends React.Component {
     super(props);
     this.state = {
       input:'',
-      word:'language'
+      word:''
     }
     store.subscribe(() => {
       console.log('Store updated in index');
@@ -82,7 +82,7 @@ class Homescreen extends React.Component {
             Translate
           </Text>
         </TouchableHighlight>
-        <ComponentWordList word={this.state.word}/>
+        <ComponentWordList enableEmptySections={true} word={this.state.word}/>
         <Menu callback={(action) => this.handleNavigation(action)}/>
       </View>
     );
