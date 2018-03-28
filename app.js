@@ -2,15 +2,18 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  NavigatorIOS,
   Text,
   View,
   TouchableHighlight,
   TextInput,
   Button
 } from 'react-native';
+
 import {
   StackNavigator,
 } from 'react-navigation';
+
 
 //styles
 import styles from './modules/styles';
@@ -27,7 +30,12 @@ import {storage, keys} from './modules/storage';
 //Screens
 import Login from './modules/login';
 
-export default class Homescreen extends React.Component {
+class Homescreen extends React.Component {
+  
+  static navigationOptions = {
+    title: 'Anglish Wordbook',
+  };
+
   constructor(props){
     super(props);
     this.state = {
@@ -39,18 +47,25 @@ export default class Homescreen extends React.Component {
     });
   }
 
-  static navigationOptions = {
-    title: 'Anglish Wordbook',
-  };
-
   onPressButton() {
     this.setState({word: this.state.input});
     console.log('Button pressed');
   }
 
+  handleNavigation(action){
+    console.log(action);
+    if(action === 'Logout'){
+      storage.clear(keys.session);
+      storage.clear(keys.user);
+      store.dispatch({type:actions.LOGGED_OUT});
+    }else{
+      console.log(this.props);
+      console.log(this.navigate);
+      this.props.navigation.navigate(action, { title: action });
+    }
+  }
+
   render() {
-    console.log('Render');
-    const { navigate } = this.props.navigation;    
     return (
       <View style={styles.containermain}>
         <Titlebar title="Word lookup"/>
@@ -68,25 +83,26 @@ export default class Homescreen extends React.Component {
           </Text>
         </TouchableHighlight>
         <ComponentWordList word={this.state.word}/>
-        <Menu callback={(action) => {
-            if(action === 'Logout'){
-              storage.clear(keys.session);
-              storage.clear(keys.user);
-              store.dispatch({type:actions.LOGGED_OUT});
-            }else{
-              navigate(action, { title: action });
-            }
-          }
-        }/>
+        <Menu callback={(action) => this.handleNavigation(action)}/>
       </View>
     );
   }
 }
 
 //Navigation screens
-const AnglishWordbook = StackNavigator({
+const AnglishWordbookNavigator = StackNavigator({
   Home: {screen: Homescreen},
   Login: {screen: Login }
 });
 
-AppRegistry.registerComponent('AnglishWordbook', () => AnglishWordbook);
+const AppNavigation = () => (
+  <AnglishWordbookNavigator/>
+);
+
+export default class App extends React.Component {
+  render() {
+    return (
+        <AppNavigation/>
+    );
+  }
+}

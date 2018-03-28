@@ -12,12 +12,12 @@
   },
   "dependencies": {
     "create-react-native-app": "^1.0.0",
+    "expo": "^25.0.0",
     "react": "16.2.0",
     "react-native": "0.52.0",
     "react-native-action-button": "^2.7.2",
     "react-native-vector-icons": "^4.2.0",
-    "react-navigation": "^1.0.0-beta.11",
-    "expo": "^25.0.0",
+    "react-navigation": "^1.5.8",
     "redux": "^3.7.1"
   },
   "devDependencies": {
