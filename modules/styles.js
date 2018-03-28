@@ -4,17 +4,23 @@ import {
 
 var styles = StyleSheet.create({
 	containerwordlist: {
+		backgroundColor: 'white',
+	},
+	componentwordlist: {
 		width: '95%',
 		backgroundColor: 'white',
-		margin: 15
+		alignItems: 'center',
+		borderWidth: 1
 	},
 	containermain: {
 		flex: 1,
+		borderWidth: 1,
 		alignItems: 'center',
 		backgroundColor: '#FFFFFF'
 	},
 	btn_translate: {
 		backgroundColor: '#DCDCDC',
+		borderWidth: 1,
 		width: 85,
 		margin: 10
 	},
@@ -29,11 +35,13 @@ var styles = StyleSheet.create({
 		width: '50%',
 		textAlign: 'center',
 		alignItems: 'center',
+		borderWidth: 1,
 		margin: 10,
 	},
 	textinputpassword:{
 		height: 40,
 		width: '50%',
+		borderWidth: 1,
 		textAlign: 'center',
 		alignItems: 'center',
 		margin: 10,
@@ -44,8 +52,8 @@ var styles = StyleSheet.create({
 		backgroundColor: 'white',
 	},
 	text: {
-		width: 100,
-		textAlign: 'left',
+		fontWeight: 'bold',
+		textAlign: 'right',
 		fontSize: 15
 	},
 	textdef:{

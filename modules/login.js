@@ -96,7 +96,7 @@ export default class Login extends Component {
 					returnKeyType='next'
           style={styles.textinput}
           placeholder="Email"
-          onChangeText= {(text) => this.state.email = text}
+          onChangeText= {(text) => this.state.email = text.toLowerCase()}
 					onSubmitEditing={(event) => { 
 							this.refs.SecondInput.focus(); 
 						}

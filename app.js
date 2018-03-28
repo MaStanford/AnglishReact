@@ -49,7 +49,6 @@ class Homescreen extends React.Component {
 
   onPressButton() {
     this.setState({word: this.state.input});
-    console.log('Button pressed');
   }
 
   handleNavigation(action){
@@ -59,8 +58,6 @@ class Homescreen extends React.Component {
       storage.clear(keys.user);
       store.dispatch({type:actions.LOGGED_OUT});
     }else{
-      console.log(this.props);
-      console.log(this.navigate);
       this.props.navigation.navigate(action, { title: action });
     }
   }
@@ -72,7 +69,7 @@ class Homescreen extends React.Component {
         <TextInput
           style={styles.textinput}
           placeholder="Type here to translate!"
-          onChangeText= {(text) => this.state.input = text}
+          onChangeText= {(text) => this.state.input = text.toLowerCase()}
           onSubmitEditing = {this.onPressButton.bind(this)}/>
         <TouchableHighlight 
           style={styles.btn_translate}
@@ -82,7 +79,7 @@ class Homescreen extends React.Component {
             Translate
           </Text>
         </TouchableHighlight>
-        <ComponentWordList enableEmptySections={true} word={this.state.word}/>
+        <ComponentWordList style={styles.componentwordlist} word={this.state.word}/>
         <Menu callback={(action) => this.handleNavigation(action)}/>
       </View>
     );
