@@ -13,7 +13,7 @@ export const actions = {
 var state = {
 	user:{
 		email:'Guest',
-		permissions: 0
+		permissions: -1
 	},
 	session:{
 		user:'',
@@ -29,7 +29,7 @@ const user = (user = state.user, action) => {
 			return user;
 			break;
 		case actions.LOGGED_OUT:
-			user = {};
+			user = state.user;
 			return user;
 			break;
 		default:
@@ -44,7 +44,7 @@ const session = (session = state.session, action) => {
 			return session;
 			break;
 		case actions.LOGGED_OUT:
-			session = {};
+			session = state.session;
 			return session;
 			break;
 		default:

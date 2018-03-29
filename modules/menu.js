@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import {
-  AppRegistry,
+	AppRegistry,
 } from 'react-native';
 
 //FAB
@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 
 //State
-import {store} from './statemanager'; 
+import { store } from './statemanager';
 
 export default class Menu extends React.Component {
 	constructor(props) {
@@ -22,57 +22,57 @@ export default class Menu extends React.Component {
 		this.state = {
 			user: store.getState().user
 		};
-		store.subscribe((state) => {this.setState({user:store.getState().user})});
+		store.subscribe((state) => {
+			this.setState({
+				user: store.getState().user
+			});
+		});
 	}
 
-	getAddButton(callback){
+	getAddButton(callback) {
 		return (
-			<ActionButton.Item key="Add" buttonColor='#9b59b6' title="Add" onPress={() => {callback('Add')}}>
+			<ActionButton.Item key="Add" buttonColor='#9b59b6' title="Add" onPress={() => { callback('Add') }}>
 				<Icon name="md-create" style={styles.actionButtonIcon} />
 			</ActionButton.Item>
 		);
 	}
 
-	getLoginButton(callback){
+	getLoginButton(callback) {
 		return (
-			<ActionButton.Item key="Login" buttonColor='#3498db' title="Login" onPress={() => {callback('Login')}}>
+			<ActionButton.Item key="Login" buttonColor='#3498db' title="Login" onPress={() => { callback('Login') }}>
 				<Icon name="md-log-in" style={styles.actionButtonIcon} />
 			</ActionButton.Item>
 		);
 	}
 
-	getLogoutButton(callback){
+	getLogoutButton(callback) {
 		return (
-			<ActionButton.Item key="Logout" buttonColor='#3498db' title="Logout" onPress={() => {callback('Logout')}}>
+			<ActionButton.Item key="Logout" buttonColor='#3498db' title="Logout" onPress={() => { callback('Logout') }}>
 				<Icon name="md-log-out" style={styles.actionButtonIcon} />
 			</ActionButton.Item>
 		);
 	}
 
-	getRegisterButton(callback){
+	getRegisterButton(callback) {
 		return (
-			<ActionButton.Item key="Register" buttonColor='#3498db' title="Register" onPress={() => {callback('Register')}}>
+			<ActionButton.Item key="Register" buttonColor='#3498db' title="Register" onPress={() => { callback('Register') }}>
 				<Icon name="md-person-add" style={styles.actionButtonIcon} />
 			</ActionButton.Item>
 		);
 	}
 
-	build (user, callback) {
+	build(user, callback) {
 		let menu = [];
-
-		if(!user.permissions || user.permissions == 0){
-			menu.push(this.getLoginButton(callback));
-			menu.push(this.getRegisterButton(callback));
-		}else{
-			if(user.permissions > 2){
-				menu.push(this.getAddButton(callback));
-			}
-		
-			if(user.permissions > 0){
-				menu.push(this.getLogoutButton(callback));
-			}
+		switch(user.permissions){
+			case 5:
+			case 4:
+			case 3:
+			case 2:	menu.push(this.getAddButton(callback));
+			case 1:
+			case 0: menu.push(this.getLogoutButton(callback));
+					break;
+			case -1:(menu.push(this.getLoginButton(callback)), menu.push(this.getRegisterButton(callback)));
 		}
-
 		return menu;
 	}
 
