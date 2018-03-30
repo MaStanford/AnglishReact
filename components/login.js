@@ -14,11 +14,11 @@ import {
 } from 'react-navigation';
 import ActionButton from 'react-native-action-button';
 
-import styles from './styles';
+import styles from '../modules/styles';
 import Titlebar from './titlebar';
-import Network from './network';
-import {store, actions} from './statemanager';
-import {storage, keys} from './storage';
+import Network from '../modules/network';
+import {store, actions} from '../modules/statemanager';
+import {storage, keys} from '../modules/storage';
 
 export default class Login extends Component {
 
@@ -49,18 +49,15 @@ export default class Login extends Component {
 		Network.login(email, password)
 		.then((res) => {
 			if(res.code == 1){
-				
 				storage.store(keys.session, JSON.stringify(res.data)).then(()=>{
 					//Hurray
 				}).catch((error)=>{
 					throw new Error(error);
 				});
-
 				store.dispatch({
 					type: actions.SESSION, 
 					session: res.data
 				});
-				
 				return res.data;
 			}else{
 				throw new Error(res.data);
@@ -74,17 +71,13 @@ export default class Login extends Component {
 	getUser(email){
 		Network.getuser(email)
 		.then((res) => {
-			if(res.code == 1){
-				
+			if(res.code == 1){	
 				storage.store(keys.user, JSON.stringify(res.data)).then(()=>{}).catch(()=>{});
-				
 				store.dispatch({
 					type: actions.USER, 
 					user: res.data
 				});	
-				
 				const {goBack} = this.props.navigation;
-				
 				goBack();
 				return res.data;
 			}else{

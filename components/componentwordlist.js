@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { AppRegistry, FlatList, Text, View, StyleSheet } from 'react-native';
-import NetworkUtils from './network';
+import NetworkUtils from '../modules/network';
 
 //styles
-import styles from './styles';
+import styles from '../modules/styles';
 
 //Store
-import { store, actions } from './statemanager'
+import { store, actions } from '../modules/statemanager'
 
 export default class FlatListWordList extends Component {
 

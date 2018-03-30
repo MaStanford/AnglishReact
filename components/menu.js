@@ -11,10 +11,10 @@ import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 //styles
-import styles from './styles';
+import styles from '../modules/styles';
 
 //State
-import { store } from './statemanager';
+import { store } from '../modules/statemanager';
 
 export default class Menu extends React.Component {
 	constructor(props) {

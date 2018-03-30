@@ -19,16 +19,17 @@ import {
 import styles from './modules/styles';
 
 //Custom Component
-import Titlebar from './modules/titlebar';
-import ComponentWordList from './modules/componentwordlist';
-import Menu from './modules/menu';
+import Titlebar from './components/titlebar';
+import ComponentWordList from './components/componentwordlist';
+import Menu from './components/menu';
 
 //Store
 import {store, actions} from './modules/statemanager';
 import {storage, keys} from './modules/storage';
 
 //Screens
-import Login from './modules/login';
+import Login from './components/login';
+import Register from './components/register';
 
 class Homescreen extends React.Component {
   
@@ -118,7 +119,8 @@ class Homescreen extends React.Component {
 //Navigation screens
 const AnglishWordbookNavigator = StackNavigator({
   Home: {screen: Homescreen},
-  Login: {screen: Login }
+  Login: {screen: Login },
+  Register: {screen: Register}
 });
 
 const AppNavigation = () => (
