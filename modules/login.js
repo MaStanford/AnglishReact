@@ -49,11 +49,18 @@ export default class Login extends Component {
 		Network.login(email, password)
 		.then((res) => {
 			if(res.code == 1){
-				// storage.store(keys.session, res.data).then(()=>{}).catch(()=>{});
+				
+				storage.store(keys.session, JSON.stringify(res.data)).then(()=>{
+					//Hurray
+				}).catch((error)=>{
+					throw new Error(error);
+				});
+
 				store.dispatch({
 					type: actions.SESSION, 
 					session: res.data
 				});
+				
 				return res.data;
 			}else{
 				throw new Error(res.data);
@@ -68,12 +75,16 @@ export default class Login extends Component {
 		Network.getuser(email)
 		.then((res) => {
 			if(res.code == 1){
-				// storage.store(keys.user, res.data).then(()=>{}).catch(()=>{});
+				
+				storage.store(keys.user, JSON.stringify(res.data)).then(()=>{}).catch(()=>{});
+				
 				store.dispatch({
 					type: actions.USER, 
 					user: res.data
 				});	
+				
 				const {goBack} = this.props.navigation;
+				
 				goBack();
 				return res.data;
 			}else{

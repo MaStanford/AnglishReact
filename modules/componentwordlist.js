@@ -32,9 +32,9 @@ export default class FlatListWordList extends Component {
 			NetworkUtils.fetchWord(word)
 				.then((res) => {
 					if (res.data.length > 0) {
-						this.setState({ dataSource: res.data});
+						this.setState({ dataSource: res.data });
 					} else {
-						this.setState({ dataSource: this.template});
+						this.setState({ dataSource: this.template });
 					}
 				}).catch((error) => {
 					console.log(error);
@@ -55,35 +55,37 @@ export default class FlatListWordList extends Component {
 	render() {
 		return (
 			<View style={styles.componentwordlist}>
-				<Text>
-					{this.props.word}
-				</Text>
 				<FlatList
 					data={this.state.dataSource}
-					keyExtractor = {(item, index) => index + ',' + item.type + ',' + item.attested}
-					extraData = {this.state.dataSource}
-					renderItem={({item, index}) => {
+					keyExtractor={(item, index) => index + ',' + item.type + ',' + item.attested}
+					extraData={this.state.dataSource}
+					ListHeaderComponent={() =>
+							<Text style={styles.wordlistheader}>
+								{this.props.word}
+							</Text>
+						}
+					renderItem={({ item, index }) => {
 						divider = ''
-						if(index != this.state.dataSource.length-1){
+						if (index != this.state.dataSource.length - 1) {
 							divider = '\n-------------------------------\n';
 						}
 						return (
 							<View style={styles.containerwordlist} key={item.key}>
 								<View style={styles.row}>
-									<Text style={styles.text}>Word</Text>
-									<Text style={styles.textdef}>            :{item.word}</Text>
+									<Text style={styles.text}>Word            :</Text>
+									<Text style={styles.textdef}>{item.word}</Text>
 								</View>
 								<View style={styles.row}>
-									<Text style={styles.text}>Type</Text>
-									<Text style={styles.textdef}>             :{item.type}</Text>
+									<Text style={styles.text}>Type             :</Text>
+									<Text style={styles.textdef}>{item.type}</Text>
 								</View>
 								<View style={styles.row}>
-									<Text style={styles.text}>Attested</Text>
-									<Text style={styles.textdef}>      :{item.attested}</Text>
+									<Text style={styles.text}>Attested      :</Text>
+									<Text style={styles.textdef}>{item.attested.split(',').join('\n')}</Text>
 								</View>
 								<View style={styles.row}>
-									<Text style={styles.text}>Unattested</Text>
-									<Text style={styles.textdef}> :{item.unattested}</Text>
+									<Text style={styles.text}>Unattested :</Text>
+									<Text style={styles.textdef}>{item.unattested.split(',').join('\n')}</Text>
 								</View>
 								<View>
 									<Text>{divider}</Text>

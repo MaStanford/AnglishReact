@@ -18,8 +18,6 @@ var NetworkUtils = {
 				email: emailval,
 				password: passwordval
 			});
-		console.log(credentials);
-		console.log(`http://${server}${UserLoginAPI}`);
 		return fetch(`http://${server}${UserLoginAPI}`,{
 			method: 'POST',
 			headers: {
@@ -32,7 +30,6 @@ var NetworkUtils = {
 			})
 		})
 		.then((response) => {
-			console.log(JSON.stringify(response));
 			return response.json()
 		});
 	},

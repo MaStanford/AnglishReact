@@ -8,10 +8,11 @@ export const keys = {
 
 export const storage = {
 	store : function(key, value){
+		AsyncStorage.multiSet
 		return AsyncStorage.setItem(key, value);
 	},
-	fetch : function(key){
-		return AsyncStorage.getItem(key);
+	fetch : function(key, callback){
+		return AsyncStorage.getItem(key, callback);
 	},
 	clear : function(key){
 		return AsyncStorage.removeItem(key);

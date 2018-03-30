@@ -19,10 +19,14 @@ import { store } from './statemanager';
 export default class Menu extends React.Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			user: store.getState().user
 		};
-		store.subscribe((state) => {
+
+		store.subscribe(() => {
+			console.log('\nMenu Updated! --------\n');
+			console.log(store.getState());
 			this.setState({
 				user: store.getState().user
 			});

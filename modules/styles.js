@@ -46,6 +46,11 @@ var styles = StyleSheet.create({
 		alignItems: 'center',
 		margin: 10,
 	},
+	wordlistheader:{
+		fontWeight: 'bold',
+		textAlign: 'center',
+		fontSize: 24
+	},
 	row: {
 		flex:1,
 		flexDirection: 'row',

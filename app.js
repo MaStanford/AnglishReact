@@ -42,6 +42,35 @@ class Homescreen extends React.Component {
       input:'',
       word:''
     }
+
+    //Get previous state
+    storage.fetch(keys.session, (error, result) => {
+      session = JSON.parse(result);
+      console.log("session: " + result);
+      if(result !== null){
+        store.dispatch({
+					type: actions.SESSION, 
+					session: session
+				});
+      }
+    }).catch((error)=>{
+      console.log('Error fetchign session ' + error);
+    });
+
+    storage.fetch(keys.user, (error, result) => {
+      user = JSON.parse(result);
+      console.log("user: " + result);
+      if(result !== null){
+        store.dispatch({
+					type: actions.USER, 
+					user: user
+				});
+      }
+    }).catch((error)=>{
+      console.log('Error fetchign session ' + error);
+    });
+
+    //Sub to state updates
     store.subscribe(() => {
       console.log('Store updated in index');
     });
