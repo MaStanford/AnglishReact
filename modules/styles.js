@@ -26,7 +26,7 @@ var styles = StyleSheet.create({
 	},
 	text_translate: {
 		fontSize: 15,
-		color: 'black',
+		color: '#000000',
 		textAlign: 'center',
 		margin: 5
 	},
@@ -54,7 +54,7 @@ var styles = StyleSheet.create({
 	row: {
 		flex:1,
 		flexDirection: 'row',
-		backgroundColor: 'white',
+		backgroundColor: '#FFFFFF',
 	},
 	text: {
 		fontWeight: 'bold',
@@ -75,14 +75,28 @@ var styles = StyleSheet.create({
 	actionButtonIcon: {
 		fontSize: 20,
 		height: 22,
-		color: 'white',
+		color: '#FFFFFF',
 	},
 	modalBackground: {
-		backgroundColor: '#DCDCDC',
-		margin: 20,
-		justifyContent: 'center',
-		alignItems: 'center',
+		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
+		marginLeft: 25, marginRight: 25,
+		marginTop: '25%', marginBottom: '25%',
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'top',
+		alignItems: 'center'
+	},
+	modalContent: {
+		flexDirection: 'column',
+		justifyContent: 'top',
+		alignItems: 'center'
+	},
+	modalButton:{
+		backgroundColor: '#DCDCDC',
+		borderWidth: 1,
+		width: 85,
+		margin: 10
 	},
 	overlay: {
 		backgroundColor: '#ff5722',

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { Modal, Text, TouchableHighlight, View } from 'react-native';
+import { Modal, Text, TouchableHighlight, View, ScrollView } from 'react-native';
 
 import styles from '../modules/styles';
+
+import WordListItem from './wordlistitem';
 
 export default class WordDetailModal extends Component {
 
@@ -14,6 +16,10 @@ export default class WordDetailModal extends Component {
 	}
 
 	render() {
+		title = '';
+		if (this.props.word.word) {
+			title = this.props.word.word.toUpperCase();
+		}
 		return (
 			<Modal
 				animationType="slide"
@@ -23,14 +29,19 @@ export default class WordDetailModal extends Component {
 					alert('Modal has been closed.');
 				}}>
 				<View style={styles.modalBackground}>
-					<View>
-						<Text>Detail view modal</Text>
-						<Text>{JSON.stringify(this.props.word)}</Text>
+					<View style={styles.modalContent}>
+						<ScrollView>
+							<Text>{title}</Text>
+							<WordListItem item={this.props.word} onPressItem={(item) => { }} />
+						</ScrollView>
 						<TouchableHighlight
+							style={styles.modalButton}
 							onPress={() => {
 								this.setModalVisible(false);
 							}}>
-							<Text>BACK</Text>
+							<Text style={styles.text_translate}>
+								Back
+							</Text>
 						</TouchableHighlight>
 					</View>
 				</View>
