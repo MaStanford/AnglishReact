@@ -30,6 +30,7 @@ import {storage, keys} from './modules/storage';
 //Screens
 import Login from './components/login';
 import Register from './components/register';
+import AddWord from './components/addword';
 
 //Dialog/Modal for word details
 import WordDetail from './components/worddetailmodal';
@@ -138,7 +139,8 @@ class Homescreen extends React.Component {
 const AnglishWordbookNavigator = StackNavigator({
   Home: {screen: Homescreen},
   Login: {screen: Login },
-  Register: {screen: Register}
+  Register: {screen: Register},
+  Add: {screen: AddWord}
 });
 
 const AppNavigation = () => (

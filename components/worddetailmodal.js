@@ -31,8 +31,9 @@ export default class WordDetailModal extends Component {
 				<View style={styles.modalBackground}>
 					<View style={styles.modalContent}>
 						<ScrollView>
-							<Text>{title}</Text>
+							<Text style={styles.wordlistheader}>{title}</Text>
 							<WordListItem item={this.props.word} onPressItem={(item) => { }} />
+							<Text style={styles.commentheadertext}>Comments: </Text>
 						</ScrollView>
 						<TouchableHighlight
 							style={styles.modalButton}

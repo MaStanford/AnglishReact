@@ -1,5 +1,5 @@
 import {
-  StyleSheet,
+	StyleSheet,
 } from 'react-native';
 
 var styles = StyleSheet.create({
@@ -30,7 +30,7 @@ var styles = StyleSheet.create({
 		textAlign: 'center',
 		margin: 5
 	},
-	textinput:{
+	textinput: {
 		height: 40,
 		width: '50%',
 		textAlign: 'center',
@@ -38,7 +38,7 @@ var styles = StyleSheet.create({
 		borderWidth: 1,
 		margin: 10,
 	},
-	textinputpassword:{
+	textinputpassword: {
 		height: 40,
 		width: '50%',
 		borderWidth: 1,
@@ -46,13 +46,13 @@ var styles = StyleSheet.create({
 		alignItems: 'center',
 		margin: 10,
 	},
-	wordlistheader:{
+	wordlistheader: {
 		fontWeight: 'bold',
 		textAlign: 'center',
 		fontSize: 24
 	},
 	row: {
-		flex:1,
+		flex: 1,
 		flexDirection: 'row',
 		backgroundColor: '#FFFFFF',
 	},
@@ -61,16 +61,22 @@ var styles = StyleSheet.create({
 		textAlign: 'right',
 		fontSize: 15
 	},
-	textdef:{
+	textdef: {
 		textAlign: 'left',
 		fontSize: 15,
 		flexWrap: 'wrap'
 	},
-	texterror:{
+	texterror: {
 		textAlign: 'left',
 		fontSize: 15,
 		flexWrap: 'wrap',
 		color: 'red'
+	},
+	commentheadertext: { 
+		marginTop: 15, 
+		marginBottom: 15, 
+		fontSize: 16, 
+		fontWeight: 'bold' 
 	},
 	actionButtonIcon: {
 		fontSize: 20,
@@ -81,7 +87,7 @@ var styles = StyleSheet.create({
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
 		marginLeft: 25, marginRight: 25,
-		marginTop: '25%', marginBottom: '25%',
+		marginTop: '30%', marginBottom: '30%',
 		flex: 1,
 		flexDirection: 'column',
 		justifyContent: 'top',
@@ -92,7 +98,7 @@ var styles = StyleSheet.create({
 		justifyContent: 'top',
 		alignItems: 'center'
 	},
-	modalButton:{
+	modalButton: {
 		backgroundColor: '#DCDCDC',
 		borderWidth: 1,
 		width: 85,
@@ -109,7 +115,7 @@ var styles = StyleSheet.create({
 		justifyContent: 'center',
 		position: 'absolute',
 		bottom: 20,
-		right:20,
+		right: 20,
 		shadowColor: "#000000",
 		shadowOpacity: 0.8,
 		shadowRadius: 2,
@@ -120,4 +126,4 @@ var styles = StyleSheet.create({
 	}
 });
 
-export {styles as default};
+export { styles as default };

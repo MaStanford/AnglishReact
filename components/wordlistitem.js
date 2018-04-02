@@ -26,11 +26,11 @@ export default class WordListItem extends React.PureComponent {
 					</View>
 					<View style={styles.row}>
 						<Text style={styles.text}>Attested      :</Text>
-						<Text style={styles.textdef}>{this.props.item.attested.split(',').join('\n')}</Text>
+						<Text style={styles.textdef}>{this.props.item.attested.split(',').join('\n').split(';').join('\n')}</Text>
 					</View>
 					<View style={styles.row}>
 						<Text style={styles.text}>Unattested :</Text>
-						<Text style={styles.textdef}>{this.props.item.unattested.split(',').join('\n')}</Text>
+						<Text style={styles.textdef}>{this.props.item.unattested.split(',').join('\n').split(';').join('\n')}</Text>
 					</View>
 				</View>
 			</TouchableOpacity>
