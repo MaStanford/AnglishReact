@@ -90,12 +90,10 @@ var styles = StyleSheet.create({
 		marginTop: '30%', marginBottom: '30%',
 		flex: 1,
 		flexDirection: 'column',
-		justifyContent: 'top',
 		alignItems: 'center'
 	},
 	modalContent: {
 		flexDirection: 'column',
-		justifyContent: 'top',
 		alignItems: 'center'
 	},
 	modalButton: {
