@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, Text, View, StyleSheet } from 'react-native';
+import { AppRegistry, FlatList, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import NetworkUtils from '../modules/network';
 
 //styles
@@ -8,7 +8,7 @@ import styles from '../modules/styles';
 //Store
 import { store, actions } from '../modules/statemanager'
 
-export default class FlatListWordList extends Component {
+export default class FlatListWordList extends React.PureComponent {
 
 	constructor(props) {
 		super(props);
@@ -16,7 +16,10 @@ export default class FlatListWordList extends Component {
 			dataSource: this.template
 		};
 
-		this.fetchData(props.word);//Just fetch the default word passed in.
+		this.fetchData(props.word); //Just fetch the default word passed in.
+
+		//Ontouch callback for each item in the list.
+		this.callback = props.callback;
 	}
 
 	template = [{
@@ -46,11 +49,21 @@ export default class FlatListWordList extends Component {
 		this.fetchData(props.word);
 	}
 
-	// if(rowID != this.state.dataSource.length){
-	// 	console.log(rowID)
-	// 	console.log(this.state.dataSource)
-	// 	divider = '--------------';
-	// }
+	_onPressItem = (word) => {
+		console.log('wordlist onPress: ' + word.word);
+		this.callback(word);
+	};
+
+	_renderItem = ({ item, index }) => (
+		<WordListItem
+			onPressItem={this._onPressItem}
+			item={item}
+		/>
+	);
+
+	_renderSeperator = ({word}) => (
+		<Text>--------------------------------------</Text>
+	);
 
 	render() {
 		return (
@@ -60,42 +73,45 @@ export default class FlatListWordList extends Component {
 					keyExtractor={(item, index) => index + ',' + item.type + ',' + item.attested}
 					extraData={this.state.dataSource}
 					ListHeaderComponent={() =>
-							<Text style={styles.wordlistheader}>
-								{this.props.word}
-							</Text>
-						}
-					renderItem={({ item, index }) => {
-						divider = ''
-						if (index != this.state.dataSource.length - 1) {
-							divider = '\n-------------------------------\n';
-						}
-						return (
-							<View style={styles.containerwordlist} key={item.key}>
-								<View style={styles.row}>
-									<Text style={styles.text}>Word            :</Text>
-									<Text style={styles.textdef}>{item.word}</Text>
-								</View>
-								<View style={styles.row}>
-									<Text style={styles.text}>Type             :</Text>
-									<Text style={styles.textdef}>{item.type}</Text>
-								</View>
-								<View style={styles.row}>
-									<Text style={styles.text}>Attested      :</Text>
-									<Text style={styles.textdef}>{item.attested.split(',').join('\n')}</Text>
-								</View>
-								<View style={styles.row}>
-									<Text style={styles.text}>Unattested :</Text>
-									<Text style={styles.textdef}>{item.unattested.split(',').join('\n')}</Text>
-								</View>
-								<View>
-									<Text>{divider}</Text>
-								</View>
-							</View>
-						)
+						<Text style={styles.wordlistheader}>
+							{this.props.word}
+						</Text>
 					}
-					}
+					ItemSeparatorComponent={this._renderSeperator}
+					renderItem={this._renderItem}
 				/>
 			</View>
 		);
+	}
+}
+
+class WordListItem extends React.PureComponent {
+	_onPress = () => {
+		this.props.onPressItem(this.props.item);
+	};
+
+	render() {
+		return (
+			<TouchableOpacity onPress={this._onPress}>
+				<View style={styles.containerwordlist} key={this.props.item.key}>
+					<View style={styles.row}>
+						<Text style={styles.text}>Word            :</Text>
+						<Text style={styles.textdef}>{this.props.item.word}</Text>
+					</View>
+					<View style={styles.row}>
+						<Text style={styles.text}>Type             :</Text>
+						<Text style={styles.textdef}>{this.props.item.type}</Text>
+					</View>
+					<View style={styles.row}>
+						<Text style={styles.text}>Attested      :</Text>
+						<Text style={styles.textdef}>{this.props.item.attested.split(',').join('\n')}</Text>
+					</View>
+					<View style={styles.row}>
+						<Text style={styles.text}>Unattested :</Text>
+						<Text style={styles.textdef}>{this.props.item.unattested.split(',').join('\n')}</Text>
+					</View>
+				</View>
+			</TouchableOpacity>
+		)
 	}
 }

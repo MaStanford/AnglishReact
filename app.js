@@ -31,6 +31,9 @@ import {storage, keys} from './modules/storage';
 import Login from './components/login';
 import Register from './components/register';
 
+//Dialog/Modal for word details
+import WordDetail from './components/worddetailmodal';
+
 class Homescreen extends React.Component {
   
   static navigationOptions = {
@@ -41,7 +44,8 @@ class Homescreen extends React.Component {
     super(props);
     this.state = {
       input:'',
-      word:''
+      word:'',
+      detailVisible:false
     }
 
     //Get previous state
@@ -86,10 +90,17 @@ class Homescreen extends React.Component {
     if(action === 'Logout'){
       storage.clear(keys.session);
       storage.clear(keys.user);
-      store.dispatch({type:actions.LOGGED_OUT});
+      store.dispatch({type:actions.LOGGED_OUT});      
     }else{
       this.props.navigation.navigate(action, { title: action });
     }
+  }
+
+  wordDetailSelectCallback(word){
+    this.setState({
+      detailVisible: true
+    });
+    console.log('Selected word: ' + JSON.stringify(word));
   }
 
   render() {
@@ -109,7 +120,8 @@ class Homescreen extends React.Component {
             Translate
           </Text>
         </TouchableHighlight>
-        <ComponentWordList style={styles.componentwordlist} word={this.state.word}/>
+        <ComponentWordList style={styles.componentwordlist} word={this.state.word} callback={this.wordDetailSelectCallback}/>
+        <WordDetail visible={this.state.detailVisible}/>
         <Menu callback={(action) => this.handleNavigation(action)}/>
       </View>
     );
@@ -120,7 +132,8 @@ class Homescreen extends React.Component {
 const AnglishWordbookNavigator = StackNavigator({
   Home: {screen: Homescreen},
   Login: {screen: Login },
-  Register: {screen: Register}
+  Register: {screen: Register},
+  WordDetail: {screen: WordDetail}
 });
 
 const AppNavigation = () => (

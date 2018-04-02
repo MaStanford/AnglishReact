@@ -68,6 +68,7 @@ export default class Menu extends React.Component {
 	build(user, callback) {
 		let menu = [];
 		switch(user.permissions){
+			case 99:
 			case 5:
 			case 4:
 			case 3:
