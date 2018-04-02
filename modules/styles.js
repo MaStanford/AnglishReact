@@ -77,6 +77,13 @@ var styles = StyleSheet.create({
 		height: 22,
 		color: 'white',
 	},
+	modalBackground: {
+		backgroundColor: '#DCDCDC',
+		margin: 20,
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderWidth: 1,
+	},
 	overlay: {
 		backgroundColor: '#ff5722',
 		borderColor: '#ff5722',

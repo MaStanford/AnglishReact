@@ -45,13 +45,13 @@ class Homescreen extends React.Component {
     this.state = {
       input:'',
       word:'',
-      detailVisible:false
+      detailVisible: false,
+      detailWord: {}
     }
 
     //Get previous state
     storage.fetch(keys.session, (error, result) => {
       session = JSON.parse(result);
-      console.log("session: " + result);
       if(result !== null){
         store.dispatch({
 					type: actions.SESSION, 
@@ -64,7 +64,6 @@ class Homescreen extends React.Component {
 
     storage.fetch(keys.user, (error, result) => {
       user = JSON.parse(result);
-      console.log("user: " + result);
       if(result !== null){
         store.dispatch({
 					type: actions.USER, 
@@ -98,12 +97,19 @@ class Homescreen extends React.Component {
 
   wordDetailSelectCallback(word){
     this.setState({
-      detailVisible: true
+      detailVisible: true,
+      detailWord: word
     });
-    console.log('Selected word: ' + JSON.stringify(word));
+  }
+
+  _detailCallback(){
+    this.setState({
+      detailVisible: false
+    });
   }
 
   render() {
+    console.log(this.state);
     return (
       <View style={styles.containermain}>
         <Titlebar title="Word lookup"/>
@@ -120,9 +126,9 @@ class Homescreen extends React.Component {
             Translate
           </Text>
         </TouchableHighlight>
-        <ComponentWordList style={styles.componentwordlist} word={this.state.word} callback={this.wordDetailSelectCallback}/>
-        <WordDetail visible={this.state.detailVisible}/>
+        <ComponentWordList style={styles.componentwordlist} word={this.state.word} callback={this.wordDetailSelectCallback.bind(this)}/>
         <Menu callback={(action) => this.handleNavigation(action)}/>
+        <WordDetail visible={this.state.detailVisible} word={this.state.detailWord} callback={this._detailCallback.bind(this)}/>
       </View>
     );
   }
@@ -132,8 +138,7 @@ class Homescreen extends React.Component {
 const AnglishWordbookNavigator = StackNavigator({
   Home: {screen: Homescreen},
   Login: {screen: Login },
-  Register: {screen: Register},
-  WordDetail: {screen: WordDetail}
+  Register: {screen: Register}
 });
 
 const AppNavigation = () => (

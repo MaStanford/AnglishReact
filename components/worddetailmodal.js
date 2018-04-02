@@ -1,41 +1,36 @@
 import React, { Component } from 'react';
 import { Modal, Text, TouchableHighlight, View } from 'react-native';
 
+import styles from '../modules/styles';
+
 export default class WordDetailModal extends Component {
 
 	constructor(props) {
 		super(props);
-		this.word = props.word;
-		this.visible = props.visible;
-		this.state = {
-			word: this.word,
-			modalVisible: this.visible,
-		};
 	}
 
 	setModalVisible(visible) {
-		this.setState({ modalVisible: visible });
+		this.props.callback(visible);
 	}
 
 	render() {
-		console.log('Visible? : ' + this.props.visible + ': ' + this.state.modalVisible);
 		return (
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={this.state.modalVisible}
+				visible={this.props.visible}
 				onRequestClose={() => {
 					alert('Modal has been closed.');
 				}}>
-				<View style={{ marginTop: 22 }}>
+				<View style={styles.modalBackground}>
 					<View>
-						<Text>Hello World!</Text>
-
+						<Text>Detail view modal</Text>
+						<Text>{JSON.stringify(this.props.word)}</Text>
 						<TouchableHighlight
 							onPress={() => {
-								this.setModalVisible(!this.state.modalVisible);
+								this.setModalVisible(false);
 							}}>
-							<Text>Hide Modal</Text>
+							<Text>BACK</Text>
 						</TouchableHighlight>
 					</View>
 				</View>
