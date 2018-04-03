@@ -7,8 +7,8 @@ import {
 //FAB
 import ActionButton from 'react-native-action-button';
 
-//Icons
-import Icon from 'react-native-vector-icons/Ionicons';
+//Icons https://material.io/icons/
+import { Icon } from 'react-native-elements'
 
 //styles
 import styles from '../modules/styles';
@@ -35,7 +35,15 @@ export default class Menu extends React.Component {
 	getAddButton(callback) {
 		return (
 			<ActionButton.Item key="Add" buttonColor='#9b59b6' title="Add" onPress={() => { callback('Add') }}>
-				<Icon name="md-create" style={styles.actionButtonIcon} />
+				<Icon name="note-add" style={styles.actionButtonIcon} />
+			</ActionButton.Item>
+		);
+	}
+
+	getAdminButton(callback) {
+		return (
+			<ActionButton.Item key="Add" buttonColor='red' title="Admin" onPress={() => { callback('Admin') }}>
+				<Icon name="supervisor-account" style={styles.actionButtonIcon} />
 			</ActionButton.Item>
 		);
 	}
@@ -43,7 +51,7 @@ export default class Menu extends React.Component {
 	getLoginButton(callback) {
 		return (
 			<ActionButton.Item key="Login" buttonColor='#3498db' title="Login" onPress={() => { callback('Login') }}>
-				<Icon name="md-log-in" style={styles.actionButtonIcon} />
+				<Icon name="account-circle" style={styles.actionButtonIcon} />
 			</ActionButton.Item>
 		);
 	}
@@ -51,7 +59,7 @@ export default class Menu extends React.Component {
 	getLogoutButton(callback) {
 		return (
 			<ActionButton.Item key="Logout" buttonColor='#3498db' title="Logout" onPress={() => { callback('Logout') }}>
-				<Icon name="md-log-out" style={styles.actionButtonIcon} />
+				<Icon name="input" style={styles.actionButtonIcon} />
 			</ActionButton.Item>
 		);
 	}
@@ -59,7 +67,7 @@ export default class Menu extends React.Component {
 	getRegisterButton(callback) {
 		return (
 			<ActionButton.Item key="Register" buttonColor='#3498db' title="Register" onPress={() => { callback('Register') }}>
-				<Icon name="md-person-add" style={styles.actionButtonIcon} />
+				<Icon name="assignment" style={styles.actionButtonIcon} />
 			</ActionButton.Item>
 		);
 	}
@@ -67,7 +75,7 @@ export default class Menu extends React.Component {
 	build(user, callback) {
 		let menu = [];
 		switch(user.permissions){
-			case 99:
+			case 99:menu.push(this.getAdminButton(callback));
 			case 5:
 			case 4:
 			case 3:

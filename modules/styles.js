@@ -80,7 +80,7 @@ var styles = StyleSheet.create({
 	},
 	actionButtonIcon: {
 		fontSize: 20,
-		height: 22,
+		height: 30,
 		color: '#FFFFFF',
 	},
 	modalBackground: {
