@@ -44,8 +44,8 @@ export default class Register extends Component {
 		console.log('Register Button pressed');
 	}
 
-	register(email, password) {
-		Network.register(email, password)
+	register(handle, email, password) {
+		Network.register(email, password, handle)
 			.then((res) => {
 				if (res.code == 1) {
 					return res.data;
@@ -82,8 +82,8 @@ export default class Register extends Component {
 					throw new Error(res.data);
 				}
 			})
-			.then(()=>{
-				const {goBack} = this.props.navigation;
+			.then(() => {
+				const { goBack } = this.props.navigation;
 				goBack();
 			})
 			.catch((err) => {
@@ -101,15 +101,26 @@ export default class Register extends Component {
 				<TextInput
 					returnKeyType='next'
 					style={styles.textinput}
-					placeholder="Email"
-					onChangeText={(text) => this.state.email = text.toLowerCase()}
+					placeholder="Handle"
+					onChangeText={(text) => this.state.handle = text}
 					onSubmitEditing={(event) => {
-						this.refs.SecondInput.focus();
-					}
+							this.refs.SecondInput.focus();
+						}
 					}
 				/>
 				<TextInput
 					ref='SecondInput'
+					returnKeyType='next'
+					style={styles.textinput}
+					placeholder="Email"
+					onChangeText={(text) => this.state.email = text.toLowerCase()}
+					onSubmitEditing={(event) => {
+							this.refs.ThirdInput.focus();
+						}
+					}
+				/>
+				<TextInput
+					ref='ThirdInput'
 					style={styles.textinputpassword}
 					placeholder="Password"
 					onChangeText={(text) => this.state.password = text}

@@ -11,14 +11,9 @@ var NetworkUtils = {
 			headers: {
 				'Accept': 'application/json'
 			}
-		})
-			.then((response) => response.json());
+		}).then((response) => response.json());
 	},
 	login: function (emailval, passwordval) {
-		let credentials = JSON.stringify({
-			email: emailval,
-			password: passwordval
-		});
 		return fetch(`https://${server}${UserLoginAPI}`, {
 			method: 'POST',
 			headers: {
@@ -29,16 +24,11 @@ var NetworkUtils = {
 				email: emailval,
 				password: passwordval
 			})
-		})
-			.then((response) => {
+		}).then((response) => {
 				return response.json()
 			});
 	},
-	register: function (emailval, passwordval) {
-		let credentials = JSON.stringify({
-			email: emailval,
-			password: passwordval
-		});
+	register: function (emailval, passwordval, handleval) {
 		return fetch(`https://${server}${UserRegisterAPI}`, {
 			method: 'POST',
 			headers: {
@@ -46,6 +36,7 @@ var NetworkUtils = {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
+				handle: handleval,
 				email: emailval,
 				password: passwordval
 			})
@@ -60,8 +51,7 @@ var NetworkUtils = {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			}
-		})
-			.then((response) => response.json());
+		}).then((response) => response.json());
 	}
 }
 
