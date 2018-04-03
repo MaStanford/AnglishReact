@@ -24,6 +24,7 @@ export default class Register extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			handle: '',
 			email: '',
 			password: '',
 			error: ''
@@ -36,37 +37,37 @@ export default class Register extends Component {
 
 	onPressButton() {
 		this.setState({
+			handle: this.state.handle,
 			email: this.state.email,
 			password: this.state.password
 		});
 
-		this.register(this.state.email, this.state.password);
+		this.register(this.state.handle, this.state.email, this.state.password);
 		console.log('Register Button pressed');
 	}
 
 	register(handle, email, password) {
-		Network.register(email, password, handle)
+		Network.register(handle, email, password)
 			.then((res) => {
 				if (res.code == 1) {
 					return res.data;
 				} else {
 					throw new Error(res.data);
 				}
-			})
-			.then((result) => {
-				storage.store(keys.user, JSON.stringify(result)).then(() => { }).catch(() => { });
-
+			}).then((result) => {
+				storage.store(keys.user, JSON.stringify(result)).then(() => { 
+					//Hurray
+				}).catch((error) => {
+					throw new Error(error);
+				});
 				store.dispatch({
 					type: actions.USER,
 					user: result
 				});
-
 				return result;
-			})
-			.then((result) => {
+			}).then((result) => {
 				return Network.login(email, password);
-			})
-			.then((res) => {
+			}).then((res) => {
 				if (res.code == 1) {
 					storage.store(keys.session, JSON.stringify(res.data)).then(() => {
 						//Hurray
@@ -81,13 +82,11 @@ export default class Register extends Component {
 				} else {
 					throw new Error(res.data);
 				}
-			})
-			.then(() => {
+			}).then(() => {
 				const { goBack } = this.props.navigation;
 				goBack();
-			})
-			.catch((err) => {
-				this.setState({ error: err.message });
+			}).catch((err) => {
+				this.setState({ error: JSON.stringify(err) });
 			});
 	}
 
@@ -134,7 +133,7 @@ export default class Register extends Component {
 					onPress={this.onPressButton.bind(this)}>
 					<Text style={styles.text_translate}>
 						Register
-          </Text>
+          			</Text>
 				</TouchableHighlight>
 			</View>
 		);

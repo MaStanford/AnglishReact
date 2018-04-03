@@ -28,7 +28,7 @@ var NetworkUtils = {
 				return response.json()
 			});
 	},
-	register: function (emailval, passwordval, handleval) {
+	register: function (handleval, emailval, passwordval) {
 		return fetch(`https://${server}${UserRegisterAPI}`, {
 			method: 'POST',
 			headers: {
