@@ -40,6 +40,8 @@
 		4FACD76995CE45E8896AB0E4 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9CE71D61F6AF4B589151D564 /* Entypo.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		6ED8C04AFFCD4392B8866380 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA5865174AB8455F9DD7156F /* Octicons.ttf */; };
+		7471BA1E207325DD001323F6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		7471BA1F207325DF001323F6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		79ED9AABA9574965A8B68C62 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 35BDEB0827894C2EA980C324 /* Feather.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		949CEB5ACF6B46EC88D96062 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4374ED8AF381419996A21ED8 /* Foundation.ttf */; };
@@ -1125,6 +1127,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7471BA1E207325DD001323F6 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1160,6 +1163,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7471BA1F207325DF001323F6 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
