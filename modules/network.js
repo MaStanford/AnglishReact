@@ -6,7 +6,7 @@ let UserGetAPI = '/users/user';
 
 var NetworkUtils = {
 	fetchWord: function (word) {
-		return fetch(`http://${server}${wordAPI}?word=${word}`, {
+		return fetch(`https://${server}${wordAPI}?word=${word}`, {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json'
@@ -19,7 +19,7 @@ var NetworkUtils = {
 			email: emailval,
 			password: passwordval
 		});
-		return fetch(`http://${server}${UserLoginAPI}`, {
+		return fetch(`https://${server}${UserLoginAPI}`, {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
@@ -39,7 +39,7 @@ var NetworkUtils = {
 			email: emailval,
 			password: passwordval
 		});
-		return fetch(`http://${server}${UserRegisterAPI}`, {
+		return fetch(`https://${server}${UserRegisterAPI}`, {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
@@ -54,7 +54,7 @@ var NetworkUtils = {
 		});
 	},
 	getuser: function (email) {
-		return fetch(`http://${server}${UserGetAPI}?user=${email}`, {
+		return fetch(`https://${server}${UserGetAPI}?user=${email}`, {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',
