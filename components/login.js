@@ -20,6 +20,9 @@ import Network from '../modules/network';
 import {store, actions} from '../modules/statemanager';
 import {storage, keys} from '../modules/storage';
 
+//Workaround to get some of the this. in the promises. Otherwise I have no idea to acces the this.function() in a promise, I keep getting undefined
+var that = this;
+
 export default class Login extends Component {
 
 	constructor(props){
@@ -40,19 +43,40 @@ export default class Login extends Component {
 			email: this.state.email,
 			password: this.state.password
 		});
-		this.getSession(this.state.email, this.state.password);
-		this.getUser(this.state.email);
-		console.log('Login Button pressed');
+
+		var email = this.state.email;
+		var password = this.state.password;
+
+		this.getSession(email, password).then(function(data){
+			if(data){
+				return this.getUser(email)
+			}else{
+				this.setState({error: 'Invalid email or password'});
+				throw new Error('Failed to get session, probably bad email or password');
+			}
+		}.bind(this))
+		.then(function(user){
+			if(user){
+				const {goBack} = this.props.navigation;
+				goBack();
+			}else{
+				this.setState({error: 'Invalid email or password'});
+				throw new Error('Invalid email or password');
+			}
+		}.bind(this)).catch((err) => {
+			console.log('Error logging In: ' + err.message);
+			this.setState({error: err.message});
+		});
 	}
 
 	getSession(email, password){
-		Network.login(email, password)
+		return Network.login(email, password)
 		.then((res) => {
 			if(res.code == 1){
 				storage.store(keys.session, JSON.stringify(res.data)).then(()=>{
 					//Hurray
 				}).catch((error)=>{
-					throw new Error(error);
+					throw new Error('Session Storage Error');
 				});
 				store.dispatch({
 					type: actions.SESSION, 
@@ -60,33 +84,29 @@ export default class Login extends Component {
 				});
 				return res.data;
 			}else{
-				throw new Error(res.data);
+				throw new Error('Invalid email or password');
 			}
-		})
-		.catch((err) => {
-			this.setState({error: err.message});
 		});
 	}
 
 	getUser(email){
-		Network.getuser(email)
+		return Network.getuser(email)
 		.then((res) => {
 			if(res.code == 1){	
-				storage.store(keys.user, JSON.stringify(res.data)).then(()=>{}).catch(()=>{});
+				storage.store(keys.user, JSON.stringify(res.data)).then(()=>{
+					//Hurray
+				}).catch(()=>{
+					throw new Error('User Storage Error');
+				});
 				store.dispatch({
 					type: actions.USER, 
 					user: res.data
-				});	
-				const {goBack} = this.props.navigation;
-				goBack();
+				});
 				return res.data;
 			}else{
-				throw new Error(res.data);
+				throw new Error('Invalide email');
 			}
 		})
-		.catch((err) => {
-				this.setState({error: 'Unable to find user'});
-		});
 	}
 	
 	render(){

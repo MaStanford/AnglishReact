@@ -25,6 +25,7 @@ var NetworkUtils = {
 				password: passwordval
 			})
 		}).then((response) => {
+				console.log(response);
 				return response.json()
 			});
 	},
@@ -51,7 +52,10 @@ var NetworkUtils = {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
 			}
-		}).then((response) => response.json());
+		}).then((response) => {
+			console.log(response);
+			return response.json()
+		});
 	}
 }
 

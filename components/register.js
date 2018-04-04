@@ -52,13 +52,13 @@ export default class Register extends Component {
 				if (res.code == 1) {
 					return res.data;
 				} else {
-					throw new Error(res.data);
+					throw new Error('Register Error');
 				}
 			}).then((result) => {
 				storage.store(keys.user, JSON.stringify(result)).then(() => { 
 					//Hurray
 				}).catch((error) => {
-					throw new Error(error);
+					throw new Error('Store User');
 				});
 				store.dispatch({
 					type: actions.USER,
@@ -72,7 +72,7 @@ export default class Register extends Component {
 					storage.store(keys.session, JSON.stringify(res.data)).then(() => {
 						//Hurray
 					}).catch((error) => {
-						throw new Error(error);
+						throw new Error('Store Session');
 					});
 					store.dispatch({
 						type: actions.SESSION,
@@ -80,7 +80,7 @@ export default class Register extends Component {
 					});
 					return res.data;
 				} else {
-					throw new Error(res.data);
+					throw new Error('Login Error');
 				}
 			}).then(() => {
 				const { goBack } = this.props.navigation;
