@@ -9,8 +9,9 @@ import styles from '../modules/styles';
 import { store, actions } from '../modules/statemanager'
 
 import WordListItem from './wordlistitem';
+import utils from '../modules/utils';
 
-export default class FlatListWordList extends React.PureComponent {
+export default class WordList extends React.PureComponent {
 
 	constructor(props) {
 		super(props);
@@ -18,21 +19,24 @@ export default class FlatListWordList extends React.PureComponent {
 			dataSource: this.template
 		};
 
-		this.fetchData(props.word); //Just fetch the default word passed in.
+		if(props.word && !utils.isEmpty(props.word)  && props.word != ''){
+			console.log('searchTerm: ' + props.word);
+			this.fetchData(props.word);
+		}
 
 		//Ontouch callback for each item in the list.
 		this.callback = props.callback;
 	}
 
 	template = [{
-		key: 'key',
+		_id: '_id',
 		word: 'word',
 		type: 'type',
 		attested: 'attested',
 		unattested: 'unattested'
 	}]
 
-	fetchData(word) {
+	fetchData(word = 'language') {
 		if (word != null || word != '') {
 			NetworkUtils.fetchWord(word)
 				.then((res) => {
@@ -48,7 +52,10 @@ export default class FlatListWordList extends React.PureComponent {
 	}
 
 	componentWillReceiveProps(props) {
-		this.fetchData(props.word);
+		if(props.word && !utils.isEmpty(props.word)  && props.word != ''){
+			console.log('searchTerm: ' + props.word);
+			this.fetchData(props.word);
+		}
 	}
 
 	_onPressItem = (word) => {
@@ -68,10 +75,11 @@ export default class FlatListWordList extends React.PureComponent {
 
 	render() {
 		return (
-			<View style={styles.componentwordlist}>
+			<View style={styles.wordlist}>
 				<FlatList
+					style={styles.wordListContainer}
 					data={this.state.dataSource}
-					keyExtractor={(item, index) => index + ',' + item.type + ',' + item.attested}
+					keyExtractor={(item, index) => item._id}
 					extraData={this.state.dataSource}
 					ListHeaderComponent={() =>
 						<Text style={styles.wordlistheader}>

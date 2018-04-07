@@ -63,7 +63,8 @@ export default class Login extends Component {
 				this.setState({error: 'Invalid email or password'});
 				throw new Error('Invalid email or password');
 			}
-		}.bind(this)).catch((err) => {
+		}.bind(this))
+		.catch((err) => {
 			console.log('Error logging In: ' + err.message);
 			this.setState({error: err.message});
 		});

@@ -5,6 +5,8 @@ import styles from '../modules/styles';
 
 import WordListItem from './wordlistitem';
 
+import CommentList from './commentlist';
+
 export default class WordDetailModal extends Component {
 
 	constructor(props) {
@@ -32,8 +34,9 @@ export default class WordDetailModal extends Component {
 					<View style={styles.modalContent}>
 						<ScrollView>
 							<Text style={styles.wordlistheader}>{title}</Text>
-							<WordListItem item={this.props.word} onPressItem={(item) => { }} />
+							<WordListItem item={this.props.word} onPressItem={(item) => {}} />
 							<Text style={styles.commentheadertext}>Comments: </Text>
+							<CommentList word={this.props.word} callback={(comment) => {}}/>
 						</ScrollView>
 						<TouchableHighlight
 							style={styles.modalButton}

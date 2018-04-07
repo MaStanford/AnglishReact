@@ -20,7 +20,7 @@ import styles from './modules/styles';
 
 //Custom Component
 import Titlebar from './components/titlebar';
-import ComponentWordList from './components/componentwordlist';
+import WordList from './components/wordlist';
 import Menu from './components/menu';
 
 //Store
@@ -127,7 +127,7 @@ class Homescreen extends React.Component {
             Translate
           </Text>
         </TouchableHighlight>
-        <ComponentWordList style={styles.componentwordlist} word={this.state.word} callback={this.wordDetailSelectCallback.bind(this)}/>
+        <WordList word={this.state.word} callback={this.wordDetailSelectCallback.bind(this)}/>
         <Menu callback={(action) => this.handleNavigation(action)}/>
         <WordDetail visible={this.state.detailVisible} word={this.state.detailWord} callback={this._detailCallback.bind(this)}/>
       </View>

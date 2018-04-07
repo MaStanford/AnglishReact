@@ -3,20 +3,71 @@ import {
 } from 'react-native';
 
 var styles = StyleSheet.create({
-	containerwordlist: {
-		backgroundColor: 'white',
-	},
-	componentwordlist: {
-		width: '95%',
-		backgroundColor: 'white',
-		alignItems: 'center',
-		borderWidth: 1
-	},
 	containermain: {
-		flex: 1,
 		borderWidth: 1,
+		flex: 1,
 		alignItems: 'center',
 		backgroundColor: '#FFFFFF'
+	},
+	wordListContainer: {
+		marginLeft: 5
+	},
+	wordlist: {
+		width: '90%',
+		backgroundColor: 'white',
+		alignItems: 'flex-start',
+		borderWidth: 1
+	},
+	wordRow: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		backgroundColor: '#FFFFFF',
+	},
+	commentWordlist: {
+		width: '90%',
+		backgroundColor: 'white',
+		alignItems: 'flex-start',
+	},
+	commentRow: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		backgroundColor: '#FFFFFF',
+		flexWrap: 'wrap'
+	},
+	text: {
+		flexDirection: 'row',
+		textAlign: 'left',
+		fontWeight: 'bold',
+		fontSize: 15,
+		flexWrap: 'wrap'
+	},
+	textRowLabel: {
+		textAlign: 'left',
+		fontWeight: 'bold',
+		fontSize: 15,
+	},
+	textdef: {
+		textAlign: 'left',
+		fontSize: 15,
+		flexWrap: 'wrap'
+	},
+	wordlistheader: {
+		fontWeight: 'bold',
+		textAlign: 'left',
+		marginLeft: 5,
+		fontSize: 24
+	},
+	commentheadertext: { 
+		marginTop: 15, 
+		marginBottom: 15, 
+		fontSize: 16, 
+		fontWeight: 'bold' 
+	},
+	texterror: {
+		textAlign: 'left',
+		fontSize: 15,
+		flexWrap: 'wrap',
+		color: 'red'
 	},
 	btn_translate: {
 		backgroundColor: '#DCDCDC',
@@ -45,38 +96,6 @@ var styles = StyleSheet.create({
 		textAlign: 'center',
 		alignItems: 'center',
 		margin: 10,
-	},
-	wordlistheader: {
-		fontWeight: 'bold',
-		textAlign: 'center',
-		fontSize: 24
-	},
-	row: {
-		flex: 1,
-		flexDirection: 'row',
-		backgroundColor: '#FFFFFF',
-	},
-	text: {
-		fontWeight: 'bold',
-		textAlign: 'right',
-		fontSize: 15
-	},
-	textdef: {
-		textAlign: 'left',
-		fontSize: 15,
-		flexWrap: 'wrap'
-	},
-	texterror: {
-		textAlign: 'left',
-		fontSize: 15,
-		flexWrap: 'wrap',
-		color: 'red'
-	},
-	commentheadertext: { 
-		marginTop: 15, 
-		marginBottom: 15, 
-		fontSize: 16, 
-		fontWeight: 'bold' 
 	},
 	actionButtonIcon: {
 		fontSize: 20,
