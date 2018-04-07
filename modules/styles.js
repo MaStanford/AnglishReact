@@ -10,10 +10,12 @@ var styles = StyleSheet.create({
 		backgroundColor: '#FFFFFF'
 	},
 	wordListContainer: {
+		width: '90%',
 		marginLeft: 5
 	},
 	wordlist: {
 		width: '90%',
+		flex: .95,
 		backgroundColor: 'white',
 		alignItems: 'flex-start',
 		borderWidth: 1
