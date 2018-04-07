@@ -7,7 +7,8 @@ import {
   View,
   TouchableHighlight,
   TextInput,
-  Button
+  Button,
+  Keyboard
 } from 'react-native';
 
 import {
@@ -82,6 +83,7 @@ class Homescreen extends React.Component {
   }
 
   onPressButton() {
+    Keyboard.dismiss;
     this.setState({word: this.state.input});
   }
 
@@ -117,7 +119,7 @@ class Homescreen extends React.Component {
         <TextInput
           style={styles.textinput}
           placeholder="Type here to translate!"
-          onChangeText= {(text) => this.state.input = text.toLowerCase()}
+          onChangeText= {(text) => this.state.input = text.toLowerCase().trim()}
           onSubmitEditing = {this.onPressButton.bind(this)}/>
         <TouchableHighlight 
           style={styles.btn_translate}
