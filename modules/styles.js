@@ -91,9 +91,33 @@ var styles = StyleSheet.create({
 		borderWidth: 1,
 		margin: 10,
 	},
+	textinputaddtop: {
+		height: 40,
+		width: '85%',
+		textAlign: 'center',
+		alignItems: 'center',
+		borderWidth: 1,
+		margin: 10,
+	},
+	textinputaddbot: {
+		height: 40,
+		width: '70%',
+		textAlign: 'center',
+		alignItems: 'center',
+		borderWidth: 1,
+		margin: 10,
+	},
 	textinputpassword: {
 		height: 40,
 		width: '50%',
+		borderWidth: 1,
+		textAlign: 'center',
+		alignItems: 'center',
+		margin: 10,
+	},
+	textinputbigedit: {
+		height: '35%',
+		width: '85%%',
 		borderWidth: 1,
 		textAlign: 'center',
 		alignItems: 'center',
@@ -103,17 +127,28 @@ var styles = StyleSheet.create({
 		fontSize: 20,
 		height: 30,
 		color: '#FFFFFF',
+		alignItems: 'center'
 	},
 	modalBackground: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
-		marginLeft: 25, marginRight: 25,
-		marginTop: '30%', marginBottom: '30%',
+		marginLeft: 25, 
+		marginRight: 25,
+		marginTop: '30%', 
+		marginBottom: '30%',
 		flex: 1,
 		flexDirection: 'column',
 		alignItems: 'center'
 	},
+	modalBackgroundAddNewWord: {
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		marginLeft: 25, marginRight: 25,
+		marginTop: '30%', 
+		marginBottom: '30%',
+	},
 	modalContent: {
+		backgroundColor: '#FFFFFF',
 		flexDirection: 'column',
 		alignItems: 'center'
 	},
@@ -121,6 +156,20 @@ var styles = StyleSheet.create({
 		backgroundColor: '#DCDCDC',
 		borderWidth: 1,
 		width: 85,
+		margin: 10
+	},
+	modalButtonAddComment: {
+		backgroundColor: '#DCDCDC',
+		borderWidth: 1,
+		width: 100,
+		margin: 10
+	},
+	bigEditButton: {
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		alignItems: 'center',
+		width: 40,
+		height: 40,
 		margin: 10
 	},
 	overlay: {

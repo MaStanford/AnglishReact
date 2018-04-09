@@ -16,7 +16,7 @@ export default class WordList extends React.PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
-			dataSource: this.template
+			dataSource: this.emptyTemplate
 		};
 
 		if(props.word && !utils.isEmpty(props.word)  && props.word != ''){
@@ -28,12 +28,14 @@ export default class WordList extends React.PureComponent {
 		this.callback = props.callback;
 	}
 
-	template = [{
+	emptyTemplate = [];
+
+	defTemplate = [{
 		_id: '_id',
-		word: 'word',
-		type: 'type',
-		attested: 'attested',
-		unattested: 'unattested'
+		word: '',
+		type: 'N/A',
+		attested: 'N/A',
+		unattested: 'N/A'
 	}]
 
 	fetchData(word = 'language') {
@@ -43,7 +45,9 @@ export default class WordList extends React.PureComponent {
 					if (res.data.length > 0) {
 						this.setState({ dataSource: res.data });
 					} else {
-						this.setState({ dataSource: this.template });
+						var nowordfound = this.defTemplate;
+						nowordfound[0].word = this.props.word + ' not found!';
+						this.setState({ dataSource: nowordfound });
 					}
 				}).catch((error) => {
 					console.log(error);

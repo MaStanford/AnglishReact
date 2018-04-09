@@ -23,56 +23,58 @@ import styles from './modules/styles';
 import Titlebar from './components/titlebar';
 import WordList from './components/wordlist';
 import Menu from './components/menu';
+import {MenuActions} from './components/menu';
 
 //Store
-import {store, actions} from './modules/statemanager';
-import {storage, keys} from './modules/storage';
+import { store, actions } from './modules/statemanager';
+import { storage, keys } from './modules/storage';
 
 //Screens
 import Login from './components/login';
 import Register from './components/register';
-import AddWord from './components/addword';
 
-//Dialog/Modal for word details
+//Dialog/Modals
 import WordDetail from './components/worddetailmodal';
+import AddWordModal from './components/addwordmodal';
 
 class Homescreen extends React.Component {
-  
+
   static navigationOptions = {
     title: 'Anglish Wordbook',
   };
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
-      input:'',
-      word:'',
+      input: '',
+      word: '',
       detailVisible: false,
+      addwordvisible: false,
       detailWord: {}
     }
 
     //Get previous state
     storage.fetch(keys.session, (error, result) => {
       session = JSON.parse(result);
-      if(result !== null){
+      if (result !== null) {
         store.dispatch({
-					type: actions.SESSION, 
-					session: session
-				});
+          type: actions.SESSION,
+          session: session
+        });
       }
-    }).catch((error)=>{
+    }).catch((error) => {
       console.log('Error fetchign session ' + error);
     });
 
     storage.fetch(keys.user, (error, result) => {
       user = JSON.parse(result);
-      if(result !== null){
+      if (result !== null) {
         store.dispatch({
-					type: actions.USER, 
-					user: user
-				});
+          type: actions.USER,
+          user: user
+        });
       }
-    }).catch((error)=>{
+    }).catch((error) => {
       console.log('Error fetchign session ' + error);
     });
 
@@ -83,31 +85,43 @@ class Homescreen extends React.Component {
   }
 
   onPressButton() {
-    Keyboard.dismiss;
-    this.setState({word: this.state.input});
+    Keyboard.dismiss();
+    this.setState({ word: this.state.input });
   }
 
-  handleNavigation(action){
+  handleNavigation(action) {
     console.log(action);
-    if(action === 'Logout'){
-      storage.clear(keys.session);
-      storage.clear(keys.user);
-      store.dispatch({type:actions.LOGGED_OUT});      
-    }else{
-      this.props.navigation.navigate(action, { title: action });
+    switch (action) {
+      case MenuActions.Logout:
+        storage.clear(keys.session);
+        storage.clear(keys.user);
+        store.dispatch({ type: actions.LOGGED_OUT });
+        break;
+      case MenuActions.Add:
+        this.setState({ addwordvisible: true });
+        break;
+      default:
+        this.props.navigation.navigate(action, { title: action });
+        break;
     }
   }
 
-  wordDetailSelectCallback(word){
+  wordDetailSelectCallback(word) {
     this.setState({
       detailVisible: true,
       detailWord: word
     });
   }
 
-  _detailCallback(){
+  _detailCallback() {
     this.setState({
       detailVisible: false
+    });
+  }
+
+  _addwordCallback() {
+    this.setState({
+      addwordvisible: false
     });
   }
 
@@ -115,13 +129,13 @@ class Homescreen extends React.Component {
     console.log(this.state);
     return (
       <View style={styles.containermain}>
-        <Titlebar title="Word lookup"/>
+        <Titlebar title="Word lookup" />
         <TextInput
           style={styles.textinput}
           placeholder="Type here to translate!"
-          onChangeText= {(text) => this.state.input = text.toLowerCase().trim()}
-          onSubmitEditing = {this.onPressButton.bind(this)}/>
-        <TouchableHighlight 
+          onChangeText={(text) => this.state.input = text.toLowerCase().trim()}
+          onSubmitEditing={this.onPressButton.bind(this)} />
+        <TouchableHighlight
           style={styles.btn_translate}
           underlayColor="black"
           onPress={this.onPressButton.bind(this)}>
@@ -129,9 +143,10 @@ class Homescreen extends React.Component {
             Translate
           </Text>
         </TouchableHighlight>
-        <WordList word={this.state.word} callback={this.wordDetailSelectCallback.bind(this)}/>
-        <Menu callback={(action) => this.handleNavigation(action)}/>
-        <WordDetail visible={this.state.detailVisible} word={this.state.detailWord} callback={this._detailCallback.bind(this)}/>
+        <WordList word={this.state.word} callback={this.wordDetailSelectCallback.bind(this)} />
+        <Menu callback={(action) => this.handleNavigation(action)} />
+        <WordDetail visible={this.state.detailVisible} word={this.state.detailWord} callback={this._detailCallback.bind(this)} />
+        <AddWordModal visible={this.state.addwordvisible} callback={this._addwordCallback.bind(this)} />
       </View>
     );
   }
@@ -139,20 +154,19 @@ class Homescreen extends React.Component {
 
 //Navigation screens
 const AnglishWordbookNavigator = StackNavigator({
-  Home: {screen: Homescreen},
-  Login: {screen: Login },
-  Register: {screen: Register},
-  Add: {screen: AddWord}
+  Home: { screen: Homescreen },
+  Login: { screen: Login },
+  Register: { screen: Register },
 });
 
 const AppNavigation = () => (
-  <AnglishWordbookNavigator/>
+  <AnglishWordbookNavigator />
 );
 
 export default class App extends React.Component {
   render() {
     return (
-        <AppNavigation/>
+      <AppNavigation />
     );
   }
 }

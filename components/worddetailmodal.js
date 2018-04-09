@@ -27,26 +27,36 @@ export default class WordDetailModal extends Component {
 				animationType="slide"
 				transparent={true}
 				visible={this.props.visible}
-				onRequestClose={() => {
-					alert('Modal has been closed.');
-				}}>
+				onRequestClose={() => { }}>
 				<View style={styles.modalBackground}>
 					<View style={styles.modalContent}>
 						<ScrollView>
 							<Text style={styles.wordlistheader}>{title}</Text>
-							<WordListItem item={this.props.word} onPressItem={(item) => {}} />
+							<WordListItem item={this.props.word} onPressItem={(item) => { }} />
 							<Text style={styles.commentheadertext}>Comments: </Text>
-							<CommentList word={this.props.word} callback={(comment) => {}}/>
+							<CommentList word={this.props.word} callback={(comment) => { }} />
 						</ScrollView>
-						<TouchableHighlight
-							style={styles.modalButton}
-							onPress={() => {
-								this.setModalVisible(false);
-							}}>
-							<Text style={styles.text_translate}>
-								Back
+
+						<View style={{ flexDirection: 'row' }}>
+							<TouchableHighlight
+								style={styles.modalButton}
+								onPress={() => {
+									this.setModalVisible(false);
+								}}>
+								<Text style={styles.text_translate}>
+									Back
 							</Text>
-						</TouchableHighlight>
+							</TouchableHighlight>
+							<TouchableHighlight
+								style={styles.modalButtonAddComment}
+								onPress={() => {
+									this.setModalVisible(false);
+								}}>
+								<Text style={styles.text_translate}>
+									Comment
+							</Text>
+							</TouchableHighlight>
+						</View>
 					</View>
 				</View>
 			</Modal>
