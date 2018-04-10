@@ -40,7 +40,7 @@ export default class EditTextModal extends Component {
 	}
 
 	onPressButton() {
-		this.props.callback(this.props.parentRef, this.state.text);
+		this.props.callback(this.props.parentState, this.state.text);
 	}
 
 	render() {
@@ -51,7 +51,7 @@ export default class EditTextModal extends Component {
 				visible={this.props.visible}
 				onRequestClose={() => { }}>
 				<View style={styles.modalBackground}>
-					<Titlebar title="Enter Text:" />
+					<Titlebar title={this.props.parentState.toUpperCase()} />
 					<Text ref='error' style={styles.texterror}>
 						{this.state.error}
 					</Text>

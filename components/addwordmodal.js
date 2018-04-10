@@ -28,7 +28,7 @@ export default class AddWord extends Component {
 		super(props);
 		this.state = {
 			edittextmodalvisible: false,
-			edittextmodalparentref: {},
+			editTextModalParentState: 'attested',
 			text: '',
 			error: '',
 			word: '',
@@ -52,27 +52,32 @@ export default class AddWord extends Component {
 		console.log('Add Button pressed');
 	}
 
-	_openLargeEdit(ref, currentText) {
+	_openLargeEdit(state, currentText) {
 		this.setState({
 			text: currentText,
-			edittextmodalparentref: ref,
+			editTextModalParentState: state,
 			edittextmodalvisible: true
 		});
 	}
 
-	_editTextModalCallback(ref, inputText) {
+	_editTextModalCallback(state, inputText) {
+		console.log(state);
+		console.log({[state]:inputText});
 		this.setState({
-			text: '',
+			[state]:inputText,
 			edittextmodalvisible: false,
 		});
-		ref.setNativeProps({ text: inputText });
+		console.log(state);
+		console.log({[state]:inputText});
 	}
 
 	_getEditTextModal(){
+		console.log('_getEditTextModal text');
+		console.log(this.state);
 		return (
 		<EditTextModal 
 			visible={this.state.edittextmodalvisible} 
-			parentRef={this.state.edittextmodalparentref} 
+			parentState={this.state.editTextModalParentState} 
 			text={this.state.text} 
 			callback={this._editTextModalCallback.bind(this)} 
 		/>);
@@ -119,6 +124,7 @@ export default class AddWord extends Component {
 								returnKeyType='next'
 								ref={component => this._attested = component}
 								style={styles.textinputaddbot}
+								value = {this.state.attested}
 								placeholder="Attested"
 								onChangeText={(text) => this.setState({attested: text})}
 								onSubmitEditing={(event) => {
@@ -128,7 +134,7 @@ export default class AddWord extends Component {
 							<TouchableHighlight
 								style={styles.modalContent}
 								onPress={() => {
-									this._openLargeEdit(this._attested, this.state.attested);
+									this._openLargeEdit('attested', this.state.attested);
 								}}>
 								<Icon name="assignment" style={styles.modalButtonOpenEdit} />
 							</TouchableHighlight>
@@ -138,6 +144,7 @@ export default class AddWord extends Component {
 							<TextInput
 								ref={component => this._unattested = component}
 								style={styles.textinputaddbot}
+								value = {this.state.unattested}
 								placeholder="Unattested"
 								onChangeText={(text) => this.setState({unattested: text})}
 								onSubmitEditing={this.onPressButton.bind(this)}
@@ -146,7 +153,7 @@ export default class AddWord extends Component {
 							<TouchableHighlight
 								style={styles.modalContent}
 								onPress={() => {
-									this._openLargeEdit(this._unattested, this.state.unattested);
+									this._openLargeEdit('unattested', this.state.unattested);
 								}}>
 								<Icon name="assignment" style={styles.modalButtonOpenEdit} />
 							</TouchableHighlight>
