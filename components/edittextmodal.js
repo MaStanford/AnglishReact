@@ -18,15 +18,21 @@ import Titlebar from './titlebar';
 export default class EditTextModal extends Component {
 	constructor(props) {
 		super(props);
-		console.log('EditTextModal');
-		console.log(props.parentRef);
+		console.log('constructor props.text');
+		console.log(props.text);
 		this.state={
-			error: ''
+			error: '',
+			text: props.text
 		}
 	}
 
-	//We need this method to change things based off props
-	componentWillReceiveProps(props) {
+	componentWillReceiveProps(props){
+		console.log('componentWillReceiveProps props.text');
+		console.log(props.text);
+		this.setState({
+			error: '',
+			text: props.text
+		});
 	}
 
 	setModalVisible(visible) {
@@ -34,8 +40,7 @@ export default class EditTextModal extends Component {
 	}
 
 	onPressButton() {
-		this.props.callback(this.props.parentRef, this._textInput.text);
-		console.log('Finish Edit');
+		this.props.callback(this.props.parentRef, this.state.text);
 	}
 
 	render() {
@@ -51,13 +56,14 @@ export default class EditTextModal extends Component {
 						{this.state.error}
 					</Text>
 					<Text>
-						Use ',' ';' ':' characters to insert new line.
+						Use ',' ';' characters to insert new line.
 					</Text>
 					<TextInput
 						ref={component => this._textInput = component}
 						multiline={true}
 						style={styles.textinputbigedit}
-						value = {this.props.text}
+						value={this.state.text}
+						onChangeText={(text) => this.setState({text})}
 						onSubmitEditing={this.onPressButton.bind(this)}
 						returnKeyType='go'
 					/>

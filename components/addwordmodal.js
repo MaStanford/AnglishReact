@@ -29,6 +29,7 @@ export default class AddWord extends Component {
 		this.state = {
 			edittextmodalvisible: false,
 			edittextmodalparentref: {},
+			text: '',
 			error: '',
 			word: '',
 			type: '',
@@ -52,25 +53,32 @@ export default class AddWord extends Component {
 	}
 
 	_openLargeEdit(ref, currentText) {
-		console.log('_openLargeEdit');
-		console.log(ref);
 		this.setState({
+			text: currentText,
 			edittextmodalparentref: ref,
-			edittextmodalvisible: true,
-			text: currentText
+			edittextmodalvisible: true
 		});
 	}
 
 	_editTextModalCallback(ref, inputText) {
-		console.log('_editTextModalCallback');
-		console.log(ref);
-		ref.setNativeProps({ text: inputText });
 		this.setState({
-			edittextmodalvisible: false
+			text: '',
+			edittextmodalvisible: false,
 		});
+		ref.setNativeProps({ text: inputText });
 	}
 
+	_getEditTextModal(){
+		return (
+		<EditTextModal 
+			visible={this.state.edittextmodalvisible} 
+			parentRef={this.state.edittextmodalparentref} 
+			text={this.state.text} 
+			callback={this._editTextModalCallback.bind(this)} 
+		/>);
+	}
 	render() {
+		var editTextModel = this.state.edittextmodalvisible ? this._getEditTextModal() : null;
 		return (
 			<Modal
 				animationType="slide"
@@ -89,7 +97,7 @@ export default class AddWord extends Component {
 							ref={component => this._word = component}
 							style={styles.textinputaddtop}
 							placeholder="Word"
-							onChangeText={(text) => this.state.word = text}
+							onChangeText={(text) => this.setState({word: text})}
 							onSubmitEditing={(event) => {
 								this.refs._type.focus();
 							}
@@ -100,7 +108,7 @@ export default class AddWord extends Component {
 							ref={component => this._type = component}
 							style={styles.textinputaddtop}
 							placeholder="Type"
-							onChangeText={(text) => this.state.type = text}
+							onChangeText={(text) => this.setState({type: text})}
 							onSubmitEditing={(event) => {
 								this.refs._attested.focus();
 							}
@@ -112,17 +120,17 @@ export default class AddWord extends Component {
 								ref={component => this._attested = component}
 								style={styles.textinputaddbot}
 								placeholder="Attested"
-								onChangeText={(text) => this.state.attested = text}
+								onChangeText={(text) => this.setState({attested: text})}
 								onSubmitEditing={(event) => {
 									this.refs._unattested.focus();
 								}
 								} />
 							<TouchableHighlight
-								style={styles.bigEditButton}
+								style={styles.modalContent}
 								onPress={() => {
 									this._openLargeEdit(this._attested, this.state.attested);
 								}}>
-								<Icon name="assignment" style={styles.actionButtonIcon} />
+								<Icon name="assignment" style={styles.modalButtonOpenEdit} />
 							</TouchableHighlight>
 						</View>
 
@@ -131,16 +139,16 @@ export default class AddWord extends Component {
 								ref={component => this._unattested = component}
 								style={styles.textinputaddbot}
 								placeholder="Unattested"
-								onChangeText={(text) => this.state.unattested = text}
+								onChangeText={(text) => this.setState({unattested: text})}
 								onSubmitEditing={this.onPressButton.bind(this)}
 								returnKeyType='go'
 							/>
 							<TouchableHighlight
-								style={styles.bigEditButton}
+								style={styles.modalContent}
 								onPress={() => {
 									this._openLargeEdit(this._unattested, this.state.unattested);
 								}}>
-								<Icon name="assignment" style={styles.actionButtonIcon} />
+								<Icon name="assignment" style={styles.modalButtonOpenEdit} />
 							</TouchableHighlight>
 						</View>
 
@@ -155,18 +163,17 @@ export default class AddWord extends Component {
 							</Text>
 							</TouchableHighlight>
 							<TouchableHighlight
-								style={styles.btn_translate}
+								style={styles.modalButtonAddComment}
 								underlayColor="black"
 								onPress={this.onPressButton.bind(this)}>
 								<Text style={styles.text_translate}>
-									Add
+									Add Word
           				</Text>
 							</TouchableHighlight>
 						</View>
-
-						<EditTextModal visible={this.state.edittextmodalvisible} parentRef={this.state.edittextmodalparentref} text={this.state.text} callback={this._editTextModalCallback.bind(this)} />
 					</View>
 				</View>
+				{editTextModel}
 			</Modal>
 		);
 	}

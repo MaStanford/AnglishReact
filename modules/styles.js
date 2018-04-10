@@ -116,7 +116,7 @@ var styles = StyleSheet.create({
 		margin: 10,
 	},
 	textinputbigedit: {
-		height: '35%',
+		height: '45%',
 		width: '85%%',
 		borderWidth: 1,
 		textAlign: 'center',
@@ -164,7 +164,7 @@ var styles = StyleSheet.create({
 		width: 100,
 		margin: 10
 	},
-	bigEditButton: {
+	modalButtonOpenEdit: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
 		alignItems: 'center',

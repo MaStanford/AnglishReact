@@ -23,7 +23,7 @@ import styles from './modules/styles';
 import Titlebar from './components/titlebar';
 import WordList from './components/wordlist';
 import Menu from './components/menu';
-import {MenuActions} from './components/menu';
+import { MenuActions } from './components/menu';
 
 //Store
 import { store, actions } from './modules/statemanager';
@@ -125,8 +125,25 @@ class Homescreen extends React.Component {
     });
   }
 
+  _getAddWordModal() {
+    return (
+      <AddWordModal
+        visible={this.state.addwordvisible}
+        callback={this._addwordCallback.bind(this)}
+      />);
+  }
+
+  _getWordDetail() {
+    return (
+      <WordDetail
+        visible={this.state.detailVisible}
+        word={this.state.detailWord}
+        callback={this._detailCallback.bind(this)} />);
+  }
+
   render() {
-    console.log(this.state);
+    var addwordmodal = this.state.addwordvisible ? this._getAddWordModal() : null;
+    var wordDetail = this.state.detailVisible ? this._getWordDetail() : null;
     return (
       <View style={styles.containermain}>
         <Titlebar title="Word lookup" />
@@ -145,8 +162,8 @@ class Homescreen extends React.Component {
         </TouchableHighlight>
         <WordList word={this.state.word} callback={this.wordDetailSelectCallback.bind(this)} />
         <Menu callback={(action) => this.handleNavigation(action)} />
-        <WordDetail visible={this.state.detailVisible} word={this.state.detailWord} callback={this._detailCallback.bind(this)} />
-        <AddWordModal visible={this.state.addwordvisible} callback={this._addwordCallback.bind(this)} />
+        {wordDetail}
+        {addwordmodal}
       </View>
     );
   }
