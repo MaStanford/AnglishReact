@@ -9,7 +9,8 @@ import {
 	TextInput,
 	Button,
 	Modal,
-	ScrollView
+	ScrollView,
+	Keyboard
 } from 'react-native';
 
 import styles from '../modules/styles';
@@ -20,13 +21,13 @@ export default class EditTextModal extends Component {
 		super(props);
 		console.log('constructor props.text');
 		console.log(props.text);
-		this.state={
+		this.state = {
 			error: '',
 			text: props.text
 		}
 	}
 
-	componentWillReceiveProps(props){
+	componentWillReceiveProps(props) {
 		console.log('componentWillReceiveProps props.text');
 		console.log(props.text);
 		this.setState({
@@ -40,6 +41,7 @@ export default class EditTextModal extends Component {
 	}
 
 	onPressButton() {
+		Keyboard.dismiss();
 		this.props.callback(this.props.parentState, this.state.text);
 	}
 
@@ -50,7 +52,7 @@ export default class EditTextModal extends Component {
 				transparent={true}
 				visible={this.props.visible}
 				onRequestClose={() => { }}>
-				<View style={styles.modalBackground}>
+				<View style={styles.modalBackgroundEditText}>
 					<Titlebar title={this.props.parentState.toUpperCase()} />
 					<Text ref='error' style={styles.texterror}>
 						{this.state.error}
@@ -58,32 +60,34 @@ export default class EditTextModal extends Component {
 					<Text>
 						Use ',' ';' characters to insert new line.
 					</Text>
-					<TextInput
-						ref={component => this._textInput = component}
-						multiline={true}
-						style={styles.textinputbigedit}
-						value={this.state.text}
-						onChangeText={(text) => this.setState({text})}
-						onSubmitEditing={this.onPressButton.bind(this)}
-						returnKeyType='go'
-					/>
-					<TouchableHighlight
-						style={styles.btn_translate}
-						underlayColor="black"
-						onPress={this.onPressButton.bind(this)}>
-						<Text style={styles.text_translate}>
-							Done
+					<View style={styles.modalContent}>
+						<TextInput
+							multiline={true}
+							style={styles.textinputbigedit}
+							value={this.state.text}
+							onChangeText={(text) => this.setState({ text })}
+							onSubmitEditing={this.onPressButton.bind(this)}
+							returnKeyType='go'
+						/>
+						<TouchableHighlight
+							style={styles.btn_translate}
+							underlayColor="black"
+							onPress={this.onPressButton.bind(this)}>
+							<Text style={styles.text_translate}>
+								Done
           				</Text>
-					</TouchableHighlight>
-					<TouchableHighlight
-						style={styles.modalButton}
-						onPress={() => {
-							this.setModalVisible(false);
-						}}>
+						</TouchableHighlight>
+						<TouchableHighlight
+							style={styles.modalButton}
+							onPress={() => {
+								this.setModalVisible(false);
+								Keyboard.dismiss();
+							}}>
 						<Text style={styles.text_translate}>
 							Back
 						</Text>
-					</TouchableHighlight>
+						</TouchableHighlight>
+					</View>
 				</View>
 			</Modal>
 		);

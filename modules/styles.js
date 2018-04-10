@@ -117,7 +117,7 @@ var styles = StyleSheet.create({
 	},
 	textinputbigedit: {
 		height: '45%',
-		width: '85%%',
+		width: '85%',
 		borderWidth: 1,
 		textAlign: 'center',
 		alignItems: 'center',
@@ -129,6 +129,12 @@ var styles = StyleSheet.create({
 		color: '#FFFFFF',
 		alignItems: 'center'
 	},
+	textinputrowaddwordbutton: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		borderWidth: 1,
+		margin: 10,
+	},
 	modalBackground: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
@@ -136,15 +142,23 @@ var styles = StyleSheet.create({
 		marginRight: 25,
 		marginTop: '30%', 
 		marginBottom: '30%',
-		flex: 1,
 		flexDirection: 'column',
 		alignItems: 'center'
+	},
+	modalBackgroundEditText: {
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		marginLeft: 25,
+		marginRight: 25,
+		marginTop: '18%', 
+		marginBottom: '30%',
 	},
 	modalBackgroundAddNewWord: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
-		marginLeft: 25, marginRight: 25,
-		marginTop: '30%', 
+		marginLeft: 25,
+		marginRight: 25,
+		marginTop: '18%', 
 		marginBottom: '30%',
 	},
 	modalContent: {
@@ -170,7 +184,7 @@ var styles = StyleSheet.create({
 		alignItems: 'center',
 		width: 40,
 		height: 40,
-		margin: 10
+		marginTop: 100
 	},
 	overlay: {
 		backgroundColor: '#ff5722',
