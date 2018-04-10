@@ -138,12 +138,10 @@ var styles = StyleSheet.create({
 	modalBackground: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
-		marginLeft: 25, 
+		marginLeft: 25,
 		marginRight: 25,
-		marginTop: '30%', 
+		marginTop: '18%', 
 		marginBottom: '30%',
-		flexDirection: 'column',
-		alignItems: 'center'
 	},
 	modalBackgroundEditText: {
 		backgroundColor: '#FFFFFF',

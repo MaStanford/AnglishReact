@@ -77,6 +77,7 @@ export default class AddWord extends Component {
 				callback={this._editTextModalCallback.bind(this)}
 			/>);
 	}
+
 	render() {
 		var editTextModel = this.state.edittextmodalvisible ? this._getEditTextModal() : null;
 		return (
@@ -84,7 +85,10 @@ export default class AddWord extends Component {
 				animationType="slide"
 				transparent={true}
 				visible={this.props.visible}
-				onRequestClose={() => { }}>
+				onRequestClose={() => {
+					this.setModalVisible(false);
+				}
+				}>
 				<View style={styles.modalBackgroundAddNewWord}>
 					<Titlebar title="Add New Word" />
 					<Text ref='error' style={styles.texterror}>

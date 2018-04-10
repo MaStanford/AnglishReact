@@ -51,7 +51,10 @@ export default class EditTextModal extends Component {
 				animationType="slide"
 				transparent={true}
 				visible={this.props.visible}
-				onRequestClose={() => { }}>
+				onRequestClose={() => {
+					this.setModalVisible(false);
+				}
+				}>			
 				<View style={styles.modalBackgroundEditText}>
 					<Titlebar title={this.props.parentState.toUpperCase()} />
 					<Text ref='error' style={styles.texterror}>
@@ -73,8 +76,8 @@ export default class EditTextModal extends Component {
 							style={styles.btn_translate}
 							underlayColor="black"
 							onPress={this.onPressButton.bind(this)}>
-							<Text style={styles.text_translate}>
-								Done
+						<Text style={styles.text_translate}>
+							Done
           				</Text>
 						</TouchableHighlight>
 						<TouchableHighlight
@@ -83,8 +86,8 @@ export default class EditTextModal extends Component {
 								this.setModalVisible(false);
 								Keyboard.dismiss();
 							}}>
-						<Text style={styles.text_translate}>
-							Back
+							<Text style={styles.text_translate}>
+								Back
 						</Text>
 						</TouchableHighlight>
 					</View>

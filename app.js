@@ -8,7 +8,8 @@ import {
   TouchableHighlight,
   TextInput,
   Button,
-  Keyboard
+  Keyboard,
+  BackHandler
 } from 'react-native';
 
 import {
@@ -81,6 +82,10 @@ class Homescreen extends React.Component {
     //Sub to state updates
     store.subscribe(() => {
       console.log('Store updated in index');
+    });
+
+    BackHandler.addEventListener('hardwareBackPress', function(){
+      console.log('BackPressed!!!');
     });
   }
 

@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Modal, Text, TouchableHighlight, View, ScrollView } from 'react-native';
+import {
+	Modal,
+	Text,
+	TouchableHighlight,
+	View,
+	ScrollView
+} from 'react-native';
 
 import styles from '../modules/styles';
 
@@ -27,7 +33,10 @@ export default class WordDetailModal extends Component {
 				animationType="slide"
 				transparent={true}
 				visible={this.props.visible}
-				onRequestClose={() => { }}>
+				onRequestClose={() => {
+					this.setModalVisible(false);
+				}
+				}>
 				<View style={styles.modalBackground}>
 					<View style={styles.modalContent}>
 						<ScrollView>
