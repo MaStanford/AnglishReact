@@ -39,7 +39,7 @@ export default class WordList extends React.PureComponent {
 
 	fetchData(word = 'language') {
 		if (word != null || word != '') {
-			NetworkUtils.fetchWord(word)
+			NetworkUtils.fetchWord(word, 0)
 				.then(function(res) {
 					if (res.data.length > 0) {
 						this.setState({ dataSource: res.data });
@@ -77,9 +77,9 @@ export default class WordList extends React.PureComponent {
 
 	render() {
 		return (
-			<View style={styles.wordlist}>
+			<View style={styles.containerWordsList}>
 				<FlatList
-					style={styles.wordListContainer}
+					style={styles.flatListWords}
 					data={this.state.dataSource}
 					keyExtractor={(item, index) => item._id}
 					extraData={this.state.dataSource}

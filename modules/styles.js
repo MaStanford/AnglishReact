@@ -9,33 +9,36 @@ var styles = StyleSheet.create({
 		alignItems: 'center',
 		backgroundColor: '#FFFFFF'
 	},
-	wordListContainer: {
-		width: '90%',
-		marginLeft: 5
-	},
-	wordlist: {
+	containerWordsList: {
 		width: '90%',
 		flex: .95,
 		backgroundColor: 'white',
 		alignItems: 'flex-start',
 		borderWidth: 1
 	},
-	wordRow: {
+	flatListWords: {
+		width: '90%',
+		marginLeft: 5
+	},
+	rowWords: {
 		flexDirection: 'row',
 		alignItems: 'center',
 		backgroundColor: '#FFFFFF',
 		flexWrap: 'wrap'
 	},
-	commentWordlist: {
+	flatListComments: {
 		backgroundColor: 'white',
 		alignItems: 'flex-start',
 		marginBottom: 2
 	},
-	commentRow: {
+	rowComments: {
 		flexDirection: 'row',
 		alignItems: 'center',
 		backgroundColor: '#FFFFFF',
 		flexWrap: 'wrap'
+	},
+	rowUsers: {
+		flexDirection: 'row',
 	},
 	text: {
 		flexDirection: 'row',
@@ -60,7 +63,7 @@ var styles = StyleSheet.create({
 		textAlign: 'left',
 		fontSize: 24
 	},
-	commentheadertext: { 
+	textCommentHeader: { 
 		marginTop: 7,
 		marginBottom: 7,
 		fontSize: 16, 
@@ -79,13 +82,13 @@ var styles = StyleSheet.create({
 		flexWrap: 'wrap',
 		color: 'red'
 	},
-	btn_translate: {
+	buttonTranslate: {
 		backgroundColor: '#DCDCDC',
 		borderWidth: 1,
 		width: 85,
 		margin: 10
 	},
-	text_translate: {
+	textTranslate: {
 		fontSize: 15,
 		color: '#000000',
 		textAlign: 'center',
@@ -131,19 +134,19 @@ var styles = StyleSheet.create({
 		alignItems: 'center',
 		margin: 10,
 	},
-	actionButtonIcon: {
-		fontSize: 20,
-		height: 30,
-		color: '#FFFFFF',
-		alignItems: 'center'
-	},
 	textinputrowaddwordbutton: {
 		flexDirection: 'row',
 		alignItems: 'center',
 		borderWidth: 1,
 		margin: 10,
 	},
-	modalBackground: {
+	buttonActionIcon: {
+		fontSize: 20,
+		height: 30,
+		color: '#FFFFFF',
+		alignItems: 'center'
+	},
+	containerModalBackground: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
 		marginLeft: 20,
@@ -151,7 +154,7 @@ var styles = StyleSheet.create({
 		marginTop: '18%', 
 		marginBottom: '18%',
 	},
-	modalBackgroundEditText: {
+	containerModalEditTextBackground: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
 		marginLeft: 20,
@@ -159,7 +162,7 @@ var styles = StyleSheet.create({
 		marginTop: '18%', 
 		marginBottom: '18%',
 	},
-	modalBackgroundAddNewWord: {
+	ContainerModalAddNewWordBackground: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
 		marginLeft: 20,
@@ -167,24 +170,24 @@ var styles = StyleSheet.create({
 		marginTop: '18%', 
 		marginBottom: '18%',
 	},
-	modalContent: {
+	containerModalContent: {
 		backgroundColor: '#FFFFFF',
 		flexDirection: 'column',
 		alignItems: 'center'
 	},
-	modalButton: {
+	buttonModal: {
 		backgroundColor: '#DCDCDC',
 		borderWidth: 1,
 		width: 85,
 		margin: 10
 	},
-	modalButtonAddComment: {
+	buttonModalAddComment: {
 		backgroundColor: '#DCDCDC',
 		borderWidth: 1,
 		width: 100,
 		margin: 10
 	},
-	modalButtonOpenEdit: {
+	buttonModalOpenEdit: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
 		alignItems: 'center',

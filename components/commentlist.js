@@ -13,7 +13,7 @@ export default class CommentList extends React.PureComponent {
 		super(props);
 		this.state = {
 			error: '',
-			dataSource: this.props.word.comments ? this.props.word.comments : this.template
+			dataSource: this.template
 		};
 
 		this.fetchData(props.word._id);
@@ -24,7 +24,9 @@ export default class CommentList extends React.PureComponent {
 
 	template = [{
 		_id: '_id',
-		user: {},
+		user: {
+			handle: ''
+		},
 		word: '',
 		createdAt: '',
 		updatedAt: '',
@@ -67,7 +69,7 @@ export default class CommentList extends React.PureComponent {
 
 	render() {
 		return (
-			<View style={styles.commentWordlist}>
+			<View style={styles.flatListComments}>
 				<View style={{ flexDirection: 'column', alignContent: 'center' }}>
 					<Text ref='error' style={styles.texterror}>
 						{this.state.error}

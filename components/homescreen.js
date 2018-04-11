@@ -72,6 +72,9 @@ export default class HomeScreen extends React.Component {
       case MenuActions.Add:
         this.setState({ addwordvisible: true });
         break;
+      case MenuActions.User:
+        this.props.navigation.navigate(action, { title: action, user: store.getState().user });
+        break;
       default:
         this.props.navigation.navigate(action, { title: action });
         break;
@@ -125,10 +128,10 @@ export default class HomeScreen extends React.Component {
           onChangeText={(text) => this.state.input = text.toLowerCase().trim()}
           onSubmitEditing={this.onPressButton.bind(this)} />
         <TouchableHighlight
-          style={styles.btn_translate}
+          style={styles.buttonTranslate}
           underlayColor="black"
           onPress={this.onPressButton.bind(this)}>
-          <Text style={styles.text_translate}>
+          <Text style={styles.textTranslate}>
             Translate
           </Text>
         </TouchableHighlight>

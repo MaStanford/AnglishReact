@@ -20,15 +20,15 @@ export default class CommentListItem extends React.PureComponent {
 		return (
 			<TouchableOpacity onPress={this._onPress}>
 				<View key={this.props.item._id}>
-					<View style={styles.commentRow}>
+					<View style={styles.rowComments}>
 						<Text style={styles.textRowLabel}>Handle: </Text>
 						<Text style={styles.textdef}>{this.props.item.user.handle}</Text>
 					</View>
-					<View style={styles.commentRow}>
+					<View style={styles.rowComments}>
 						<Text style={styles.textRowLabel}>Date: </Text>
 						<Text style={styles.textdef}>{this.formatDate(this.props.item.createdAt)}</Text>
 					</View>
-					<View style={styles.commentRow}>
+					<View style={styles.rowComments}>
 						<Text style={styles.textRowLabel}>Comment: </Text>
 						<Text style={styles.textdef}>{this.props.item.comment}</Text>
 					</View>

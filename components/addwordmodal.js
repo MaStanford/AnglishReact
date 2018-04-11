@@ -147,7 +147,7 @@ export default class AddWord extends Component {
 					this.setModalVisible(false);
 				}
 				}>
-				<View style={styles.modalBackgroundAddNewWord}>
+				<View style={styles.ContainerModalAddNewWordBackground}>
 					<Titlebar title="Add New Word" />
 
 					<View style={{ flexDirection: 'column', alignContent: 'center' }}>
@@ -160,7 +160,7 @@ export default class AddWord extends Component {
 						</Text>
 					</View>
 
-					<View style={styles.modalContent}>
+					<View style={styles.containerModalContent}>
 						<TextInput
 							returnKeyType='next'
 							ref='word'
@@ -202,7 +202,7 @@ export default class AddWord extends Component {
 								onPress={() => {
 									this._openLargeEdit('attested', this.state.attested);
 								}}>
-								<Icon name="subject" style={styles.modalButtonOpenEdit} />
+								<Icon name="subject" style={styles.buttonModalOpenEdit} />
 							</TouchableHighlight>
 						</View>
 
@@ -221,33 +221,33 @@ export default class AddWord extends Component {
 								onPress={() => {
 									this._openLargeEdit('unattested', this.state.unattested);
 								}}>
-								<Icon name="subject" style={styles.modalButtonOpenEdit} />
+								<Icon name="subject" style={styles.buttonModalOpenEdit} />
 							</TouchableHighlight>
 						</View>
 
 						<View style={{ flexDirection: 'row' }}>
 							<TouchableHighlight
-								style={styles.modalButton}
+								style={styles.buttonModal}
 								onPress={() => {
 									this.setModalVisible(false);
 								}}>
-								<Text style={styles.text_translate}>
+								<Text style={styles.textTranslate}>
 									Back
 								</Text>
 							</TouchableHighlight>
 							<TouchableHighlight
-								style={styles.modalButtonAddComment}
+								style={styles.buttonModalAddComment}
 								underlayColor="black"
 								onPress={this.onPressButton.bind(this)}>
-								<Text style={styles.text_translate}>
+								<Text style={styles.textTranslate}>
 									Add Word
           						</Text>
 							</TouchableHighlight>
 							<TouchableHighlight
-								style={styles.modalButton}
+								style={styles.buttonModal}
 								underlayColor="black"
 								onPress={this._clear.bind(this)}>
-								<Text style={styles.text_translate}>
+								<Text style={styles.textTranslate}>
 									Clear
           						</Text>
 							</TouchableHighlight>

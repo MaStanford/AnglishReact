@@ -71,7 +71,7 @@ export default class EditCommentTextModal extends Component {
 					this.setModalVisible(false);
 				}
 				}>
-				<View style={styles.modalBackgroundEditText}>
+				<View style={styles.containerModalEditTextBackground}>
 					<Titlebar title='Comment' />
 					<View style={{ flexDirection: 'column', alignContent: 'center' }}>
 						<Text ref='error' style={styles.texterror}>
@@ -82,7 +82,7 @@ export default class EditCommentTextModal extends Component {
 							{this.state.info}
 						</Text>
 					</View>
-					<View style={styles.modalContent}>
+					<View style={styles.containerModalContent}>
 						<TextInput
 							multiline={true}
 							style={styles.textinputbigedit}
@@ -93,17 +93,17 @@ export default class EditCommentTextModal extends Component {
 						/>
 						<View style={{ flexDirection: 'row' }}>
 							<TouchableHighlight
-								style={styles.modalButton}
+								style={styles.buttonModal}
 								onPress={() => this.setModalVisible(false)}>
-								<Text style={styles.text_translate}>
+								<Text style={styles.textTranslate}>
 									Back
 								</Text>
 							</TouchableHighlight>
 							<TouchableHighlight
-								style={styles.modalButton}
+								style={styles.buttonModal}
 								underlayColor="black"
 								onPress={() => this._addComment()}>
-								<Text style={styles.text_translate}>
+								<Text style={styles.textTranslate}>
 									Comment
           						</Text>
 							</TouchableHighlight>

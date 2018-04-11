@@ -45,7 +45,7 @@ export default class Menu extends React.Component {
 	getAddButton(callback) {
 		return (
 			<ActionButton.Item key="Add" buttonColor='#9b59b6' title={MenuActions.Add} onPress={() => { callback(MenuActions.Add) }}>
-				<Icon name="note-add" style={styles.actionButtonIcon} />
+				<Icon name="note-add" style={styles.buttonActionIcon} />
 			</ActionButton.Item>
 		);
 	}
@@ -53,7 +53,7 @@ export default class Menu extends React.Component {
 	getAdminButton(callback) {
 		return (
 			<ActionButton.Item key="Add" buttonColor='red' title={MenuActions.Admin} onPress={() => { callback(MenuActions.Admin) }}>
-				<Icon name="supervisor-account" style={styles.actionButtonIcon} />
+				<Icon name="supervisor-account" style={styles.buttonActionIcon} />
 			</ActionButton.Item>
 		);
 	}
@@ -61,7 +61,7 @@ export default class Menu extends React.Component {
 	getLoginButton(callback) {
 		return (
 			<ActionButton.Item key="Login" buttonColor='#3498db' title={MenuActions.Login} onPress={() => { callback(MenuActions.Login) }}>
-				<Icon name="account-circle" style={styles.actionButtonIcon} />
+				<Icon name="account-circle" style={styles.buttonActionIcon} />
 			</ActionButton.Item>
 		);
 	}
@@ -69,7 +69,7 @@ export default class Menu extends React.Component {
 	getLogoutButton(callback) {
 		return (
 			<ActionButton.Item key="Logout" buttonColor='#3498db' title={MenuActions.Logout} onPress={() => { callback(MenuActions.Logout) }}>
-				<Icon name="exit-to-app" style={styles.actionButtonIcon} />
+				<Icon name="exit-to-app" style={styles.buttonActionIcon} />
 			</ActionButton.Item>
 		);
 	}
@@ -77,7 +77,7 @@ export default class Menu extends React.Component {
 	getUserButton(callback){
 		return (
 			<ActionButton.Item key="User" buttonColor='#3498db' title={MenuActions.User} onPress={() => { callback(MenuActions.User) }}>
-				<Icon name="account-box" style={styles.actionButtonIcon} />
+				<Icon name="account-box" style={styles.buttonActionIcon} />
 			</ActionButton.Item>
 		);
 	}
@@ -85,7 +85,7 @@ export default class Menu extends React.Component {
 	getRegisterButton(callback) {
 		return (
 			<ActionButton.Item key="Register" buttonColor='#3498db' title={MenuActions.Register} onPress={() => { callback(MenuActions.Register) }}>
-				<Icon name="assignment" style={styles.actionButtonIcon} />
+				<Icon name="assignment" style={styles.buttonActionIcon} />
 			</ActionButton.Item>
 		);
 	}

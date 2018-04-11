@@ -128,10 +128,10 @@ export default class Register extends Component {
 					returnKeyType='go'
 				/>
 				<TouchableHighlight
-					style={styles.btn_translate}
+					style={styles.buttonTranslate}
 					underlayColor="black"
 					onPress={this.onPressButton.bind(this)}>
-					<Text style={styles.text_translate}>
+					<Text style={styles.textTranslate}>
 						Register
           			</Text>
 				</TouchableHighlight>

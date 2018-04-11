@@ -51,7 +51,7 @@ export default class EditWordTextModal extends Component {
 					this.setModalVisible(false);
 				}
 				}>
-				<View style={styles.modalBackgroundEditText}>
+				<View style={styles.containerModalEditTextBackground}>
 					<Titlebar title={this.props.parentState.toUpperCase()} />
 					<Text ref='error' style={styles.texterror}>
 						{this.state.error}
@@ -59,7 +59,7 @@ export default class EditWordTextModal extends Component {
 					<Text>
 						Use ',' ';' characters to insert new line.
 					</Text>
-					<View style={styles.modalContent}>
+					<View style={styles.containerModalContent}>
 						<TextInput
 							multiline={true}
 							style={styles.textinputbigedit}
@@ -71,20 +71,20 @@ export default class EditWordTextModal extends Component {
 
 						<View style={{ flexDirection: 'row' }}>
 							<TouchableHighlight
-								style={styles.btn_translate}
+								style={styles.buttonTranslate}
 								underlayColor="black"
 								onPress={this.onPressButton.bind(this)}>
-								<Text style={styles.text_translate}>
+								<Text style={styles.textTranslate}>
 									Done
           				</Text>
 							</TouchableHighlight>
 							<TouchableHighlight
-								style={styles.modalButton}
+								style={styles.buttonModal}
 								onPress={() => {
 									this.setModalVisible(false);
 									Keyboard.dismiss();
 								}}>
-								<Text style={styles.text_translate}>
+								<Text style={styles.textTranslate}>
 									Back
 						</Text>
 							</TouchableHighlight>

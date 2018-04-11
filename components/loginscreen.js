@@ -35,7 +35,7 @@ export default class Login extends Component {
 	}
 
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.title
+    	title: navigation.state.params.title
 	});
 	
 	onPressButton() {
@@ -138,10 +138,10 @@ export default class Login extends Component {
 					returnKeyType='go'
         />
         <TouchableHighlight 
-          style={styles.btn_translate}
+          style={styles.buttonTranslate}
           underlayColor="black"
           onPress={this.onPressButton.bind(this)}>
-          <Text style={styles.text_translate}>
+          <Text style={styles.textTranslate}>
             Login
           </Text>
         </TouchableHighlight>

@@ -30,8 +30,18 @@ export default class WordDetailModal extends Component {
 
 		//Sub to state updates
 		store.subscribe(() => {
-			this.setState({ permission: store.getState().user.permissions });
+			if (this._mounted) {
+				this.setState({ permission: store.getState().user.permissions });
+			}
 		}).bind(this);
+	}
+
+	componentDidMount() {
+		this._mounted = true;
+	}
+
+	componentWillUnmount() {
+		this._mounted = false;
 	}
 
 	setModalVisible(visible) {
@@ -58,11 +68,12 @@ export default class WordDetailModal extends Component {
 	_getCommentButton() {
 		return (
 			<TouchableHighlight
-				style={styles.modalButtonAddComment}
+				style={styles.buttonModalAddComment
+				}
 				onPress={() => {
 					this.setState({ editcommentvisible: true });
 				}}>
-				<Text style={styles.text_translate}>
+				<Text style={styles.textTranslate}>
 					Comment
 				</Text>
 			</TouchableHighlight>
@@ -101,21 +112,21 @@ export default class WordDetailModal extends Component {
 					this.setModalVisible(false);
 				}
 				}>
-				<View style={styles.modalBackground}>
-					<View style={styles.modalContent}>
+				<View style={styles.containerModalBackground}>
+					<View style={styles.containerModalContent}>
 						<ScrollView style={{ height: '85%' }}>
 							<Text style={styles.wordlistheader}>{title}</Text>
 							<WordListItem item={this.state.word} onPressItem={(item) => { }} />
-							<Text style={styles.commentheadertext}>Comments: </Text>
+							<Text style={styles.textCommentHeader}>Comments: </Text>
 							<CommentList word={this.state.word} callback={(comment) => { }} />
 						</ScrollView>
 						<View style={{ flexDirection: 'row' }}>
 							<TouchableHighlight
-								style={styles.modalButton}
+								style={styles.buttonModal}
 								onPress={() => {
 									this.setModalVisible(false);
 								}}>
-								<Text style={styles.text_translate}>
+								<Text style={styles.textTranslate}>
 									Back
 							</Text>
 							</TouchableHighlight>

@@ -16,6 +16,7 @@ import ActionButton from 'react-native-action-button';
 
 import styles from '../modules/styles';
 import Titlebar from './titlebar';
+import UserComponent from './usercomponent';
 import Network from '../modules/network';
 import { store, actions } from '../modules/statemanager';
 import { storage, keys } from '../modules/storage';
@@ -27,10 +28,8 @@ export default class UserScreen extends Component {
 		this.state = {
 			error: '',
 			info: '',
-			user: props.user
+			user: this.props.navigation.state.params.user
 		};
-
-		this._getUser(props.user);
 	}
 
 	static navigationOptions = ({ navigation }) => ({
@@ -60,6 +59,7 @@ export default class UserScreen extends Component {
 				<Text ref='info' style={styles.textInfo}>
 					{this.state.info}
 				</Text>
+				<UserComponent user={this.state.user}/>
 			</View>
 		);
 	}
