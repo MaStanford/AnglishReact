@@ -5,9 +5,6 @@ import NetworkUtils from '../modules/network';
 //styles
 import styles from '../modules/styles';
 
-//Store
-import { store, actions } from '../modules/statemanager'
-
 import CommentListItem from './commentlistitem';
 
 export default class CommentList extends React.PureComponent {
@@ -50,7 +47,7 @@ export default class CommentList extends React.PureComponent {
 	}
 
 	componentWillReceiveProps(props) {
-		this.fetchData(props.word);
+		this.fetchData(props.word._id);
 	}
 
 	_onPressItem = (comment) => {

@@ -14,7 +14,6 @@ export default class CommentListItem extends React.PureComponent {
 	};
 
 	formatDate(date){
-		console.log(utils.formatDate(date));
 		return utils.formatDate(date);
 	}
 	render() {

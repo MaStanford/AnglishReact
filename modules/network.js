@@ -26,8 +26,6 @@ var NetworkUtils = {
 		}).then((response) => response.json());
 	},
 	addCommentToWord: function (wordID, userId, comment, sessionToken) {
-		console.log('addCommentToWord');
-		console.log(wordID, userId, comment, sessionToken);
 		return fetch(`https://${server}${commentAPI}`, {
 			method: 'POST',
 			headers: {
@@ -53,7 +51,6 @@ var NetworkUtils = {
 		}).then((response) => response.json());
 	},
 	addWord: function (word, sessionToken) {
-		console.log(word);
 		return fetch(`https://${server}${wordAPI}`, {
 			method: 'POST',
 			headers: {
@@ -122,7 +119,6 @@ var NetworkUtils = {
 				'Content-Type': 'application/json'
 			}
 		}).then((response) => {
-			console.log(response);
 			return response.json()
 		});
 	}

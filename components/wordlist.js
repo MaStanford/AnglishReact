@@ -57,7 +57,6 @@ export default class WordList extends React.PureComponent {
 
 	componentWillReceiveProps(props) {
 		if(props.word && !utils.isEmpty(props.word)  && props.word != ''){
-			console.log('searchTerm: ' + props.word);
 			this.fetchData(props.word);
 		}
 	}
