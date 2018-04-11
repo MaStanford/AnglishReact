@@ -86,7 +86,6 @@ class Homescreen extends React.Component {
   }
 
   handleNavigation(action) {
-    console.log(action);
     switch (action) {
       case MenuActions.Logout:
         storage.clear(keys.session);

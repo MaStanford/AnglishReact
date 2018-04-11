@@ -29,6 +29,7 @@ var styles = StyleSheet.create({
 	commentWordlist: {
 		backgroundColor: 'white',
 		alignItems: 'flex-start',
+		marginBottom: 2
 	},
 	commentRow: {
 		flexDirection: 'row',
@@ -123,7 +124,7 @@ var styles = StyleSheet.create({
 		margin: 10,
 	},
 	textinputbigedit: {
-		height: '45%',
+		height: '55%',
 		width: '85%',
 		borderWidth: 1,
 		textAlign: 'center',

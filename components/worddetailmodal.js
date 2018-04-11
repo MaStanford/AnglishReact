@@ -30,7 +30,6 @@ export default class WordDetailModal extends Component {
 
 		//Sub to state updates
 		store.subscribe(() => {
-			console.log('User updated.');
 			this.setState({ permission: store.getState().user.permissions });
 		}).bind(this);
 	}
@@ -65,7 +64,7 @@ export default class WordDetailModal extends Component {
 				}}>
 				<Text style={styles.text_translate}>
 					Comment
-			</Text>
+				</Text>
 			</TouchableHighlight>
 		);
 	}
@@ -90,7 +89,6 @@ export default class WordDetailModal extends Component {
 		title = '';
 		var commentEditModal = this.state.editcommentvisible ? this._getCommentEditModal() : null;
 		var commentButton = this.state.permissions > 0 ? this._getCommentButton() : null;
-		console.log(this.state);
 		if (this.props.word.word) {
 			title = this.props.word.word.toUpperCase();
 		}

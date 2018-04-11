@@ -19,8 +19,6 @@ import Titlebar from './titlebar';
 export default class EditWordTextModal extends Component {
 	constructor(props) {
 		super(props);
-		console.log('constructor props.text');
-		console.log(props.text);
 		this.state = {
 			error: '',
 			text: props.text

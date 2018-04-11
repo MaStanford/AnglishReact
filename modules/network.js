@@ -17,7 +17,7 @@ var NetworkUtils = {
 		}).then((response) => response.json());
 	},
 	fetchCommentsByWordID: function (wordID) {
-		return fetch(`https://${server}${wordAPI}/word/${wordID}`, {
+		return fetch(`https://${server}${commentAPI}/word/${wordID}`, {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',

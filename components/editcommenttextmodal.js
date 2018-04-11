@@ -12,6 +12,7 @@ import {
 	ScrollView,
 	Keyboard
 } from 'react-native';
+import TimerMixin from 'react-timer-mixin';
 
 import styles from '../modules/styles';
 import Titlebar from './titlebar';
@@ -27,14 +28,6 @@ export default class EditCommentTextModal extends Component {
 			text: props.text
 		}
 
-		//Sub to state updates
-		store.subscribe(() => {
-			//If we somehow are here and the user is logged out. 
-			if (store.getState().user.permissions < 1) {
-				this.setState({ error: 'Invalid permissions to comment.' });
-			}
-		}).bind(this);
-
 		//Edge case that somehow this is launched when we don't have permissions
 		if (!store.getState().session || store.getState().user.permissions < 1) {
 			this.setState({ error: 'Invalid permissions to comment.' });
@@ -48,28 +41,22 @@ export default class EditCommentTextModal extends Component {
 		});
 	}
 
-	setModalVisible() {
+	setModalVisible(success) {
 		Keyboard.dismiss();
-		this.props.callback();
+		this.props.callback(success);
 	}
 
 	_addComment() {
-		console.log(this.props.word._id, store.getState().user._id, this.state.text, store.getState().session.token);
 		Network.addCommentToWord(this.props.word._id, store.getState().user._id, this.state.text, store.getState().session.token)
 			.then(function (res) {
-				console.log('_addComment');
-				console.log(res);
 				if (res && res.code == 1) {
 					this.setState({ info: 'Comment added to ' + this.props.word.word});
-					this.setState({text: ''});
-					setTimeout(this.setModalVisible.bind(this), 500);
+					setTimeout(() => {this.setModalVisible(true)}, 1000);
 				} else {
 					this.setState({ error: 'Error adding comment: ' + res.result});
 				}
 			}.bind(this))
 			.catch(function (err) {
-				console.log('_addComment error');
-				console.log(err);
 				this.setState({ error: 'Error adding comment: ' + err.message});
 			}.bind(this));
 	}
@@ -107,7 +94,7 @@ export default class EditCommentTextModal extends Component {
 						<View style={{ flexDirection: 'row' }}>
 							<TouchableHighlight
 								style={styles.modalButton}
-								onPress={() => this.setModalVisible()}>
+								onPress={() => this.setModalVisible(false)}>
 								<Text style={styles.text_translate}>
 									Back
 								</Text>
