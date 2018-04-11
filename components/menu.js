@@ -21,7 +21,9 @@ var MenuActions = {
 	Admin:'Admin',
 	Login:'Login',
 	Logout:'Logout',
-	Register:'Register'
+	Mod:'Mod',
+	Register:'Register',
+	User:'User'
 }
 
 export default class Menu extends React.Component {
@@ -67,7 +69,15 @@ export default class Menu extends React.Component {
 	getLogoutButton(callback) {
 		return (
 			<ActionButton.Item key="Logout" buttonColor='#3498db' title={MenuActions.Logout} onPress={() => { callback(MenuActions.Logout) }}>
-				<Icon name="input" style={styles.actionButtonIcon} />
+				<Icon name="exit-to-app" style={styles.actionButtonIcon} />
+			</ActionButton.Item>
+		);
+	}
+
+	getUserButton(callback){
+		return (
+			<ActionButton.Item key="User" buttonColor='#3498db' title={MenuActions.User} onPress={() => { callback(MenuActions.User) }}>
+				<Icon name="account-box" style={styles.actionButtonIcon} />
 			</ActionButton.Item>
 		);
 	}
@@ -90,6 +100,7 @@ export default class Menu extends React.Component {
 			case 2:	menu.push(this.getAddButton(callback));
 			case 1:
 			case 0: menu.push(this.getLogoutButton(callback));
+					menu.push(this.getUserButton(callback));
 					break;
 			case -1:(menu.push(this.getLoginButton(callback)), menu.push(this.getRegisterButton(callback)));
 		}
