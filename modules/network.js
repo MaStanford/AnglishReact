@@ -26,6 +26,8 @@ var NetworkUtils = {
 		}).then((response) => response.json());
 	},
 	addCommentToWord: function (wordID, userId, comment, sessionToken) {
+		console.log('addCommentToWord');
+		console.log(wordID, userId, comment, sessionToken);
 		return fetch(`https://${server}${commentAPI}`, {
 			method: 'POST',
 			headers: {

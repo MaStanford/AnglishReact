@@ -64,7 +64,7 @@ class Homescreen extends React.Component {
         });
       }
     }).catch((error) => {
-      console.log('Error fetchign session ' + error);
+      console.log('Error fetching session ' + error);
     });
 
     storage.fetch(keys.user, (error, result) => {
@@ -76,7 +76,7 @@ class Homescreen extends React.Component {
         });
       }
     }).catch((error) => {
-      console.log('Error fetchign session ' + error);
+      console.log('Error fetching user ' + error);
     });
   }
 
@@ -102,7 +102,7 @@ class Homescreen extends React.Component {
     }
   }
 
-  wordDetailSelectCallback(word) {
+  _wordDetailSelectCallback(word) {
     this.setState({
       detailVisible: true,
       detailWord: word
@@ -156,7 +156,7 @@ class Homescreen extends React.Component {
             Translate
           </Text>
         </TouchableHighlight>
-        <WordList word={this.state.word} callback={this.wordDetailSelectCallback.bind(this)} />
+        <WordList word={this.state.word} callback={this._wordDetailSelectCallback.bind(this)} />
         <Menu callback={(action) => this.handleNavigation(action)} />
         {wordDetail}
         {addwordmodal}

@@ -12,6 +12,7 @@ export const actions = {
 //Default state.
 var state = {
 	user:{
+		_id: 'guest',
 		handle:'Guest',
 		email:'Guest',
 		permissions: -1

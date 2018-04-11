@@ -18,7 +18,7 @@ import { Icon } from 'react-native-elements'
 
 import styles from '../modules/styles';
 import Titlebar from './titlebar';
-import EditTextModal from './edittextmodal';
+import EditWordTextModal from './edittextmodal';
 import Network from '../modules/network';
 import { store, actions } from '../modules/statemanager';
 import { storage, keys } from '../modules/storage';
@@ -46,7 +46,7 @@ export default class AddWord extends Component {
 				this.setState({error: 'Invalid permissions to add word.'});
 				//this.setModalVisible(visible);
 			}
-		});
+		}).bind(this);
 
 		//Edge case that somehow this is launched when we don't have permissions
 		if(!store.getState().session || store.getState().user.permissions < 2){
@@ -78,11 +78,17 @@ export default class AddWord extends Component {
 			unattested: this.state.unattested
 		}
 
+		if(word.word == '' || word.type == '' || word.attested == '' || word.unattested == ''){
+			this.setState({error: 'Please fill out all fields, use a \'-\' character to fill empty fields.'});
+			return;
+		}
+
 		Network.addWord(word, store.getState().session.token)
 		.then(function(result){
 			if(result.code == 1){
 				this.setState({info: result.data.word + ' Added!'});
 				this.setState({error:''});
+				this._clear();
 			}else{
 				this.setState({info:''});
 				this.setState({error: 'Failed to add word!'});
@@ -122,7 +128,7 @@ export default class AddWord extends Component {
 
 	_getEditTextModal() {
 		return (
-			<EditTextModal
+			<EditWordTextModal
 				visible={this.state.edittextmodalvisible}
 				parentState={this.state.editTextModalParentState}
 				text={this.state.text}

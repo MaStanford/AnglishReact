@@ -41,7 +41,7 @@ export default class WordList extends React.PureComponent {
 	fetchData(word = 'language') {
 		if (word != null || word != '') {
 			NetworkUtils.fetchWord(word)
-				.then((res) => {
+				.then(function(res) {
 					if (res.data.length > 0) {
 						this.setState({ dataSource: res.data });
 					} else {
@@ -49,9 +49,9 @@ export default class WordList extends React.PureComponent {
 						nowordfound[0].word = this.props.word + ' not found!';
 						this.setState({ dataSource: nowordfound });
 					}
-				}).catch((error) => {
+				}.bind(this)).catch(function(error) {
 					console.log(error);
-				});
+				}.bind(this));
 		}
 	}
 
