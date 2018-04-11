@@ -31,7 +31,7 @@ export default class WordDetailModal extends Component {
 		//Sub to state updates
 		store.subscribe(() => {
 			console.log('User updated.');
-			this.setState({ permission: store.getState().user.permissions});
+			this.setState({ permission: store.getState().user.permissions });
 		}).bind(this);
 	}
 
@@ -105,13 +105,12 @@ export default class WordDetailModal extends Component {
 				}>
 				<View style={styles.modalBackground}>
 					<View style={styles.modalContent}>
-						<ScrollView>
+						<ScrollView style={{ height: '85%' }}>
 							<Text style={styles.wordlistheader}>{title}</Text>
 							<WordListItem item={this.state.word} onPressItem={(item) => { }} />
 							<Text style={styles.commentheadertext}>Comments: </Text>
 							<CommentList word={this.state.word} callback={(comment) => { }} />
 						</ScrollView>
-
 						<View style={{ flexDirection: 'row' }}>
 							<TouchableHighlight
 								style={styles.modalButton}

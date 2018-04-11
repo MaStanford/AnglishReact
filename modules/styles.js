@@ -24,9 +24,9 @@ var styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'center',
 		backgroundColor: '#FFFFFF',
+		flexWrap: 'wrap'
 	},
 	commentWordlist: {
-		width: '90%',
 		backgroundColor: 'white',
 		alignItems: 'flex-start',
 	},
@@ -46,6 +46,7 @@ var styles = StyleSheet.create({
 	textRowLabel: {
 		textAlign: 'left',
 		fontWeight: 'bold',
+		flexWrap: 'wrap',
 		fontSize: 15,
 	},
 	textdef: {
@@ -56,12 +57,11 @@ var styles = StyleSheet.create({
 	wordlistheader: {
 		fontWeight: 'bold',
 		textAlign: 'left',
-		marginLeft: 5,
 		fontSize: 24
 	},
 	commentheadertext: { 
-		marginTop: 15, 
-		marginBottom: 15, 
+		marginTop: 7,
+		marginBottom: 7,
 		fontSize: 16, 
 		fontWeight: 'bold' 
 	},
@@ -145,26 +145,26 @@ var styles = StyleSheet.create({
 	modalBackground: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
-		marginLeft: 25,
-		marginRight: 25,
+		marginLeft: 20,
+		marginRight: 20,
 		marginTop: '18%', 
-		marginBottom: '30%',
+		marginBottom: '18%',
 	},
 	modalBackgroundEditText: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
-		marginLeft: 25,
-		marginRight: 25,
+		marginLeft: 20,
+		marginRight: 20,
 		marginTop: '18%', 
-		marginBottom: '30%',
+		marginBottom: '18%',
 	},
 	modalBackgroundAddNewWord: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
-		marginLeft: 25,
-		marginRight: 25,
+		marginLeft: 20,
+		marginRight: 20,
 		marginTop: '18%', 
-		marginBottom: '30%',
+		marginBottom: '18%',
 	},
 	modalContent: {
 		backgroundColor: '#FFFFFF',

@@ -32,13 +32,11 @@ export default class EditCommentTextModal extends Component {
 			//If we somehow are here and the user is logged out. 
 			if (store.getState().user.permissions < 1) {
 				this.setState({ error: 'Invalid permissions to comment.' });
-				//this.setModalVisible(visible);
 			}
 		}).bind(this);
 
 		//Edge case that somehow this is launched when we don't have permissions
 		if (!store.getState().session || store.getState().user.permissions < 1) {
-			//this.setModalVisible(visible);
 			this.setState({ error: 'Invalid permissions to comment.' });
 		}
 	}
@@ -64,7 +62,7 @@ export default class EditCommentTextModal extends Component {
 				if (res && res.code == 1) {
 					this.setState({ info: 'Comment added to ' + this.props.word.word});
 					this.setState({text: ''});
-					setTimeout(setModalVisible, 500);
+					setTimeout(this.setModalVisible.bind(this), 500);
 				} else {
 					this.setState({ error: 'Error adding comment: ' + res.result});
 				}

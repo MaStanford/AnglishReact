@@ -19,7 +19,7 @@ export default class CommentListItem extends React.PureComponent {
 	render() {
 		return (
 			<TouchableOpacity onPress={this._onPress}>
-				<View style={styles.containerwordlist} key={this.props.item._id}>
+				<View key={this.props.item._id}>
 					<View style={styles.commentRow}>
 						<Text style={styles.textRowLabel}>Handle: </Text>
 						<Text style={styles.textdef}>{this.props.item.user.handle}</Text>
