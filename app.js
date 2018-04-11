@@ -78,15 +78,6 @@ class Homescreen extends React.Component {
     }).catch((error) => {
       console.log('Error fetchign session ' + error);
     });
-
-    //Sub to state updates
-    store.subscribe(() => {
-      console.log('Store updated in index');
-    });
-
-    BackHandler.addEventListener('hardwareBackPress', function(){
-      console.log('BackPressed!!!');
-    });
   }
 
   onPressButton() {

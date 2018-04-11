@@ -47,7 +47,8 @@ export default class Login extends Component {
 		var email = this.state.email;
 		var password = this.state.password;
 
-		this.getSession(email, password).then(function(data){
+		this.getSession(email, password)
+		.then(function(data){
 			if(data){
 				return this.getUser(email)
 			}else{

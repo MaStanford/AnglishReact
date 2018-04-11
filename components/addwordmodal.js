@@ -32,11 +32,27 @@ export default class AddWord extends Component {
 			editTextModalParentState: 'attested',
 			text: '',
 			error: '',
+			info: '',
 			word: '',
 			type: '',
 			attested: '',
 			unattested: ''
 		};
+
+		//Sub to state updates
+		store.subscribe(() => {
+			//If we somehow are here and the user is logged out. 
+			if(store.getState().user.permissions < 2){
+				this.setState({error: 'Invalid permissions to add word.'});
+				//this.setModalVisible(visible);
+			}
+		});
+
+		//Edge case that somehow this is launched when we don't have permissions
+		if(!store.getState().session || store.getState().user.permissions < 2){
+			//this.setModalVisible(visible);
+			this.setState({error: 'Invalid permissions to add word.'});
+		}
 	}
 
 	setModalVisible(visible) {
@@ -51,6 +67,42 @@ export default class AddWord extends Component {
 			unattested: this.state.unattested
 		});
 		Keyboard.dismiss();
+		this._addword();
+	}
+
+	_addword(){
+		word = {
+			word: this.state.word,
+			type: this.state.type,
+			attested: this.state.attested,
+			unattested: this.state.unattested
+		}
+
+		Network.addWord(word, store.getState().session.token)
+		.then(function(result){
+			if(result.code == 1){
+				this.setState({info: result.data.word + ' Added!'});
+				this.setState({error:''});
+			}else{
+				this.setState({info:''});
+				this.setState({error: 'Failed to add word!'});
+			}
+		}.bind(this))
+		.catch(function(err){
+			this.setState({error: err.message});
+		}.bind(this));
+	}
+
+	_clear(){
+		this.setState({
+			text: '',
+			error: '',
+			info: '',
+			word: '',
+			type: '',
+			attested: '',
+			unattested: ''
+		})
 	}
 
 	_openLargeEdit(state, currentText) {
@@ -91,9 +143,16 @@ export default class AddWord extends Component {
 				}>
 				<View style={styles.modalBackgroundAddNewWord}>
 					<Titlebar title="Add New Word" />
-					<Text ref='error' style={styles.texterror}>
-						{this.state.error}
-					</Text>
+
+					<View style={{ flexDirection: 'column', alignContent: 'center' }}>
+						<Text ref='error' style={styles.texterror}>
+							{this.state.error}
+						</Text>
+
+						<Text ref='info' style={styles.textInfo}>
+							{this.state.info}
+						</Text>
+					</View>
 
 					<View style={styles.modalContent}>
 						<TextInput
@@ -101,6 +160,7 @@ export default class AddWord extends Component {
 							ref='word'
 							style={styles.textinputaddtop}
 							placeholder="Word"
+							value={this.state.word}
 							onChangeText={(text) => this.setState({ word: text })}
 							onSubmitEditing={(event) => {
 								this.refs.type.focus();
@@ -112,6 +172,7 @@ export default class AddWord extends Component {
 							ref='type'
 							style={styles.textinputaddtop}
 							placeholder="Type"
+							value={this.state.type}
 							onChangeText={(text) => this.setState({ type: text })}
 							onSubmitEditing={(event) => {
 								this.refs.attested.focus();
@@ -174,6 +235,14 @@ export default class AddWord extends Component {
 								onPress={this.onPressButton.bind(this)}>
 								<Text style={styles.text_translate}>
 									Add Word
+          						</Text>
+							</TouchableHighlight>
+							<TouchableHighlight
+								style={styles.modalButton}
+								underlayColor="black"
+								onPress={this._clear.bind(this)}>
+								<Text style={styles.text_translate}>
+									Clear
           						</Text>
 							</TouchableHighlight>
 						</View>

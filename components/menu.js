@@ -33,7 +33,7 @@ export default class Menu extends React.Component {
 		};
 
 		store.subscribe(() => {
-			console.log('\nMenu Updated! --------\n');
+			console.log('Menu Updated! --------');
 			this.setState({
 				user: store.getState().user
 			});

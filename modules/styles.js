@@ -65,9 +65,16 @@ var styles = StyleSheet.create({
 		fontSize: 16, 
 		fontWeight: 'bold' 
 	},
-	texterror: {
-		textAlign: 'left',
+	textInfo: {
+		textAlign: 'center',
 		fontSize: 15,
+		alignItems: 'center',
+		flexWrap: 'wrap',
+	},
+	texterror: {
+		textAlign: 'center',
+		fontSize: 15,
+		alignItems: 'center',
 		flexWrap: 'wrap',
 		color: 'red'
 	},
