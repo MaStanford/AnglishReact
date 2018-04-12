@@ -120,7 +120,7 @@ export default class WordDetailModal extends Component {
 								<WordListItem item={this.state.word} onPressItem={(item) => { }} />
 							</View>
 							<Text style={styles.textCommentHeader}>Comments: </Text>
-							<CommentList word={this.state.word} callback={(comment) => { }} />
+							<CommentList word={this.state.word} longPressCallback={(comment) => {console.log('Long press on comment' + comment.comment)}} />
 						</ScrollView>
 						<View style={{ flexDirection: 'row' }}>
 							<TouchableHighlight

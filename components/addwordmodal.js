@@ -44,9 +44,8 @@ export default class AddWord extends Component {
 			//If we somehow are here and the user is logged out. 
 			if(store.getState().user.permissions < 2){
 				this.setState({error: 'Invalid permissions to add word.'});
-				//this.setModalVisible(visible);
 			}
-		}).bind(this);
+		});
 
 		//Edge case that somehow this is launched when we don't have permissions
 		if(!store.getState().session || store.getState().user.permissions < 2){
@@ -84,7 +83,7 @@ export default class AddWord extends Component {
 		}
 
 		Network.addWord(word, store.getState().session.token)
-		.then(function(result){
+		.then((result) => {
 			if(result.code == 1){
 				this.setState({info: result.data.word + ' Added!'});
 				this.setState({error:''});
@@ -93,10 +92,10 @@ export default class AddWord extends Component {
 				this.setState({info:''});
 				this.setState({error: 'Failed to add word!'});
 			}
-		}.bind(this))
-		.catch(function(err){
+		})
+		.catch((err) => {
 			this.setState({error: err.message});
-		}.bind(this));
+		});
 	}
 
 	_clear(){

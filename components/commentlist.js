@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlatList, Text, View, TouchableOpacity } from 'react-native';
+import { FlatList, Text, View, TouchableOpacity, Alert } from 'react-native';
 import NetworkUtils from '../modules/network';
 
 //styles
@@ -22,7 +22,7 @@ export default class CommentList extends React.PureComponent {
 		this.fetchData(props.word._id);
 
 		//Ontouch callback for each item in the list.
-		this.callback = props.callback;
+		this.longPressCallback = props.longPressCallback;
 	}
 
 	template = [{
@@ -56,39 +56,49 @@ export default class CommentList extends React.PureComponent {
 	}
 
 	_onLongPressItem = (comment) => {
-		this.callback(comment);
+		this.longPressCallback(comment);
 	};
 
 	_onDeleteComment = (comment) => {
-		console.log('_onDeleteComment');
-		console.log(comment);
-		console.log(store.getState().user);
-		if(comment.user._id == store.getState().user._id || store.getState().user.permissions >= utils.permissions.mod){
+		if (comment.user._id == store.getState().user._id || store.getState().user.permissions >= utils.permissions.mod) {
 			network.deleteCommentByID(comment._id, store.getState().session.token)
-			.then((res) => {
-				if(res.code == 1){
-					this.setState({info: 'Comment deleted!'});
-					this.setState({error: ''});
-					this.fetchData(comment.word);
-				}else{
-					this.setState({error: 'Error deleting comment: ' + res.result});
-					this.setState({info: ''});
-				}
-			})
-			.catch((error) => {
-				this.setState({error: 'Error deleting comment: ' + error.message});
-				this.setState({info: ''});
-			});
-		}else{
-			this.setState({error: 'Invalid permissions'});
-			this.setState({info: ''});
+				.then((res) => {
+					if (res.code == 1) {
+						this.setState({ info: 'Comment deleted!' });
+						this.setState({ error: '' });
+						this.fetchData(comment.word);
+					} else {
+						this.setState({ error: 'Error deleting comment: ' + res.result });
+						this.setState({ info: '' });
+					}
+				})
+				.catch((error) => {
+					this.setState({ error: 'Error deleting comment: ' + error.message });
+					this.setState({ info: '' });
+				});
+		} else {
+			this.setState({ error: 'Invalid permissions' });
+			this.setState({ info: '' });
 		}
+	}
+
+	_deleteCommentAlert(comment) {
+		// Works on both iOS and Android
+		Alert.alert(
+			'Delete Comment?',
+			'Do you want to delete this comment? This cannot be undone.',
+			[
+				{ text: 'Back', onPress: () => {}, style: 'cancel' },
+				{ text: 'OK', onPress: () => {this._onDeleteComment(comment)}}
+			],
+			{ cancelable: true }
+		)
 	}
 
 	_renderItem = ({ item, index }) => (
 		<CommentListItem
-			onLongPress={this._onLongPressItem}
-			onDeletePress={this._onDeleteComment}
+			onLongPressItem={(item) => {this._onLongPressItem(item)}}
+			onDeletePress={(comment) => {this._deleteCommentAlert(comment)}}
 			item={item}
 			user={store.getState().user}
 		/>
@@ -98,7 +108,7 @@ export default class CommentList extends React.PureComponent {
 		<Text>--------------------------------------</Text>
 	);
 
-	_getInfoText(){
+	_getInfoText() {
 		return (
 			<View style={{ flexDirection: 'column', alignContent: 'center' }}>
 				<Text ref='info' style={styles.textInfo}>
@@ -108,8 +118,8 @@ export default class CommentList extends React.PureComponent {
 		);
 	}
 
-	_getErrorText(){
-		return(
+	_getErrorText() {
+		return (
 			<View style={{ flexDirection: 'column', alignContent: 'center' }}>
 				<Text ref='error' style={styles.texterror}>
 					{this.state.error}
