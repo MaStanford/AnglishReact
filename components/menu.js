@@ -15,6 +15,7 @@ import styles from '../modules/styles';
 
 //State
 import { store } from '../modules/statemanager';
+import utils from '../modules/utils';
 
 var MenuActions = {
 	Add:'Add Word',
@@ -93,16 +94,21 @@ export default class Menu extends React.Component {
 	build(user, callback) {
 		let menu = [];
 		switch(user.permissions){
-			case 99:menu.push(this.getAdminButton(callback));
-			case 5:
-			case 4:
-			case 3:	menu.push(this.getAddButton(callback));
-			case 2:
-			case 1: menu.push(this.getLogoutButton(callback));
+			case utils.permissions.owner:
+				menu.push(this.getAdminButton(callback));
+			case utils.permissions.admin:
+			case utils.permissions.mod:
+			case utils.permissions.poweruser:	
+				menu.push(this.getAddButton(callback));
+			case utils.permissions.basicuser:
+			case utils.permissions.punisheduser: 
+					menu.push(this.getLogoutButton(callback));
 					menu.push(this.getUserButton(callback));
 					break;
 			case 0:
-			case -1:(menu.push(this.getLoginButton(callback)), menu.push(this.getRegisterButton(callback)));
+			case -1:
+				menu.push(this.getLoginButton(callback));
+				menu.push(this.getRegisterButton(callback));
 		}
 		return menu;
 	}

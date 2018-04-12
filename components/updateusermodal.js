@@ -43,17 +43,17 @@ export default class UpdateUserModal extends Component {
 
 	_updateUser = () => {
 		Network.updateUserPermissions(this.state.user, this.state.permissions, store.getState().session.token)
-		.then((res) => {
-			if(res.code == 1){
-				this.setState({info:'Successfully updated state'});
-				setTimeout(() => {this.setModalVisible()}, 200);
-			}else{
-				this.setState({error:res.result});
-			}
-		})
-		.catch((err) => {
-			this.setState({error:err.message});
-		});
+			.then((res) => {
+				if (res.code == 1) {
+					this.setState({ info: 'Successfully updated state' });
+					setTimeout(() => { this.setModalVisible() }, 200);
+				} else {
+					this.setState({ error: res.result });
+				}
+			})
+			.catch((err) => {
+				this.setState({ error: err.message });
+			});
 	}
 
 	render() {
@@ -67,7 +67,7 @@ export default class UpdateUserModal extends Component {
 				}
 				}>
 				<View style={styles.containerModalPickerPermissions}>
-					<Titlebar title='Update Permissions'/>
+					<Titlebar title='Update Permissions' />
 					<UserComponent user={this.state.user} />
 					<View style={{ flexDirection: 'column', alignContent: 'center' }}>
 						<Text ref='error' style={styles.texterror}>
@@ -77,24 +77,27 @@ export default class UpdateUserModal extends Component {
 						<Text ref='info' style={styles.textInfo}>
 							{this.state.info}
 						</Text>
-					</View>					
-					<Picker
-						selectedValue={this.state.permissions}
-						style={styles.pickerPermissions}
-						itemStyle={styles.textPickerPermissions}
-						onValueChange={(itemValue, itemIndex) => this._handlePermissionUpdate(itemValue, itemIndex)}>
-						<Picker.Item label="99 - Owner" value='99' />
-						<Picker.Item label="5  - Admin" value="5" />
-						<Picker.Item label="4  - Mod" value="4" />
-						<Picker.Item label="3  - Power User" value="3" />
-						<Picker.Item label="2  - Basic User" value="2" />
-						<Picker.Item label="1  - Punished User" value="1" />
-					</Picker>
+					</View>
+					<View style={styles.containerPickerPermissions}>
+						<Picker
+							mode='dialog'
+							selectedValue={this.state.permissions}
+							style={styles.pickerPermissions}
+							itemStyle={styles.textPickerPermissions}
+							onValueChange={(itemValue, itemIndex) => this._handlePermissionUpdate(itemValue, itemIndex)}>
+							<Picker.Item label="99 - Owner" value='99' />
+							<Picker.Item label="5  - Admin" value="5" />
+							<Picker.Item label="4  - Mod" value="4" />
+							<Picker.Item label="3  - Power User" value="3" />
+							<Picker.Item label="2  - Basic User" value="2" />
+							<Picker.Item label="1  - Punished User" value="1" />
+						</Picker>
+					</View>
 					<View style={{ flexDirection: 'row' }}>
 						<TouchableHighlight
 							style={styles.buttonModal}
 							underlayColor="black"
-							onPress={() => { this.setModalVisible()}}>
+							onPress={() => { this.setModalVisible() }}>
 							<Text style={styles.textTranslate}>
 								Back
 							</Text>
@@ -102,7 +105,7 @@ export default class UpdateUserModal extends Component {
 						<TouchableHighlight
 							style={styles.buttonModal}
 							underlayColor="black"
-							onPress={() => { this._updateUser()}}>
+							onPress={() => { this._updateUser() }}>
 							<Text style={styles.textTranslate}>
 								Update
 							</Text>

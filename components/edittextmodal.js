@@ -76,7 +76,7 @@ export default class EditWordTextModal extends Component {
 								onPress={this.onPressButton.bind(this)}>
 								<Text style={styles.textTranslate}>
 									Done
-          				</Text>
+          						</Text>
 							</TouchableHighlight>
 							<TouchableHighlight
 								style={styles.buttonModal}
@@ -86,7 +86,7 @@ export default class EditWordTextModal extends Component {
 								}}>
 								<Text style={styles.textTranslate}>
 									Back
-						</Text>
+								</Text>
 							</TouchableHighlight>
 						</View>
 					</View>

@@ -147,7 +147,7 @@ export default class AddWord extends Component {
 					this.setModalVisible(false);
 				}
 				}>
-				<View style={styles.ContainerModalAddNewWordBackground}>
+				<View style={styles.containerModalAddNewWordBackground}>
 					<Titlebar title="Add New Word" />
 
 					<View style={{ flexDirection: 'column', alignContent: 'center' }}>

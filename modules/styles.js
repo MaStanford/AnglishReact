@@ -4,16 +4,18 @@ import {
 
 var styles = StyleSheet.create({
 	containermain: {
-		borderWidth: 1,
 		flex: 1,
+		borderWidth: 1,
 		alignItems: 'center',
 		backgroundColor: '#FFFFFF'
 	},
 	containerWordsList: {
-		width: '90%',
-		flex: .95,
+		flex: 1,
+		flexDirection:'row',
+		alignItems: 'stretch', //Children cannot have width if you use stretch
+		justifyContent: 'center', 
+		width: '90%', //You need a width in order to have flex in the children.
 		backgroundColor: 'white',
-		alignItems: 'flex-start',
 		borderWidth: 1
 	},
 	flatListWords: {
@@ -27,9 +29,11 @@ var styles = StyleSheet.create({
 		flexWrap: 'wrap'
 	},
 	flatListComments: {
-		height: '40%',
+		flex: 1, //Take up as much space as I can
+		flexDirection: 'column', //Everything stacked
+		justifyContent: 'center', //Stacked in the middle
+		alignItems: 'flex-start', //Aligned from the start of the views
 		backgroundColor: 'white',
-		alignItems: 'flex-start',
 		marginBottom: 2
 	},
 	flatListUsers: {
@@ -83,13 +87,15 @@ var styles = StyleSheet.create({
 		fontSize: 15,
 		alignItems: 'center',
 		flexWrap: 'wrap',
+		borderWidth: 1
 	},
 	texterror: {
 		textAlign: 'center',
 		fontSize: 15,
 		alignItems: 'center',
 		flexWrap: 'wrap',
-		color: 'red'
+		color: 'red',
+		borderWidth: 1
 	},
 	buttonTranslate: {
 		backgroundColor: '#DCDCDC',
@@ -154,7 +160,18 @@ var styles = StyleSheet.create({
 		color: '#FFFFFF',
 		alignItems: 'center'
 	},
-	containerModalBackground: {
+	buttonDeleteIcon: {
+		flexDirection: 'row',
+		alignItems: 'flex-start',
+		alignSelf: 'flex-start',
+		backgroundColor: '#FFFFFF',
+		flexWrap: 'wrap'
+	},
+	containerModalMain: {
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'stretch',
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
 		marginLeft: 20,
@@ -170,7 +187,7 @@ var styles = StyleSheet.create({
 		marginTop: '18%', 
 		marginBottom: '18%',
 	},
-	ContainerModalAddNewWordBackground: {
+	containerModalAddNewWordBackground: {
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
 		marginLeft: 20,
@@ -217,11 +234,21 @@ var styles = StyleSheet.create({
 		height: 100, 
 		width: 200,
 		marginBottom: 100,
-		backgroundColor: '#FFFFFF'
+		alignItems: 'center',
+		backgroundColor: '#FFFFFF',
+		alignSelf: 'center'
+	},
+	containerPickerPermissions:{
+		borderWidth: 1, 
+		flexDirection: 'column',
+		alignItems: 'center',
+		alignSelf: 'center'
 	},
 	textPickerPermissions: {
 		fontSize: 10,
-		textAlign: 'center'
+		textAlign: 'center',
+		borderWidth: 1,
+		alignSelf: 'center'
 	},
 	overlay: {
 		backgroundColor: '#ff5722',

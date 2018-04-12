@@ -112,11 +112,13 @@ export default class WordDetailModal extends Component {
 					this.setModalVisible(false);
 				}
 				}>
-				<View style={styles.containerModalBackground}>
+				<View style={styles.containerModalMain}>
 					<View style={styles.containerModalContent}>
 						<ScrollView style={{ height: '85%' }}>
 							<Text style={styles.wordlistheader}>{title}</Text>
-							<WordListItem item={this.state.word} onPressItem={(item) => { }} />
+							<View style={{borderWidth: 1}}>
+								<WordListItem item={this.state.word} onPressItem={(item) => { }} />
+							</View>
 							<Text style={styles.textCommentHeader}>Comments: </Text>
 							<CommentList word={this.state.word} callback={(comment) => { }} />
 						</ScrollView>
