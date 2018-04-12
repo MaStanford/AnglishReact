@@ -96,12 +96,12 @@ export default class Menu extends React.Component {
 			case 99:menu.push(this.getAdminButton(callback));
 			case 5:
 			case 4:
-			case 3:
-			case 2:	menu.push(this.getAddButton(callback));
-			case 1:
-			case 0: menu.push(this.getLogoutButton(callback));
+			case 3:	menu.push(this.getAddButton(callback));
+			case 2:
+			case 1: menu.push(this.getLogoutButton(callback));
 					menu.push(this.getUserButton(callback));
 					break;
+			case 0:
 			case -1:(menu.push(this.getLoginButton(callback)), menu.push(this.getRegisterButton(callback)));
 		}
 		return menu;

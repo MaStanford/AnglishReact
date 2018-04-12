@@ -43,7 +43,6 @@ export default class Register extends Component {
 		});
 
 		this.register(this.state.handle, this.state.email, this.state.password);
-		console.log('Register Button pressed');
 	}
 
 	register(handle, email, password) {

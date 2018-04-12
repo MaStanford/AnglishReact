@@ -23,7 +23,7 @@ export default class Titlebar extends Component{
 
 const styles = StyleSheet.create({
   container: {
-		height: 65,
+		height: 40,
 		width: '100%',
 		backgroundColor: 'white',
 	},
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 		fontSize: 20, 
 		color: 'black', 
 		textAlign: 'center',
-		marginTop: 20,
+		marginTop: 10,
 		alignItems: 'center'
 	}
 });

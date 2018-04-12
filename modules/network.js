@@ -61,7 +61,7 @@ var NetworkUtils = {
 			body: JSON.stringify(word)
 		}).then((response) => response.json());
 	},
-	updateWord: function(word_id, word, sessionToken){
+	updateWord: function (word_id, word, sessionToken) {
 		return fetch(`https://${server}${wordAPI}/${word_id}`, {
 			method: 'POST',
 			headers: {
@@ -85,7 +85,7 @@ var NetworkUtils = {
 			})
 		}).then((response) => response.json());
 	},
-	logout: function(sessionToken){
+	logout: function (sessionToken) {
 		return fetch(`https://${server}${UserLogoutAPI}`, {
 			method: 'POST',
 			headers: {
@@ -111,8 +111,44 @@ var NetworkUtils = {
 			return response.json()
 		});
 	},
-	getuser: function (email) {
-		return fetch(`https://${server}${UserGetAPI}?user=${email}`, {
+	updateUserPermissions: function (user, permissions, sessionToken) {
+		user.permissions = permissions;
+		return fetch(`https://${server}${UserGetAPI}/${user._id}`, {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'sessionToken': sessionToken
+			},
+			body: JSON.stringify(user)
+		}).then((response) => {
+			return response.json()
+		});
+	},
+	getUserByEmail: function (email) {
+		return fetch(`https://${server}${UserGetAPI}/email?user=${email}`, {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then((response) => {
+			return response.json()
+		});
+	},
+	getUserByHandle: function (handle) {
+		return fetch(`https://${server}${UserGetAPI}/handle/${handle}`, {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then((response) => {
+			return response.json()
+		});
+	},
+	getUserById: function (user_id) {
+		return fetch(`https://${server}${UserGetAPI}/${user_id}`, {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',

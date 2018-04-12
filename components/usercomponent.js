@@ -10,6 +10,7 @@ export default class UserComponent extends React.PureComponent {
 	}
 
 	_onPress = () => {
+		this.props.onPressItem(this.props.user)
 	};
 
 	formatDate(date) {

@@ -28,8 +28,14 @@ export default class UserScreen extends Component {
 		this.state = {
 			error: '',
 			info: '',
-			user: this.props.navigation.state.params.user
+			user: store.getState().user
 		};
+
+		store.subscribe(() => {
+			this.setState({
+				user: store.getState().user
+			});
+		});
 	}
 
 	static navigationOptions = ({ navigation }) => ({
@@ -38,10 +44,10 @@ export default class UserScreen extends Component {
 
 	_getUser(email) {
 		return Network
-			.getuser(email)
+			.getUserByEmail(email)
 			.then((res) => {
 				if (res.code == 1) {
-					this.setState({user: res.data});
+					this.setState({ user: res.data });
 					return res.data;
 				} else {
 					throw new Error('User not found');
@@ -59,7 +65,7 @@ export default class UserScreen extends Component {
 				<Text ref='info' style={styles.textInfo}>
 					{this.state.info}
 				</Text>
-				<UserComponent user={this.state.user}/>
+				<UserComponent user={this.state.user} />
 			</View>
 		);
 	}

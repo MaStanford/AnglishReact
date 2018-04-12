@@ -44,9 +44,7 @@ import AddWordModal from './components/addwordmodal';
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-
-    console.log(HomeScreen);
-
+    
     //Grab session from disk storage and add it so violatile 
     storage.fetch(keys.session, (error, result) => {
       session = JSON.parse(result);

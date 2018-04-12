@@ -27,8 +27,17 @@ var styles = StyleSheet.create({
 		flexWrap: 'wrap'
 	},
 	flatListComments: {
+		height: '40%',
 		backgroundColor: 'white',
 		alignItems: 'flex-start',
+		marginBottom: 2
+	},
+	flatListUsers: {
+		height: '40%',
+		width: '65%',
+		backgroundColor: 'white',
+		alignItems: 'flex-start',
+		borderWidth: 1,
 		marginBottom: 2
 	},
 	rowComments: {
@@ -95,12 +104,11 @@ var styles = StyleSheet.create({
 		margin: 5
 	},
 	textinput: {
-		height: 40,
+		height: 45,
 		width: '50%',
 		textAlign: 'center',
 		alignItems: 'center',
 		borderWidth: 1,
-		margin: 10,
 	},
 	textinputaddtop: {
 		height: 40,
@@ -194,6 +202,26 @@ var styles = StyleSheet.create({
 		width: 40,
 		height: 40,
 		marginTop: 100
+	},
+	containerModalPickerPermissions:{
+		flexDirection: 'column',
+		alignItems: 'center',
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		marginLeft: 20,
+		marginRight: 20,
+		marginTop: '18%', 
+		marginBottom: '18%',
+	},
+	pickerPermissions: {
+		height: 100, 
+		width: 200,
+		marginBottom: 100,
+		backgroundColor: '#FFFFFF'
+	},
+	textPickerPermissions: {
+		fontSize: 10,
+		textAlign: 'center'
 	},
 	overlay: {
 		backgroundColor: '#ff5722',
