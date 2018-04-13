@@ -16,7 +16,7 @@ export default class CommentList extends React.PureComponent {
 		super(props);
 		this.state = {
 			error: '',
-			dataSource: this.template
+			dataSource: this.emptyTemplate
 		};
 
 		this.fetchData(props.word._id);
@@ -24,6 +24,8 @@ export default class CommentList extends React.PureComponent {
 		//Ontouch callback for each item in the list.
 		this.longPressCallback = props.longPressCallback;
 	}
+
+	emptyTemplate = [];
 
 	template = [{
 		_id: '_id',
@@ -43,7 +45,7 @@ export default class CommentList extends React.PureComponent {
 					if (res.data.length > 0) {
 						this.setState({ dataSource: res.data });
 					} else {
-						this.setState({ dataSource: this.template });
+						this.setState({ dataSource: this.emptyTemplate });
 					}
 				}).catch((error) => {
 
@@ -98,7 +100,7 @@ export default class CommentList extends React.PureComponent {
 	_renderItem = ({ item, index }) => (
 		<CommentListItem
 			onLongPressItem={(item) => {this._onLongPressItem(item)}}
-			onDeletePress={(comment) => {this._deleteCommentAlert(comment)}}
+			onDeleteItem={(comment) => {this._deleteCommentAlert(comment)}}
 			item={item}
 			user={store.getState().user}
 		/>

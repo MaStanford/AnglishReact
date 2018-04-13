@@ -30,12 +30,6 @@ import { MenuActions } from './menu';
 import { store, actions } from '../modules/statemanager';
 import { storage, keys } from '../modules/storage';
 
-//Screens
-import LoginScreen from './loginscreen';
-import RegisterScreen from './registerscreen';
-import UserScreen from './userscreen';
-import AdminScreen from './adminscreen';
-
 //Dialog/Modals
 import WordDetail from './worddetailmodal';
 import AddWordModal from './addwordmodal';
@@ -51,11 +45,28 @@ export default class HomeScreen extends React.Component {
     this.state = {
       input: '',
       word: '',
+      user: store.getState().user,
       detailVisible: false,
       addwordvisible: false,
       detailWord: {}
     }
+
+    this._isMounted = 'false'
+
+		store.subscribe(() => {
+      if(this._isMounted){
+        this.setState({user: store.getState().user});
+      }
+		});
   }
+
+  componentDidMount() {
+		this._mounted = true;
+	}
+
+	componentWillUnmount() {
+		this._mounted = false;
+	}
 
   onPressButton() {
     Keyboard.dismiss();
@@ -135,7 +146,7 @@ export default class HomeScreen extends React.Component {
             Translate
           </Text>
         </TouchableHighlight>
-        <WordList word={this.state.word} callback={this._wordDetailSelectCallback.bind(this)} />
+        <WordList word={this.state.word} user={this.state.user} callback={(wordDetail)=>this._wordDetailSelectCallback(wordDetail)} />
         <Menu callback={(action) => this.handleNavigation(action)} />
         {wordDetail}
         {addwordmodal}

@@ -162,8 +162,10 @@ var styles = StyleSheet.create({
 		flexDirection: 'row',
 		alignItems: 'flex-start',
 		alignSelf: 'flex-start',
+		height: 40,
+		width: 40,
 		backgroundColor: '#FFFFFF',
-		flexWrap: 'wrap'
+		flexWrap: 'wrap',
 	},
 	containerModalMain: {
 		flex: 1,

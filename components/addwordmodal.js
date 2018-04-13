@@ -201,7 +201,7 @@ export default class AddWord extends Component {
 								onPress={() => {
 									this._openLargeEdit('attested', this.state.attested);
 								}}>
-								<Icon name="subject" style={styles.buttonModalOpenEdit} />
+								<Icon name="wrap-text" style={styles.buttonModalOpenEdit} />
 							</TouchableHighlight>
 						</View>
 
@@ -220,7 +220,7 @@ export default class AddWord extends Component {
 								onPress={() => {
 									this._openLargeEdit('unattested', this.state.unattested);
 								}}>
-								<Icon name="subject" style={styles.buttonModalOpenEdit} />
+								<Icon name="wrap-text" style={styles.buttonModalOpenEdit} />
 							</TouchableHighlight>
 						</View>
 

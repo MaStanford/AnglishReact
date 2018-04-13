@@ -21,7 +21,7 @@ import Network from '../modules/network';
 import { store, actions } from '../modules/statemanager';
 import { storage, keys } from '../modules/storage';
 
-export default class UserScreen extends Component {
+export default class InfoScreen extends Component {
 
 	constructor(props) {
 		super(props);
@@ -66,6 +66,11 @@ export default class UserScreen extends Component {
 					{this.state.info}
 				</Text>
 				<UserComponent user={this.state.user} />
+				<Text>App info</Text>
+				<Text>Privacy Policy</Text>
+				<Text>Change Password</Text>
+				<Text>Word List</Text>
+				<Text>Comment List</Text>
 			</View>
 		);
 	}

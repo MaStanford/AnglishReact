@@ -24,7 +24,7 @@ var MenuActions = {
 	Logout:'Logout',
 	Mod:'Mod',
 	Register:'Register',
-	User:'User'
+	Info:'Info'
 }
 
 export default class Menu extends React.Component {
@@ -77,8 +77,8 @@ export default class Menu extends React.Component {
 
 	getUserButton(callback){
 		return (
-			<ActionButton.Item key="User" buttonColor='#3498db' title={MenuActions.User} onPress={() => { callback(MenuActions.User) }}>
-				<Icon name="account-box" style={styles.buttonActionIcon} />
+			<ActionButton.Item key="Info" buttonColor='#3498db' title={MenuActions.Info} onPress={() => { callback(MenuActions.Info) }}>
+				<Icon name="info" style={styles.buttonActionIcon} />
 			</ActionButton.Item>
 		);
 	}

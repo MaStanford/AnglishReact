@@ -17,7 +17,7 @@ export default class CommentListItem extends React.PureComponent {
 	};
 
 	_deleteComment() {
-		this.props.onDeletePress(this.props.item);
+		this.props.onDeleteItem(this.props.item);
 	}
 
 	_getDeleteButton() {

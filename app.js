@@ -34,7 +34,7 @@ import { storage, keys } from './modules/storage';
 import HomeScreen from './components/homescreen';
 import LoginScreen from './components/loginscreen';
 import RegisterScreen from './components/registerscreen';
-import UserScreen from './components/userscreen';
+import InfoScreen from './components/infoscreen';
 import AdminScreen from './components/adminscreen';
 
 //Dialog/Modals
@@ -84,7 +84,7 @@ const AnglishWordbookNavigator = StackNavigator({
   Home: { screen: HomeScreen },
   Login: { screen: LoginScreen },
   Register: { screen: RegisterScreen },
-  User: { screen: UserScreen },
+  Info: { screen: InfoScreen },
   Admin: { screen: AdminScreen }
 });
 

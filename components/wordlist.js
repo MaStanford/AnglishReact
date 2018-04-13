@@ -15,8 +15,10 @@ export default class WordList extends React.PureComponent {
 
 	constructor(props) {
 		super(props);
+
 		this.state = {
-			dataSource: this.emptyTemplate
+			dataSource: this.emptyTemplate,
+			user: props.user
 		};
 
 		if(props.word && !utils.isEmpty(props.word)  && props.word != ''){
@@ -40,7 +42,7 @@ export default class WordList extends React.PureComponent {
 	fetchData(word = 'language') {
 		if (word != null || word != '') {
 			NetworkUtils.fetchWord(word, 0)
-				.then(function(res) {
+				.then((res) => {
 					if (res.data.length > 0) {
 						this.setState({ dataSource: res.data });
 					} else {
@@ -48,9 +50,9 @@ export default class WordList extends React.PureComponent {
 						nowordfound[0].word = this.props.word + ' not found!';
 						this.setState({ dataSource: nowordfound });
 					}
-				}.bind(this)).catch(function(error) {
+				}).catch((error) => {
 					console.log(error);
-				}.bind(this));
+				});
 		}
 	}
 
@@ -58,6 +60,7 @@ export default class WordList extends React.PureComponent {
 		if(props.word && !utils.isEmpty(props.word)  && props.word != ''){
 			this.fetchData(props.word);
 		}
+		this.setState({user:props.user});
 	}
 
 	_onPressItem = (word) => {
@@ -66,8 +69,12 @@ export default class WordList extends React.PureComponent {
 
 	_renderItem = ({ item, index }) => (
 		<WordListItem
-			onPressItem={this._onPressItem}
-			item={item}
+			onPressItem={(item)=>this._onPressItem(item)}
+			onLongPressItem={() => {}}
+			onDeleteItem={()=>{}}
+			onEditItem={()=>{}}
+			word={item}
+			user={this.state.user}
 		/>
 	);
 

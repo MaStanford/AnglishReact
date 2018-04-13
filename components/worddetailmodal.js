@@ -18,22 +18,25 @@ import { store, actions } from '../modules/statemanager'
 
 export default class WordDetailModal extends Component {
 
+
 	constructor(props) {
 		super(props);
 		this.state = {
 			permissions: store.getState().user.permissions,
+			user:store.getState().user,
 			word: props.word,
-			commentText: '',
 			editcommentvisible: false,
 			error: ''
 		}
 
+		this._mounted = false;
+
 		//Sub to state updates
 		store.subscribe(() => {
 			if (this._mounted) {
-				this.setState({ permission: store.getState().user.permissions });
+				this.setState({ user: store.getState().user, permission: store.getState().user.permissions });
 			}
-		}).bind(this);
+		});
 	}
 
 	componentDidMount() {
@@ -58,7 +61,6 @@ export default class WordDetailModal extends Component {
 	_getCommentEditModal() {
 		return (
 			<EditCommentTextModal
-				text={this.state.commentText}
 				callback={this._editCommentTextCallback.bind(this)}
 				word={this.props.word}
 			/>
@@ -80,7 +82,7 @@ export default class WordDetailModal extends Component {
 		);
 	}
 
-	_fetchComments() {
+	_fetchComments() {		
 		Network.fetchCommentsByWordID(this.state.word._id)
 			.then(function (res) {
 				if (res && res.code == 1) {
@@ -96,8 +98,23 @@ export default class WordDetailModal extends Component {
 			}.bind(this));
 	}
 
+	_onPressItem(){
+	
+	}
+
+	_getWordListItem(){
+		return(<WordListItem
+			onPressItem={this._onPressItem}
+			onLongPressItem={() => {}}
+			onDeleteItem={()=>{}}
+			onEditItem={()=>{}}
+			word={this.state.word}
+			user={this.state.user}
+		/>);
+	}
 	render() {
 		title = '';
+		var wordlistitem = this._getWordListItem();
 		var commentEditModal = this.state.editcommentvisible ? this._getCommentEditModal() : null;
 		var commentButton = this.state.permissions > 0 ? this._getCommentButton() : null;
 		if (this.props.word.word) {
@@ -117,7 +134,7 @@ export default class WordDetailModal extends Component {
 						<ScrollView style={{ height: '85%' }}>
 							<Text style={styles.wordlistheader}>{title}</Text>
 							<View style={{borderWidth: 1}}>
-								<WordListItem item={this.state.word} onPressItem={(item) => { }} />
+								{wordlistitem}
 							</View>
 							<Text style={styles.textCommentHeader}>Comments: </Text>
 							<CommentList word={this.state.word} longPressCallback={(comment) => {console.log('Long press on comment' + comment.comment)}} />

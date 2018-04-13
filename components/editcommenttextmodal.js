@@ -25,7 +25,7 @@ export default class EditCommentTextModal extends Component {
 		this.state = {
 			error: '',
 			info: '',
-			text: props.text
+			text: ''
 		}
 
 		//Edge case that somehow this is launched when we don't have permissions
