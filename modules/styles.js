@@ -87,7 +87,6 @@ var styles = StyleSheet.create({
 		fontSize: 15,
 		alignItems: 'center',
 		flexWrap: 'wrap',
-		borderWidth: 1
 	},
 	texterror: {
 		textAlign: 'center',
@@ -95,7 +94,6 @@ var styles = StyleSheet.create({
 		alignItems: 'center',
 		flexWrap: 'wrap',
 		color: 'red',
-		borderWidth: 1
 	},
 	buttonTranslate: {
 		backgroundColor: '#DCDCDC',
@@ -220,35 +218,35 @@ var styles = StyleSheet.create({
 		height: 40,
 		marginTop: 100
 	},
+	buttonSelectPermissions: {
+		backgroundColor: '#DCDCDC',
+		borderWidth: 1,
+		alignItems: 'center',
+		width: 100,
+		height: 50,
+	},
+	containerUpdateUserModalButtons:{
+		flex: 1,
+		flexDirection: 'row',
+		width: '95%',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		marginLeft: 20,
+		marginRight: 20,
+	},
 	containerModalPickerPermissions:{
+		flex: 1,
 		flexDirection: 'column',
 		alignItems: 'center',
+		justifyContent: 'center',
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
 		marginLeft: 20,
 		marginRight: 20,
 		marginTop: '18%', 
 		marginBottom: '18%',
-	},
-	pickerPermissions: {
-		height: 100, 
-		width: 200,
-		marginBottom: 100,
-		alignItems: 'center',
-		backgroundColor: '#FFFFFF',
-		alignSelf: 'center'
-	},
-	containerPickerPermissions:{
-		borderWidth: 1, 
-		flexDirection: 'column',
-		alignItems: 'center',
-		alignSelf: 'center'
-	},
-	textPickerPermissions: {
-		fontSize: 10,
-		textAlign: 'center',
-		borderWidth: 1,
-		alignSelf: 'center'
 	},
 	overlay: {
 		backgroundColor: '#ff5722',

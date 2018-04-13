@@ -30,7 +30,7 @@ export default class UserComponent extends React.PureComponent {
 				</View>
 				<View style={styles.rowUsers}>
 					<Text>Permissions: </Text>
-					<Text>{this.props.user.permissions}</Text>
+					<Text>{utils.getKeyFromValue(utils.permissions, this.props.user.permissions)}</Text>
 				</View>
 			</TouchableOpacity>
 		);

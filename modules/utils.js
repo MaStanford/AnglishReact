@@ -20,6 +20,13 @@ Utils = {
 		'poweruser'		:3,
 		'basicuser'		:2,
 		'punisheduser'	:1
+	},
+	getKeyFromValue: function(map, value){
+		for(key in map){
+			if(map[key] == value){
+				return key;
+			}
+		}
 	}
 }
 

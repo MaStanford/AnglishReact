@@ -25,6 +25,14 @@ export default class EditWordTextModal extends Component {
 		}
 	}
 
+	componentDidMount() {
+		this._mounted = true;
+	}
+
+	componentWillUnmount() {
+		this._mounted = false;
+	}
+
 	componentWillReceiveProps(props) {
 		this.setState({
 			error: '',

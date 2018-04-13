@@ -34,6 +34,14 @@ export default class EditCommentTextModal extends Component {
 		}
 	}
 
+	componentDidMount() {
+		this._mounted = true;
+	}
+
+	componentWillUnmount() {
+		this._mounted = false;
+	}
+
 	componentWillReceiveProps(props) {
 		this.setState({
 			error: '',
