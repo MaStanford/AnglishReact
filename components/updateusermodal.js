@@ -84,7 +84,11 @@ export default class UpdateUserModal extends Component {
 			pickerToolBarBg: [220, 220, 220, 1], //This is the same as the DCDCDC used in the app for button bg
 			
 			onPickerConfirm: data => {
-				this.setState({info: 'Change ' + this.state.user.handle + ' permissions from ' + selected + ' to ' + data + '?'});
+				this.setState({permissions: utils.permissions[data]});
+				this.setState({info: 
+					'Change ' + this.state.user.handle 
+				+ ' permissions from ' + utils.getKeyFromValue(utils.permissions,this.state.user.permissions) 
+				+ ' to ' + data + '?'});
 			},
 			
 			onPickerCancel: data => {
@@ -92,7 +96,6 @@ export default class UpdateUserModal extends Component {
 			},
 			
 			onPickerSelect: data => {
-				this.setState({permissions: utils.permissions[data]});
 			}
 		});
 		Picker.show();

@@ -41,7 +41,7 @@ export default class EditWordTextModal extends Component {
 	}
 
 	setModalVisible(visible) {
-		this.props.callback(this.props.parentState, this.state.text);
+		this.props.callback(this.props.parentState, this.props.text);
 	}
 
 	onPressButton() {
@@ -78,15 +78,7 @@ export default class EditWordTextModal extends Component {
 						/>
 
 						<View style={{ flexDirection: 'row' }}>
-							<TouchableHighlight
-								style={styles.buttonTranslate}
-								underlayColor="black"
-								onPress={this.onPressButton.bind(this)}>
-								<Text style={styles.textTranslate}>
-									Done
-          						</Text>
-							</TouchableHighlight>
-							<TouchableHighlight
+						<TouchableHighlight
 								style={styles.buttonModal}
 								onPress={() => {
 									this.setModalVisible(false);
@@ -95,6 +87,14 @@ export default class EditWordTextModal extends Component {
 								<Text style={styles.textTranslate}>
 									Back
 								</Text>
+							</TouchableHighlight>							
+							<TouchableHighlight
+								style={styles.buttonTranslate}
+								underlayColor="black"
+								onPress={this.onPressButton.bind(this)}>
+								<Text style={styles.textTranslate}>
+									Done
+          						</Text>
 							</TouchableHighlight>
 						</View>
 					</View>
