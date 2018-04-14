@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { FlatList, Text, View, TouchableOpacity, Alert } from 'react-native';
-import NetworkUtils from '../modules/network';
 
 //styles
 import styles from '../modules/styles';
@@ -40,7 +39,7 @@ export default class CommentList extends React.PureComponent {
 
 	fetchData(wordID) {
 		if (wordID != null || wordID != '') {
-			NetworkUtils.fetchCommentsByWordID(wordID)
+			network.fetchCommentsByWordID(wordID)
 				.then((res) => {
 					if (res.data.length > 0) {
 						this.setState({ dataSource: res.data });
@@ -107,7 +106,7 @@ export default class CommentList extends React.PureComponent {
 	);
 
 	_renderSeperator = ({ word }) => (
-		<Text>--------------------------------------</Text>
+		<View style={{borderBottomWidth:1}}/>
 	);
 
 	_getInfoText() {

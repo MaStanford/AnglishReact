@@ -23,11 +23,11 @@ export default class CommentListItem extends React.PureComponent {
 	_getDeleteButton() {
 		return (
 			<TouchableHighlight
-				style={styles.buttonDeleteIcon}
+				style={styles.buttonDeleteComment}
 				onPress={() => {
 					this._deleteComment();
 				}}>
-				<Icon name="delete" style={styles.buttonModalOpenEdit} />
+				<Icon name="delete" style={styles.buttonDeleteComment} />
 			</TouchableHighlight>
 		);
 	}

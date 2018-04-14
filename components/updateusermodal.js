@@ -7,7 +7,8 @@ import {
 	View,
 	TouchableHighlight,
 	TextInput,
-	Modal
+	Modal,
+	Alert
 } from 'react-native';
 
 import Picker from 'react-native-picker';
@@ -74,31 +75,55 @@ export default class UpdateUserModal extends Component {
 			pickerData: data,
 			pickerTitleText: 'Select Permission',
 			pickerConfirmBtnText: 'Select',
-			pickerCancelBtnText	: 'Back',
+			pickerCancelBtnText: 'Back',
 			selectedValue: [selected],
 			pickerToolBarFontSize: 18,
-			pickerFontColor: [0, 0 ,0, 1],
+			pickerFontColor: [0, 0, 0, 1],
 			pickerConfirmBtnColor: [0, 0, 0, 1],
 			pickerCancelBtnColor: [0, 0, 0, 1],
-			pickerBg: [255,255,255,1],
+			pickerBg: [255, 255, 255, 1],
 			pickerToolBarBg: [220, 220, 220, 1], //This is the same as the DCDCDC used in the app for button bg
-			
+
 			onPickerConfirm: data => {
-				this.setState({permissions: utils.permissions[data]});
-				this.setState({info: 
-					'Change ' + this.state.user.handle 
-				+ ' permissions from ' + utils.getKeyFromValue(utils.permissions,this.state.user.permissions) 
-				+ ' to ' + data + '?'});
+				this.setState({ permissions: utils.permissions[data] });
+				this.setState({
+					info:
+						'Change ' + this.state.user.handle
+						+ ' permissions from ' + utils.getKeyFromValue(utils.permissions, this.state.user.permissions)
+						+ ' to ' + data + '?'
+				});
 			},
-			
+
 			onPickerCancel: data => {
-				this.setState({permissions: this.state.permissions});
+				this.setState({ permissions: this.state.permissions });
 			},
-			
+
 			onPickerSelect: data => {
 			}
 		});
 		Picker.show();
+	}
+
+	_showWordList() {
+		Alert.alert(
+			'Feature Incomplete',
+			'This feature is no complete yet, I\'m working on getting it done, so keep an eye out for updates',
+			[
+				{ text: 'OK', onPress: () => { } }
+			],
+			{ cancelable: false }
+		)
+	}
+
+	_showCommentList() {
+		Alert.alert(
+			'Feature Incomplete',
+			'This feature is no complete yet, I\'m working on getting it done, so keep an eye out for updates',
+			[
+				{ text: 'OK', onPress: () => { } }
+			],
+			{ cancelable: false }
+		)
 	}
 
 	render() {
@@ -126,13 +151,29 @@ export default class UpdateUserModal extends Component {
 						<TouchableHighlight
 							style={styles.buttonSelectPermissions}
 							underlayColor="black"
-							onPress={() => { this._showPermissionPicker();}}>
+							onPress={() => { this._showPermissionPicker(); }}>
 							<Text style={styles.textTranslate}>
 								Select new permissions
 							</Text>
 						</TouchableHighlight>
+						<TouchableHighlight
+							style={styles.buttonSelectPermissions}
+							underlayColor="black"
+							onPress={() => { this._showWordList(); }}>
+							<Text style={styles.textTranslate}>
+								Show User's words
+							</Text>
+						</TouchableHighlight>
+						<TouchableHighlight
+							style={styles.buttonSelectPermissions}
+							underlayColor="black"
+							onPress={() => { this._showCommentList(); }}>
+							<Text style={styles.textTranslate}>
+								Show User's Comments
+							</Text>
+						</TouchableHighlight>
 					</View>
-					<View style={{ flexDirection: 'row'}}>
+					<View style={{ flexDirection: 'row' }}>
 						<TouchableHighlight
 							style={styles.buttonModal}
 							underlayColor="black"

@@ -78,8 +78,8 @@ export default class WordList extends React.PureComponent {
 		/>
 	);
 
-	_renderSeperator = ({word}) => (
-		<Text>--------------------------------------</Text>
+	_renderSeperator = ({ word }) => (
+		<View style={{borderBottomWidth:1}}/>
 	);
 
 	render() {

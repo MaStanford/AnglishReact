@@ -158,14 +158,20 @@ var styles = StyleSheet.create({
 		color: '#FFFFFF',
 		alignItems: 'center'
 	},
-	buttonDeleteIcon: {
+	buttonDeleteComment: {
 		flexDirection: 'row',
 		alignItems: 'flex-start',
 		alignSelf: 'flex-start',
-		height: 40,
-		width: 40,
+		backgroundColor: '#FFFFFF',
+		flexWrap: 'wrap'
+	},
+	buttonDeleteWord: {
+		flexDirection: 'row',
+		alignItems: 'flex-start',
+		alignSelf: 'flex-start',
 		backgroundColor: '#FFFFFF',
 		flexWrap: 'wrap',
+		marginRight: 15
 	},
 	containerModalMain: {
 		flex: 1,
@@ -218,7 +224,6 @@ var styles = StyleSheet.create({
 		alignItems: 'center',
 		width: 40,
 		height: 40,
-		marginTop: 100
 	},
 	buttonSelectPermissions: {
 		backgroundColor: '#DCDCDC',

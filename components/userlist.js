@@ -56,7 +56,7 @@ export default class UserList extends React.PureComponent {
 	);
 
 	_renderSeperator = ({ word }) => (
-		<Text>--------------------------------------</Text>
+		<View style={{borderBottomWidth:1}}/>
 	);
 
 	render() {

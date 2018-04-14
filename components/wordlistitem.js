@@ -37,11 +37,11 @@ export default class WordListItem extends React.PureComponent {
 	_getDeleteButton() {
 		return (
 			<TouchableHighlight
-				style={styles.buttonDeleteIcon}
+				style={styles.buttonDeleteWord}
 				onPress={() => {
 					this._deleteWord();
 				}}>
-				<Icon name="delete" style={styles.buttonModalOpenEdit} />
+				<Icon name="delete" style={styles.buttonDeleteIcon} />
 			</TouchableHighlight>
 		);
 	}
@@ -49,11 +49,11 @@ export default class WordListItem extends React.PureComponent {
 	_getEditButton() {
 		return (
 			<TouchableHighlight
-				style={styles.buttonDeleteIcon}
+				style={styles.buttonDeleteWord}
 				onPress={() => {
 					this._EditWord();
 				}}>
-				<Icon name="mode-edit" style={styles.buttonModalOpenEdit} />
+				<Icon name="mode-edit" style={styles.buttonDeleteIcon} />
 			</TouchableHighlight>
 		);
 	}
@@ -63,7 +63,7 @@ export default class WordListItem extends React.PureComponent {
 		var editButton = this.state.user.permissions >= utils.permissions.mod ? this._getEditButton() : null;
 		return (
 			<TouchableOpacity onPress={this._onPress}>
-				<View key={this.state.word._id}>
+				<View style={{marginTop:3}} key={this.state.word._id}>
 					<View style={styles.rowWords}>
 						<Text style={styles.textRowLabel}>Word             :</Text>
 						<Text style={styles.textdef}>{this.state.word.word}</Text>
