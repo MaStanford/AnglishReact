@@ -25,6 +25,15 @@ var NetworkUtils = {
 			}
 		}).then((response) => response.json());
 	},
+	fetchCommentsByUserID: function (userId){
+		return fetch(`https://${server}${commentAPI}/user/${userId}`, {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then((response) => response.json());
+	},
 	addCommentToWord: function (wordID, userId, comment, sessionToken) {
 		return fetch(`https://${server}${commentAPI}`, {
 			method: 'POST',

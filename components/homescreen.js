@@ -57,20 +57,20 @@ export default class HomeScreen extends React.Component {
 
     this._isMounted = 'false'
 
-		store.subscribe(() => {
-      if(this._isMounted){
-        this.setState({user: store.getState().user});
+    store.subscribe(() => {
+      if (this._isMounted) {
+        this.setState({ user: store.getState().user });
       }
-		});
+    });
   }
 
   componentDidMount() {
-		this._mounted = true;
-	}
+    this._mounted = true;
+  }
 
-	componentWillUnmount() {
-		this._mounted = false;
-	}
+  componentWillUnmount() {
+    this._mounted = false;
+  }
 
   handleNavigation(action) {
     switch (action) {
@@ -98,29 +98,29 @@ export default class HomeScreen extends React.Component {
   }
 
   defTemplate = [{
-		_id: '_id',
-		word: '',
-		type: 'N/A',
-		attested: 'N/A',
-		unattested: 'N/A'
-	}]
+    _id: '_id',
+    word: '',
+    type: 'N/A',
+    attested: 'N/A',
+    unattested: 'N/A'
+  }]
 
   _fetchWordListByWord(word = 'language') {
-		if (word != null || word != '') {
-			NetworkUtils.fetchWord(word, 0)
-				.then((res) => {
-					if (res.data.length > 0) {
-						this.setState({ wordList: res.data });
-					} else {
-						var nowordfound = this.defTemplate;
-						nowordfound[0].word = this.props.word + ' not found!';
-						this.setState({ dataSource: nowordfound });
-					}
-				}).catch((error) => {
-					console.log(error);
-				});
-		}
-	}
+    if (word != null || word != '') {
+      NetworkUtils.fetchWord(word, 0)
+        .then((res) => {
+          if (res.data.length > 0) {
+            this.setState({ wordList: res.data });
+          } else {
+            var nowordfound = this.defTemplate;
+            nowordfound[0].word = this.props.word + ' not found!';
+            this.setState({ dataSource: nowordfound });
+          }
+        }).catch((error) => {
+          console.log(error);
+        });
+    }
+  }
 
   _wordDetailSelectCallback(word) {
     this.setState({
@@ -157,20 +157,32 @@ export default class HomeScreen extends React.Component {
         callback={this._detailCallback.bind(this)} />);
   }
 
-  _WIPAlert(){
+  _WIPAlert() {
     Alert.alert(
-			'Feature Incomplete',
-			'This feature is no complete yet, I\'m working on getting it done, so keep an eye out for updates',
-			[
-				{ text: 'OK', onPress: () => { } }
-			],
-			{ cancelable: false }
-		)
+      'Feature Incomplete',
+      'This feature is no complete yet, I\'m working on getting it done, so keep an eye out for updates',
+      [
+        { text: 'OK', onPress: () => { } }
+      ],
+      { cancelable: false }
+    )
+  }
+
+  _getWordList() {
+    return (
+      <WordList word={this.state.word}
+        user={this.state.user} wordList={this.state.wordList}
+        onPressItem={(wordDetail) => this._wordDetailSelectCallback(wordDetail)}
+        onLongPressItem={() => { this._WIPAlert() }}
+        onEditItem={() => { this._WIPAlert() }}
+        onDeleteItem={() => { this._WIPAlert() }} />
+    );
   }
 
   render() {
     var addwordmodal = this.state.addwordvisible ? this._getAddWordModal() : null;
     var wordDetail = this.state.detailVisible ? this._getWordDetail() : null;
+    var wordList = this._getWordList();
     return (
       <View style={styles.containermain}>
         <Titlebar title="Word lookup" />
@@ -178,21 +190,16 @@ export default class HomeScreen extends React.Component {
           style={styles.textinput}
           placeholder="Type here to translate!"
           onChangeText={(text) => this.state.input = text.toLowerCase().trim()}
-          onSubmitEditing={() => {this._onPressButton();}} />
+          onSubmitEditing={() => { this._onPressButton(); }} />
         <TouchableHighlight
           style={styles.buttonTranslate}
           underlayColor="black"
-          onPress={() => {this._onPressButton();}}>
+          onPress={() => { this._onPressButton(); }}>
           <Text style={styles.textTranslate}>
             Translate
           </Text>
         </TouchableHighlight>
-        <WordList word={this.state.word} 
-          user={this.state.user} wordList={this.state.wordList} 
-          onPressItem={(wordDetail)=>this._wordDetailSelectCallback(wordDetail)} 
-          onLongPressItem={()=> {this._WIPAlert()}}
-          onEditItem={()=> {this._WIPAlert()}}
-          onDeleteItem={()=> {this._WIPAlert()}}/>
+        {wordList}
         <Menu callback={(action) => this.handleNavigation(action)} />
         {wordDetail}
         {addwordmodal}

@@ -243,6 +243,18 @@ var styles = StyleSheet.create({
 		marginLeft: 20,
 		marginRight: 20,
 	},
+	containerModalUserCommentList:{
+		flex: 1,
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		marginLeft: 20,
+		marginRight: 20,
+		marginTop: '18%', 
+		marginBottom: '18%',
+	},
 	containerModalPickerPermissions:{
 		flex: 1,
 		flexDirection: 'column',

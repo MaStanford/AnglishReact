@@ -103,7 +103,8 @@ export default class WordDetailModal extends Component {
 			})
 			.catch((err) => {
 				this.setState({ error: 'Error fetching comments: ' + err.message });
-			});
+			}
+		);
 	}
 
 	_onDeleteComment(comment) {

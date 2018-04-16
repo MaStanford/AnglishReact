@@ -10,7 +10,6 @@ import utils from '../modules/utils';
 export default class CommentListItem extends React.PureComponent {
 	constructor(props) {
 		super(props);
-		console.log(props);
 	}
 
 	_onLongPress = () => {
