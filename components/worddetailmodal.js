@@ -12,12 +12,11 @@ import styles from '../modules/styles';
 import WordListItem from './wordlistitem';
 
 import CommentList from './commentlist';
-import EditCommentTextModal from './editcommenttextmodal';
+import EditCommentTextModal from './commentedittextmodal';
 import Network from '../modules/network';
 import { store, actions } from '../modules/statemanager'
 
 export default class WordDetailModal extends Component {
-
 
 	constructor(props) {
 		super(props);

@@ -51,7 +51,7 @@ export default class WordListItem extends React.PureComponent {
 			<TouchableHighlight
 				style={styles.buttonDeleteWord}
 				onPress={() => {
-					this._EditWord();
+					this._editWord();
 				}}>
 				<Icon name="mode-edit" style={styles.buttonDeleteIcon} />
 			</TouchableHighlight>

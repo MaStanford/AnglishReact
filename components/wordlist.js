@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {FlatList, Text, View, TouchableOpacity } from 'react-native';
-import NetworkUtils from '../modules/network';
 
 //styles
 import styles from '../modules/styles';
@@ -17,54 +16,24 @@ export default class WordList extends React.PureComponent {
 		super(props);
 
 		this.state = {
-			dataSource: this.emptyTemplate,
-			user: props.user
+			dataSource: props.wordList,
+			user: props.user,
+			word: props.word
 		};
 
-		if(props.word && !utils.isEmpty(props.word)  && props.word != ''){
-			this.fetchData(props.word);
-		}
-
 		//Ontouch callback for each item in the list.
-		this.callback = props.callback;
-	}
-
-	emptyTemplate = [];
-
-	defTemplate = [{
-		_id: '_id',
-		word: '',
-		type: 'N/A',
-		attested: 'N/A',
-		unattested: 'N/A'
-	}]
-
-	fetchData(word = 'language') {
-		if (word != null || word != '') {
-			NetworkUtils.fetchWord(word, 0)
-				.then((res) => {
-					if (res.data.length > 0) {
-						this.setState({ dataSource: res.data });
-					} else {
-						var nowordfound = this.defTemplate;
-						nowordfound[0].word = this.props.word + ' not found!';
-						this.setState({ dataSource: nowordfound });
-					}
-				}).catch((error) => {
-					console.log(error);
-				});
-		}
+		this.onPressItem = props.onPressItem;
 	}
 
 	componentWillReceiveProps(props) {
-		if(props.word && !utils.isEmpty(props.word)  && props.word != ''){
-			this.fetchData(props.word);
-		}
-		this.setState({user:props.user});
+		this.setState({
+			dataSource: props.wordList, 
+			user: props.user, 
+			word: props.word});
 	}
 
 	_onPressItem = (word) => {
-		this.callback(word);
+		this.onPressItem(word);
 	};
 
 	_renderItem = ({ item, index }) => (

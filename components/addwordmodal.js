@@ -18,7 +18,7 @@ import { Icon } from 'react-native-elements'
 
 import styles from '../modules/styles';
 import Titlebar from './titlebar';
-import EditWordTextModal from './edittextmodal';
+import EditWordTextModal from './wordedittextmodal';
 import Network from '../modules/network';
 import { store, actions } from '../modules/statemanager';
 import { storage, keys } from '../modules/storage';

@@ -20,6 +20,8 @@ import {
 //styles
 import styles from '../modules/styles';
 
+import NetworkUtils from '../modules/network';
+
 //Custom Component
 import Titlebar from './titlebar';
 import WordList from './wordlist';
@@ -45,6 +47,7 @@ export default class HomeScreen extends React.Component {
     this.state = {
       input: '',
       word: '',
+      wordList: [],
       user: store.getState().user,
       detailVisible: false,
       addwordvisible: false,
@@ -68,11 +71,6 @@ export default class HomeScreen extends React.Component {
 		this._mounted = false;
 	}
 
-  onPressButton() {
-    Keyboard.dismiss();
-    this.setState({ word: this.state.input });
-  }
-
   handleNavigation(action) {
     switch (action) {
       case MenuActions.Logout:
@@ -91,6 +89,37 @@ export default class HomeScreen extends React.Component {
         break;
     }
   }
+
+  _onPressButton() {
+    Keyboard.dismiss();
+    this.setState({ word: this.state.input });
+    this._fetchWordListByWord(this.state.input);
+  }
+
+  defTemplate = [{
+		_id: '_id',
+		word: '',
+		type: 'N/A',
+		attested: 'N/A',
+		unattested: 'N/A'
+	}]
+
+  _fetchWordListByWord(word = 'language') {
+		if (word != null || word != '') {
+			NetworkUtils.fetchWord(word, 0)
+				.then((res) => {
+					if (res.data.length > 0) {
+						this.setState({ wordList: res.data });
+					} else {
+						var nowordfound = this.defTemplate;
+						nowordfound[0].word = this.props.word + ' not found!';
+						this.setState({ dataSource: nowordfound });
+					}
+				}).catch((error) => {
+					console.log(error);
+				});
+		}
+	}
 
   _wordDetailSelectCallback(word) {
     this.setState({
@@ -137,16 +166,16 @@ export default class HomeScreen extends React.Component {
           style={styles.textinput}
           placeholder="Type here to translate!"
           onChangeText={(text) => this.state.input = text.toLowerCase().trim()}
-          onSubmitEditing={this.onPressButton.bind(this)} />
+          onSubmitEditing={() => {this._onPressButton();}} />
         <TouchableHighlight
           style={styles.buttonTranslate}
           underlayColor="black"
-          onPress={this.onPressButton.bind(this)}>
+          onPress={() => {this._onPressButton();}}>
           <Text style={styles.textTranslate}>
             Translate
           </Text>
         </TouchableHighlight>
-        <WordList word={this.state.word} user={this.state.user} callback={(wordDetail)=>this._wordDetailSelectCallback(wordDetail)} />
+        <WordList word={this.state.word} user={this.state.user} wordList={this.state.wordList} onPressItem={(wordDetail)=>this._wordDetailSelectCallback(wordDetail)} />
         <Menu callback={(action) => this.handleNavigation(action)} />
         {wordDetail}
         {addwordmodal}
