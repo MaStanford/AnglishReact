@@ -37,10 +37,6 @@ import RegisterScreen from './components/registerscreen';
 import InfoScreen from './components/infoscreen';
 import AdminScreen from './components/adminscreen';
 
-//Dialog/Modals
-import WordDetail from './components/worddetailmodal';
-import AddWordModal from './components/addwordmodal';
-
 export default class App extends React.Component {
   constructor(props) {
     super(props);

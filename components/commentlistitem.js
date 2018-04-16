@@ -10,17 +10,22 @@ import utils from '../modules/utils';
 export default class CommentListItem extends React.PureComponent {
 	constructor(props) {
 		super(props);
+		console.log(props);
 	}
 
 	_onLongPress = () => {
 		this.props.onLongPressItem(this.props.item);
 	};
 
-	_deleteComment() {
+	_deleteComment = () => {
 		this.props.onDeleteItem(this.props.item);
 	}
 
-	_getDeleteButton() {
+	_editComment = () => {
+		this.props.onEditItem(this.props.item);
+	}
+
+	_getDeleteButton = () =>  {
 		return (
 			<TouchableHighlight
 				style={styles.buttonDeleteComment}
@@ -32,12 +37,25 @@ export default class CommentListItem extends React.PureComponent {
 		);
 	}
 
+	_getEditButton() {
+		return (
+			<TouchableHighlight
+				style={styles.buttonDeleteComment}
+				onPress={() => {
+					this._editComment();
+				}}>
+				<Icon name="mode-edit" style={styles.buttonDeleteComment} />
+			</TouchableHighlight>
+		);
+	}
+
 	_formatDate(date) {
 		return utils.formatDate(date);
 	}
 
 	render() {
 		var deleteButton = this.props.user._id == this.props.item.user._id  || this.props.user.permissions >= utils.permissions.mod ? this._getDeleteButton() : null;
+		var editButton = this.props.user._id == this.props.item.user._id  || this.props.user.permissions >= utils.permissions.mod ? this._getEditButton() : null;
 		return (
 			<TouchableOpacity onLongPress={this._onLongPress}>
 				<View key={this.props.item._id}>
@@ -53,7 +71,10 @@ export default class CommentListItem extends React.PureComponent {
 						<Text style={styles.textRowLabel}>Comment: </Text>
 						<Text style={styles.textdef}>{this.props.item.comment}</Text>
 					</View>
-					{deleteButton}
+					<View style={{flexDirection: 'row', justifyContent: 'flex-start', alignContent: 'flex-start'}}>
+						{editButton}
+						{deleteButton}
+					</View>
 				</View>
 			</TouchableOpacity>
 		);

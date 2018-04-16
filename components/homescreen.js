@@ -9,7 +9,8 @@ import {
   TextInput,
   Button,
   Keyboard,
-  BackHandler
+  BackHandler,
+  Alert
 } from 'react-native';
 
 import {
@@ -34,7 +35,7 @@ import { storage, keys } from '../modules/storage';
 
 //Dialog/Modals
 import WordDetail from './worddetailmodal';
-import AddWordModal from './addwordmodal';
+import AddWordModal from './wordaddmodal';
 
 export default class HomeScreen extends React.Component {
 
@@ -156,6 +157,17 @@ export default class HomeScreen extends React.Component {
         callback={this._detailCallback.bind(this)} />);
   }
 
+  _WIPAlert(){
+    Alert.alert(
+			'Feature Incomplete',
+			'This feature is no complete yet, I\'m working on getting it done, so keep an eye out for updates',
+			[
+				{ text: 'OK', onPress: () => { } }
+			],
+			{ cancelable: false }
+		)
+  }
+
   render() {
     var addwordmodal = this.state.addwordvisible ? this._getAddWordModal() : null;
     var wordDetail = this.state.detailVisible ? this._getWordDetail() : null;
@@ -175,7 +187,12 @@ export default class HomeScreen extends React.Component {
             Translate
           </Text>
         </TouchableHighlight>
-        <WordList word={this.state.word} user={this.state.user} wordList={this.state.wordList} onPressItem={(wordDetail)=>this._wordDetailSelectCallback(wordDetail)} />
+        <WordList word={this.state.word} 
+          user={this.state.user} wordList={this.state.wordList} 
+          onPressItem={(wordDetail)=>this._wordDetailSelectCallback(wordDetail)} 
+          onLongPressItem={()=> {this._WIPAlert()}}
+          onEditItem={()=> {this._WIPAlert()}}
+          onDeleteItem={()=> {this._WIPAlert()}}/>
         <Menu callback={(action) => this.handleNavigation(action)} />
         {wordDetail}
         {addwordmodal}

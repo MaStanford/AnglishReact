@@ -14,73 +14,24 @@ export default class CommentList extends React.PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
-			error: '',
-			dataSource: this.emptyTemplate
+			dataSource: props.commentList
 		};
-
-		this.fetchData(props.word._id);
-
-		//Ontouch callback for each item in the list.
-		this.longPressCallback = props.longPressCallback;
-	}
-
-	emptyTemplate = [];
-
-	template = [{
-		_id: '_id',
-		user: {
-			handle: ''
-		},
-		word: '',
-		createdAt: '',
-		updatedAt: '',
-		comment: ''
-	}]
-
-	fetchData(wordID) {
-		if (wordID != null || wordID != '') {
-			network.fetchCommentsByWordID(wordID)
-				.then((res) => {
-					if (res.data.length > 0) {
-						this.setState({ dataSource: res.data });
-					} else {
-						this.setState({ dataSource: this.emptyTemplate });
-					}
-				}).catch((error) => {
-
-				});
-		}
 	}
 
 	componentWillReceiveProps(props) {
-		this.fetchData(props.word._id);
+		this.setState({dataSource: props.commentList});
 	}
 
 	_onLongPressItem = (comment) => {
-		this.longPressCallback(comment);
+		this.props.onLongPressItem(comment);
 	};
 
 	_onDeleteComment = (comment) => {
-		if (comment.user._id == store.getState().user._id || store.getState().user.permissions >= utils.permissions.mod) {
-			network.deleteCommentByID(comment._id, store.getState().session.token)
-				.then((res) => {
-					if (res.code == 1) {
-						this.setState({ info: 'Comment deleted!' });
-						this.setState({ error: '' });
-						this.fetchData(comment.word);
-					} else {
-						this.setState({ error: 'Error deleting comment: ' + res.result });
-						this.setState({ info: '' });
-					}
-				})
-				.catch((error) => {
-					this.setState({ error: 'Error deleting comment: ' + error.message });
-					this.setState({ info: '' });
-				});
-		} else {
-			this.setState({ error: 'Invalid permissions' });
-			this.setState({ info: '' });
-		}
+		this.props.onDeleteItem(comment);
+	}
+
+	_onEditItem = (comment) => {
+		this.props.onEditItem(comment);
 	}
 
 	_deleteCommentAlert(comment) {
@@ -100,6 +51,7 @@ export default class CommentList extends React.PureComponent {
 		<CommentListItem
 			onLongPressItem={(item) => {this._onLongPressItem(item)}}
 			onDeleteItem={(comment) => {this._deleteCommentAlert(comment)}}
+			onEditItem={(item)=>{this._onEditItem()}}
 			item={item}
 			user={store.getState().user}
 		/>
@@ -109,33 +61,9 @@ export default class CommentList extends React.PureComponent {
 		<View style={{borderBottomWidth:1}}/>
 	);
 
-	_getInfoText() {
-		return (
-			<View style={{ flexDirection: 'column', alignContent: 'center' }}>
-				<Text ref='info' style={styles.textInfo}>
-					{this.state.info}
-				</Text>
-			</View>
-		);
-	}
-
-	_getErrorText() {
-		return (
-			<View style={{ flexDirection: 'column', alignContent: 'center' }}>
-				<Text ref='error' style={styles.texterror}>
-					{this.state.error}
-				</Text>
-			</View>
-		);
-	}
-
 	render() {
-		var error = this.state.error == '' ? null : this._getErrorText();
-		var info = this.state.info == '' ? null : this._getInfoText();
 		return (
 			<View style={styles.flatListComments}>
-				{error}
-				{info}
 				<FlatList
 					data={this.state.dataSource}
 					keyExtractor={(item, index) => item._id}

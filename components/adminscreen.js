@@ -19,7 +19,7 @@ import styles from '../modules/styles';
 import Titlebar from './titlebar';
 import Network from '../modules/network';
 import UserList from './userlist';
-import UpdateUserModal from './updateusermodal';
+import UpdateUserModal from './userupdatemodal';
 import { store, actions } from '../modules/statemanager';
 import { storage, keys } from '../modules/storage';
 

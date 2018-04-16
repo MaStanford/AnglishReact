@@ -62,7 +62,7 @@ export default class WordListItem extends React.PureComponent {
 		var deleteButton = this.state.user.permissions >= utils.permissions.mod ? this._getDeleteButton() : null;
 		var editButton = this.state.user.permissions >= utils.permissions.mod ? this._getEditButton() : null;
 		return (
-			<TouchableOpacity onPress={this._onPress}>
+			<TouchableOpacity onPress={this._onPress} onLongPress={this._onLongPress}>
 				<View style={{marginTop:3}} key={this.state.word._id}>
 					<View style={styles.rowWords}>
 						<Text style={styles.textRowLabel}>Word             :</Text>

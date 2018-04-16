@@ -19,7 +19,7 @@ import Titlebar from './titlebar';
 import Network from '../modules/network';
 import { store, actions } from '../modules/statemanager';
 
-export default class EditCommentTextModal extends Component {
+export default class CommentEditTextModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -51,7 +51,7 @@ export default class EditCommentTextModal extends Component {
 
 	setModalVisible(success) {
 		Keyboard.dismiss();
-		this.props.callback(success);
+		this.props.editCommentCallback(success);
 	}
 
 	_addComment() {

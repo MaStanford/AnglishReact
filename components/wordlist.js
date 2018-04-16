@@ -39,9 +39,9 @@ export default class WordList extends React.PureComponent {
 	_renderItem = ({ item, index }) => (
 		<WordListItem
 			onPressItem={(item)=>this._onPressItem(item)}
-			onLongPressItem={() => {}}
-			onDeleteItem={()=>{}}
-			onEditItem={()=>{}}
+			onLongPressItem={(item) => {this.props.onLongPressItem(item)}}
+			onDeleteItem={(item)=>{this.props.onDeleteItem(item)}}
+			onEditItem={(item)=>{this.props.onEditItem(item)}}
 			word={item}
 			user={this.state.user}
 		/>
