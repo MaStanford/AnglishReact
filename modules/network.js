@@ -1,10 +1,10 @@
 let server = 'anglish-server.herokuapp.com';
+let UserGetAPI = '/users/user';
 let wordAPI = '/api/words';
 let commentAPI = '/api/comments';
 let UserLoginAPI = '/users/login';
 let UserLogoutAPI = '/users/logout';
 let UserRegisterAPI = '/users/register';
-let UserGetAPI = '/users/user';
 
 var NetworkUtils = {
 	fetchWord: function (word = 'language', getComments = 1) {
@@ -13,6 +13,47 @@ var NetworkUtils = {
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
+			}
+		}).then((response) => response.json());
+	},
+	fecthWordByID: function (wordID, getComments = 1){
+		return fetch(`https://${server}${wordAPI}/${wordID}?populate_comments=${getComments}`, {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then((response) => response.json());
+	},
+	addWord: function (word, sessionToken) {
+		return fetch(`https://${server}${wordAPI}`, {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'sessionToken': sessionToken
+			},
+			body: JSON.stringify(word)
+		}).then((response) => response.json());
+	},
+	updateWord: function (wordID, word, sessionToken) {
+		return fetch(`https://${server}${wordAPI}/${wordID}`, {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'sessionToken': sessionToken
+			},
+			body: JSON.stringify(word)
+		}).then((response) => response.json());
+	},
+	deleteWordByID: function (wordID, sessionToken){
+		return fetch(`https://${server}${wordAPI}/${wordID}`, {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'sessionToken': sessionToken
 			}
 		}).then((response) => response.json());
 	},
@@ -27,6 +68,15 @@ var NetworkUtils = {
 	},
 	fetchCommentsByUserID: function (userId){
 		return fetch(`https://${server}${commentAPI}/user/${userId}`, {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then((response) => response.json());
+	},
+	fetchCommentById: function (commentID){
+		return fetch(`https://${server}${commentAPI}/comment/${commentID}`, {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',
@@ -59,26 +109,15 @@ var NetworkUtils = {
 			}
 		}).then((response) => response.json());
 	},
-	addWord: function (word, sessionToken) {
-		return fetch(`https://${server}${wordAPI}`, {
+	updateCommentbyID: function(comment, sessionToken){
+		return fetch(`https://${server}${commentAPI}/comment/${comment._id}`, {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
 				'sessionToken': sessionToken
 			},
-			body: JSON.stringify(word)
-		}).then((response) => response.json());
-	},
-	updateWord: function (word_id, word, sessionToken) {
-		return fetch(`https://${server}${wordAPI}/${word_id}`, {
-			method: 'POST',
-			headers: {
-				'Accept': 'application/json',
-				'Content-Type': 'application/json',
-				'sessionToken': sessionToken
-			},
-			body: JSON.stringify(word)
+			body: JSON.stringify(comment)
 		}).then((response) => response.json());
 	},
 	login: function (emailval, passwordval) {
@@ -156,8 +195,8 @@ var NetworkUtils = {
 			return response.json()
 		});
 	},
-	getUserById: function (user_id) {
-		return fetch(`https://${server}${UserGetAPI}/${user_id}`, {
+	getUserById: function (userID) {
+		return fetch(`https://${server}${UserGetAPI}/${userID}`, {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',

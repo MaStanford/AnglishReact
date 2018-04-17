@@ -56,16 +56,16 @@ export default class InfoScreen extends Component {
 	}
 
 	render() {
+		var error = this.state.error == '' ? null : this._getErrorText();
+		var info = this.state.info == '' ? null : this._getInfoText();
 		return (
 			<View style={styles.containermain}>
 				<Titlebar title="User Info" />
-				<Text ref='error' style={styles.texterror}>
-					{this.state.error}
-				</Text>
-				<Text ref='info' style={styles.textInfo}>
-					{this.state.info}
-				</Text>
-				<UserComponent user={this.state.user} />
+				{error}
+				{info}
+				<View style={{borderWidth: 1}}>
+					<UserComponent user={this.state.user} onPressItem={()=>{}} />
+				</View>
 				<Text>App info</Text>
 				<Text>Privacy Policy</Text>
 				<Text>Change Password</Text>
