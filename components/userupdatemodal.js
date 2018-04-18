@@ -88,7 +88,16 @@ export default class UpdateUserModal extends Component {
 	}
 
 	_fetchWordsByUser() {
-
+		Network.fetchWordsbyUserId(this.state.user._id)
+		.then((res)=>{
+			if(res.code ==1){
+				this.setState({wordList:res.data});
+			}else{
+				this.setState({error: res.result});
+			}
+		}).catch((err)=>{
+			this.setState({error:err.message});
+		});
 	}
 
 	_onDeleteComment(comment) {
@@ -167,9 +176,8 @@ export default class UpdateUserModal extends Component {
 	}
 
 	_showWordList() {
-		this._WIPAlert();
-		// this.setState({ wordsVisible: true });
-		// this._fetchWordsByUser();
+		this.setState({ wordsVisible: true });
+		this._fetchWordsByUser();
 	}
 
 	_getWordList() {

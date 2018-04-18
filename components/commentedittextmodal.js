@@ -56,17 +56,17 @@ export default class CommentEditTextModal extends Component {
 
 	_addComment() {
 		Network.addCommentToWord(this.props.word._id, store.getState().user._id, this.state.text, store.getState().session.token)
-			.then(function (res) {
+			.then((res) => {
 				if (res && res.code == 1) {
 					this.setState({ info: 'Comment added to ' + this.props.word.word});
-					setTimeout(() => {this.setModalVisible(true)}, 1000);
+					setTimeout(() => {this.setModalVisible(true)}, 500);
 				} else {
 					this.setState({ error: 'Error adding comment: ' + res.result});
 				}
-			}.bind(this))
-			.catch(function (err) {
+			})
+			.catch((err) => {
 				this.setState({ error: 'Error adding comment: ' + err.message});
-			}.bind(this));
+			});
 	}
 
 	render() {

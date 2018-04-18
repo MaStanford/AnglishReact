@@ -16,8 +16,17 @@ var NetworkUtils = {
 			}
 		}).then((response) => response.json());
 	},
-	fecthWordByID: function (wordID, getComments = 1){
-		return fetch(`https://${server}${wordAPI}/${wordID}?populate_comments=${getComments}`, {
+	fecthWordByID: function (wordId, getComments = 1){
+		return fetch(`https://${server}${wordAPI}/${wordId}?populate_comments=${getComments}`, {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			}
+		}).then((response) => response.json());
+	},
+	fetchWordsbyUserId: function (wordId, getComments = 1){
+		return fetch(`https://${server}${wordAPI}/user/${wordId}?populate_comments=${getComments}`, {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',
@@ -36,8 +45,8 @@ var NetworkUtils = {
 			body: JSON.stringify(word)
 		}).then((response) => response.json());
 	},
-	updateWord: function (wordID, word, sessionToken) {
-		return fetch(`https://${server}${wordAPI}/${wordID}`, {
+	updateWord: function (wordId, word, sessionToken) {
+		return fetch(`https://${server}${wordAPI}/${wordId}`, {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
@@ -47,8 +56,8 @@ var NetworkUtils = {
 			body: JSON.stringify(word)
 		}).then((response) => response.json());
 	},
-	deleteWordByID: function (wordID, sessionToken){
-		return fetch(`https://${server}${wordAPI}/${wordID}`, {
+	deleteWordByID: function (wordId, sessionToken){
+		return fetch(`https://${server}${wordAPI}/${wordId}`, {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',
@@ -57,8 +66,8 @@ var NetworkUtils = {
 			}
 		}).then((response) => response.json());
 	},
-	fetchCommentsByWordID: function (wordID) {
-		return fetch(`https://${server}${commentAPI}/word/${wordID}`, {
+	fetchCommentsByWordID: function (wordId) {
+		return fetch(`https://${server}${commentAPI}/word/${wordId}`, {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',
@@ -75,8 +84,8 @@ var NetworkUtils = {
 			}
 		}).then((response) => response.json());
 	},
-	fetchCommentById: function (commentID){
-		return fetch(`https://${server}${commentAPI}/comment/${commentID}`, {
+	fetchCommentById: function (commentId){
+		return fetch(`https://${server}${commentAPI}/comment/${commentId}`, {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',
@@ -99,8 +108,8 @@ var NetworkUtils = {
 			})
 		}).then((response) => response.json());
 	},
-	deleteCommentByID: function (commentID, sessionToken) {
-		return fetch(`https://${server}${commentAPI}/comment/${commentID}`, {
+	deleteCommentByID: function (commentId, sessionToken) {
+		return fetch(`https://${server}${commentAPI}/comment/${commentId}`, {
 			method: 'DELETE',
 			headers: {
 				'Accept': 'application/json',
@@ -195,8 +204,8 @@ var NetworkUtils = {
 			return response.json()
 		});
 	},
-	getUserById: function (userID) {
-		return fetch(`https://${server}${UserGetAPI}/${userID}`, {
+	getUserById: function (userId) {
+		return fetch(`https://${server}${UserGetAPI}/${userId}`, {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',

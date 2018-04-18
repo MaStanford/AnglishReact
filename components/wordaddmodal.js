@@ -42,15 +42,15 @@ export default class AddWord extends Component {
 		//Sub to state updates
 		store.subscribe(() => {
 			//If we somehow are here and the user is logged out. 
-			if(store.getState().user.permissions < 2){
-				this.setState({error: 'Invalid permissions to add word.'});
+			if (store.getState().user.permissions < 2) {
+				this.setState({ error: 'Invalid permissions to add word.' });
 			}
 		});
 
 		//Edge case that somehow this is launched when we don't have permissions
-		if(!store.getState().session || store.getState().user.permissions < 2){
+		if (!store.getState().session || store.getState().user.permissions < 2) {
 			//this.setModalVisible(visible);
-			this.setState({error: 'Invalid permissions to add word.'});
+			this.setState({ error: 'Invalid permissions to add word.' });
 		}
 	}
 
@@ -69,7 +69,7 @@ export default class AddWord extends Component {
 		this._addword();
 	}
 
-	_addword(){
+	_addword() {
 		word = {
 			word: this.state.word,
 			type: this.state.type,
@@ -77,28 +77,29 @@ export default class AddWord extends Component {
 			unattested: this.state.unattested
 		}
 
-		if(word.word == '' || word.type == '' || word.attested == '' || word.unattested == ''){
-			this.setState({error: 'Please fill out all fields, use a \'-\' character to fill empty fields.'});
+		if (word.word == '' || word.type == '' || word.attested == '' || word.unattested == '') {
+			this.setState({ error: 'Please fill out all fields, use a \'-\' character to fill empty fields.' });
 			return;
 		}
 
 		Network.addWord(word, store.getState().session.token)
-		.then((result) => {
-			if(result.code == 1){
-				this.setState({info: result.data.word + ' Added!'});
-				this.setState({error:''});
-				this._clear();
-			}else{
-				this.setState({info:''});
-				this.setState({error: 'Failed to add word!'});
-			}
-		})
-		.catch((err) => {
-			this.setState({error: err.message});
-		});
+			.then((result) => {
+				if (result.code == 1) {
+					this.setState({ info: result.data.word + ' Added!' });
+					this.setState({ error: '' });
+					this._clear();
+					setTimeout(() => { this.setModalVisible(false) }, 500);
+				} else {
+					this.setState({ info: '' });
+					this.setState({ error: 'Failed to add word!' });
+				}
+			})
+			.catch((err) => {
+				this.setState({ error: err.message });
+			});
 	}
 
-	_clear(){
+	_clear() {
 		this.setState({
 			text: '',
 			error: '',
@@ -135,8 +136,30 @@ export default class AddWord extends Component {
 			/>);
 	}
 
+	_getInfoText() {
+		return (
+			<View style={{ flexDirection: 'column', alignContent: 'center' }}>
+				<Text ref='info' style={styles.textInfo}>
+					{this.state.info}
+				</Text>
+			</View>
+		);
+	}
+
+	_getErrorText() {
+		return (
+			<View style={{ flexDirection: 'column', alignContent: 'center' }}>
+				<Text ref='error' style={styles.texterror}>
+					{this.state.error}
+				</Text>
+			</View>
+		);
+	}
+
 	render() {
 		var editTextModel = this.state.edittextmodalvisible ? this._getEditTextModal() : null;
+		var error = this.state.error == '' ? null : this._getErrorText();
+		var info = this.state.info == '' ? null : this._getInfoText();
 		return (
 			<Modal
 				animationType="slide"
@@ -148,18 +171,11 @@ export default class AddWord extends Component {
 				}>
 				<View style={styles.containerModalAddNewWordBackground}>
 					<Titlebar title="Add New Word" />
-
-					<View style={{ flexDirection: 'column', alignContent: 'center' }}>
-						<Text ref='error' style={styles.texterror}>
-							{this.state.error}
-						</Text>
-
-						<Text ref='info' style={styles.textInfo}>
-							{this.state.info}
-						</Text>
-					</View>
-
 					<View style={styles.containerModalContent}>
+						<View style={{ flexDirection: 'column', alignContent: 'center' }}>
+							{error}
+							{info}
+						</View>
 						<TextInput
 							returnKeyType='next'
 							ref='word'

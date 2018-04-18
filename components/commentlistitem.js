@@ -53,8 +53,8 @@ export default class CommentListItem extends React.PureComponent {
 	}
 
 	render() {
-		var deleteButton = this.props.user._id == this.props.item.user._id  || this.props.user.permissions >= utils.permissions.mod ? this._getDeleteButton() : null;
-		var editButton = this.props.user._id == this.props.item.user._id  || this.props.user.permissions >= utils.permissions.mod ? this._getEditButton() : null;
+		var deleteButton = this.props.user._id === this.props.item.user._id  || this.props.user.permissions >= utils.permissions.mod ? this._getDeleteButton() : null;
+		var editButton = this.props.user._id === this.props.item.user._id ? this._getEditButton() : null;
 		return (
 			<TouchableOpacity onLongPress={this._onLongPress}>
 				<View key={this.props.item._id}>

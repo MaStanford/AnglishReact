@@ -59,8 +59,8 @@ export default class WordListItem extends React.PureComponent {
 	}
 
 	render() {
-		var deleteButton = this.state.user.permissions >= utils.permissions.mod ? this._getDeleteButton() : null;
-		var editButton = this.state.user.permissions >= utils.permissions.mod ? this._getEditButton() : null;
+		var deleteButton = (this.state.user.permissions >= utils.permissions.mod || this.state.user._id === this.state.word.createdBy) ? this._getDeleteButton() : null;
+		var editButton = (this.state.user.permissions >= utils.permissions.mod || this.state.user._id === this.state.word.createdBy) ? this._getEditButton() : null;
 		return (
 			<TouchableOpacity onPress={this._onPress} onLongPress={this._onLongPress}>
 				<View style={{marginTop:3}} key={this.state.word._id}>
@@ -81,8 +81,8 @@ export default class WordListItem extends React.PureComponent {
 						<Text style={styles.textdef}>{this.state.word.unattested.split(',').join('\n').split(';').join('\n')}</Text>
 					</View>
 					<View style={{flexDirection: 'row', justifyContent: 'flex-start', alignContent: 'flex-start'}}>
-					{editButton}
-					{deleteButton}
+						{editButton}
+						{deleteButton}
 					</View>
 
 				</View>
