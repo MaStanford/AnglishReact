@@ -27,16 +27,27 @@ export default class AddWord extends Component {
 
 	constructor(props) {
 		super(props);
+
+		word = props.word;
+		if(!props.word){
+			word = {
+				word: '',
+				type: '',
+				attested: '',
+				unattested: ''
+			}
+		}
+		
 		this.state = {
 			edittextmodalvisible: false,
 			editTextModalParentState: 'attested',
 			text: '',
 			error: '',
 			info: '',
-			word: '',
-			type: '',
-			attested: '',
-			unattested: ''
+			word: word.word,
+			type: word.type,
+			attested: word.attested,
+			unattested: word.unattested
 		};
 
 		//Sub to state updates
@@ -82,21 +93,45 @@ export default class AddWord extends Component {
 			return;
 		}
 
-		Network.addWord(word, store.getState().session.token)
-			.then((result) => {
-				if (result.code == 1) {
-					this.setState({ info: result.data.word + ' Added!' });
-					this.setState({ error: '' });
-					this._clear();
-					setTimeout(() => { this.setModalVisible(false) }, 500);
-				} else {
-					this.setState({ info: '' });
-					this.setState({ error: 'Failed to add word!' });
-				}
-			})
-			.catch((err) => {
-				this.setState({ error: err.message });
-			});
+		if (props.word) {
+			word = this.props.word;
+			word.word = this.state.word;
+			word.type = this.state.type;
+			word.attested = this.state.attested;
+			word.unattested = this.state.unattested;
+
+			Network.updateWord(word)
+				.then((result) => {
+					if (result.code == 1) {
+						this.setState({ info: result.data.word + ' updated!' });
+						this.setState({ error: '' });
+						this._clear();
+						setTimeout(() => { this.setModalVisible(false) }, 500);
+					} else {
+						this.setState({ info: '' });
+						this.setState({ error: 'Failed to add word!' });
+					}
+				})
+				.catch((err) => {
+					this.setState({ error: err.message });
+				});
+		} else {
+			Network.addWord(word, store.getState().session.token)
+				.then((result) => {
+					if (result.code == 1) {
+						this.setState({ info: result.data.word + ' added!' });
+						this.setState({ error: '' });
+						this._clear();
+						setTimeout(() => { this.setModalVisible(false) }, 500);
+					} else {
+						this.setState({ info: '' });
+						this.setState({ error: 'Failed to add word!' });
+					}
+				})
+				.catch((err) => {
+					this.setState({ error: err.message });
+				});
+		}
 	}
 
 	_clear() {

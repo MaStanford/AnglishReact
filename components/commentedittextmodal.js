@@ -25,13 +25,10 @@ export default class CommentEditTextModal extends Component {
 		this.state = {
 			error: '',
 			info: '',
-			text: ''
+			text: props.commentText
 		}
-
-		//Edge case that somehow this is launched when we don't have permissions
-		if (!store.getState().session || store.getState().user.permissions < 1) {
-			this.setState({ error: 'Invalid permissions to comment.' });
-		}
+		console.log('this.state');
+		console.log(this.state);
 	}
 
 	componentDidMount() {
@@ -45,28 +42,20 @@ export default class CommentEditTextModal extends Component {
 	componentWillReceiveProps(props) {
 		this.setState({
 			error: '',
-			text: props.text
+			info: '',
+			text: props.commentText
 		});
+		console.log('this.state');
+		console.log(this.state);
 	}
 
 	setModalVisible(success) {
 		Keyboard.dismiss();
-		this.props.editCommentCallback(success);
-	}
-
-	_addComment() {
-		Network.addCommentToWord(this.props.word._id, store.getState().user._id, this.state.text, store.getState().session.token)
-			.then((res) => {
-				if (res && res.code == 1) {
-					this.setState({ info: 'Comment added to ' + this.props.word.word});
-					setTimeout(() => {this.setModalVisible(true)}, 500);
-				} else {
-					this.setState({ error: 'Error adding comment: ' + res.result});
-				}
-			})
-			.catch((err) => {
-				this.setState({ error: 'Error adding comment: ' + err.message});
-			});
+		if(success){
+			this.props.commentCallBack(this.state.text);
+		}else{
+			this.props.cancelCallback();
+		}
 	}
 
 	render() {
@@ -110,7 +99,7 @@ export default class CommentEditTextModal extends Component {
 							<TouchableHighlight
 								style={styles.buttonModal}
 								underlayColor="black"
-								onPress={() => this._addComment()}>
+								onPress={() => this.setModalVisible(true)}>
 								<Text style={styles.textTranslate}>
 									Comment
           						</Text>

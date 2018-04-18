@@ -26,7 +26,9 @@ export default class WordDetailModal extends Component {
 			user: store.getState().user,
 			word: props.word,
 			commentList: [],
-			editcommentvisible: false,
+			editComment: {},
+			newCommentVisible: false,
+			editCommentVisible: false,
 			error: '',
 			info: ''
 		}
@@ -56,55 +58,80 @@ export default class WordDetailModal extends Component {
 		this.props.callback(visible);
 	}
 
-	_editCommentCallback(commentSucces) {
-		this.setState({ editcommentvisible: false });
-		if (commentSucces) {
-			this._fetchComments();
-		}
+	_newCommentCallback(text) {
+		this.setState({ newCommentVisible: false });
+		this._addComment(text);
 	}
 
-	_getCommentEditModal() {
-		return (
-			<CommentEditTextModal
-				editCommentCallback={(commentSuccess) =>this._editCommentCallback(commentSuccess)}
-				word={this.props.word}
-			/>
-		);
+	_editCommentCallback(text) {
+		this.setState({ editCommentVisible: false });
+		this._updateComment(text);
 	}
 
-	_getCommentButton() {
-		return (
-			<TouchableHighlight
-				style={styles.buttonModalAddComment
-				}
-				onPress={() => {
-					this.setState({ editcommentvisible: true });
-				}}>
-				<Text style={styles.textTranslate}>
-					Comment
-				</Text>
-			</TouchableHighlight>
-		);
+	_cancelCommentCallback() {
+		this.setState({ editCommentVisible: false, newCommentVisible: false });
 	}
 
 	_fetchComments() {
 		Network.fetchCommentsByWordID(this.state.word._id)
 			.then((res) => {
 				if (res && res.code == 1) {
-					this.setState({ 
-						commentList: res.data});
+					this.setState({
+						commentList: res.data
+					});
 				} else {
-					this.setState({ 
+					this.setState({
 						error: 'Error fetching comments: ' + res.result,
 						info: '',
-						commentList: [] 
+						commentList: []
 					});
 				}
 			})
 			.catch((err) => {
 				this.setState({ error: 'Error fetching comments: ' + err.message });
 			}
-		);
+			);
+	}
+
+	_updateComment(text) {
+		var comment = this.state.editComment;
+		if (comment.user._id == store.getState().user._id) {
+			comment.comment = text;
+			Network.updateCommentbyID(comment, store.getState().session.token)
+				.then((res) => {
+					if (res.code == 1) {
+						this.setState({ info: 'Comment updated!' });
+						this.setState({ error: '' });
+						this._fetchComments();
+					} else {
+						this.setState({ error: 'Error updating comment: ' + res.result });
+						this.setState({ info: '' });
+					}
+				})
+				.catch((error) => {
+					this.setState({ error: 'Error updating comment: ' + error.message });
+					this.setState({ info: '' });
+				});
+		} else {
+			this.setState({ error: 'Invalid permissions' });
+			this.setState({ info: '' });
+		}
+	}
+
+
+	_addComment(text) {
+		Network.addCommentToWord(this.props.word._id, store.getState().user._id, text, store.getState().session.token)
+			.then((res) => {
+				if (res && res.code == 1) {
+					this.setState({ info: 'Comment added to ' + this.props.word.word });
+					this._fetchComments();
+				} else {
+					this.setState({ error: 'Error adding comment: ' + res.result });
+				}
+			})
+			.catch((err) => {
+				this.setState({ error: 'Error adding comment: ' + err.message });
+			});
 	}
 
 	_onDeleteComment(comment) {
@@ -114,7 +141,7 @@ export default class WordDetailModal extends Component {
 					if (res.code == 1) {
 						this.setState({ info: 'Comment deleted!' });
 						this.setState({ error: '' });
-						this._fetchComments(comment.word);
+						this._fetchComments();
 					} else {
 						this.setState({ error: 'Error deleting comment: ' + res.result });
 						this.setState({ info: '' });
@@ -130,28 +157,66 @@ export default class WordDetailModal extends Component {
 		}
 	}
 
-	_onEditComment(comment){
-		this._WIPAlert();
+	_onEditComment(comment) {
+		this.setState({ editCommentVisible: true, editComment: comment });
 	}
 
-	_onLongPressComment(comment){
-		this._WIPAlert();
+	_onLongPressComment(comment) {
+
 	}
 
-	_WIPAlert() {
-		Alert.alert(
-			'Feature Incomplete',
-			'This feature is no complete yet, I\'m working on getting it done, so keep an eye out for updates',
-			[
-				{ text: 'OK', onPress: () => { } }
-			],
-			{ cancelable: false }
-		)
+	_getCommentEditModal() {
+		return (
+			<CommentEditTextModal
+				commentCallBack={(commentSuccess) => this._editCommentCallback(commentSuccess)}
+				cancelCallback={() => this._cancelCommentCallback()}
+				commentText={this.state.editComment.comment}
+			/>
+		);
+	}
+
+	_getCommentNewModal() {
+		return (
+			<CommentEditTextModal
+				commentCallBack={(commentSuccess) => this._newCommentCallback(commentSuccess)}
+				cancelCallback={() => this._cancelCommentCallback()}
+				commentText={null}
+			/>
+		);
+	}
+
+	_getBackButton() {
+		return (
+			<TouchableHighlight
+				style={styles.buttonModal}
+				onPress={() => {
+					this.setModalVisible(false);
+				}}>
+				<Text style={styles.textTranslate}>
+					Back
+				</Text>
+			</TouchableHighlight>
+		);
+	}
+
+	_getCommentButton() {
+		return (
+			<TouchableHighlight
+				style={styles.buttonModalAddComment
+				}
+				onPress={() => {
+					this.setState({ newCommentVisible: true });
+				}}>
+				<Text style={styles.textTranslate}>
+					Comment
+				</Text>
+			</TouchableHighlight>
+		);
 	}
 
 	_getWordListItem() {
 		return (<WordListItem
-			onPressItem={()=>{}}
+			onPressItem={() => { }}
 			onLongPressItem={(word) => { this._WIPAlert() }}
 			onDeleteItem={(word) => { this._WIPAlert() }}
 			onEditItem={(word) => { this._WIPAlert() }}
@@ -191,12 +256,21 @@ export default class WordDetailModal extends Component {
 
 	render() {
 		title = '';
+		//Word and commentlist, comment list has the edit and delete buttons.
 		var wordlistitem = this._getWordListItem();
 		var commentList = this._getCommentList();
-		var commentEditModal = this.state.editcommentvisible ? this._getCommentEditModal() : null;
+
+		//Modal for adding and modal for updating
+		var commentEditModal = this.state.editCommentVisible ? this._getCommentEditModal() : null;
+		var commentNewModal = this.state.newCommentVisible ? this._getCommentNewModal() : null;
+
+		//Buttons, comment makes new comment visible.
+		var backButton = this._getBackButton();
 		var commentButton = this.state.permissions > 0 ? this._getCommentButton() : null;
+
 		var error = this.state.error == '' ? null : this._getErrorText();
 		var info = this.state.info == '' ? null : this._getInfoText();
+
 		if (this.props.word.word) {
 			title = this.props.word.word.toUpperCase();
 		}
@@ -222,19 +296,12 @@ export default class WordDetailModal extends Component {
 							{commentList}
 						</ScrollView>
 						<View style={{ flexDirection: 'row' }}>
-							<TouchableHighlight
-								style={styles.buttonModal}
-								onPress={() => {
-									this.setModalVisible(false);
-								}}>
-								<Text style={styles.textTranslate}>
-									Back
-							</Text>
-							</TouchableHighlight>
+							{backButton}
 							{commentButton}
 						</View>
 					</View>
 					{commentEditModal}
+					{commentNewModal}
 				</View>
 			</Modal>
 		);

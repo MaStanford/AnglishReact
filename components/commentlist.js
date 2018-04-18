@@ -51,7 +51,7 @@ export default class CommentList extends React.PureComponent {
 		<CommentListItem
 			onLongPressItem={(item) => {this._onLongPressItem(item)}}
 			onDeleteItem={(comment) => {this._deleteCommentAlert(comment)}}
-			onEditItem={(item)=>{this._onEditItem()}}
+			onEditItem={(item)=>{this._onEditItem(item)}}
 			item={item}
 			user={store.getState().user}
 		/>

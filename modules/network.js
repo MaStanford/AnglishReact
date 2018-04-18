@@ -45,8 +45,8 @@ var NetworkUtils = {
 			body: JSON.stringify(word)
 		}).then((response) => response.json());
 	},
-	updateWord: function (wordId, word, sessionToken) {
-		return fetch(`https://${server}${wordAPI}/${wordId}`, {
+	updateWord: function (word, sessionToken) {
+		return fetch(`https://${server}${wordAPI}/${word._id}`, {
 			method: 'POST',
 			headers: {
 				'Accept': 'application/json',

@@ -123,7 +123,15 @@ export default class UpdateUserModal extends Component {
 		}
 	}
 
+	_onEditComment(comment){
+		this._WIPAlert();
+	}
+
 	_onDeleteWord(word) {
+		this._WIPAlert();
+	}
+
+	_onEditWord(word){
 		this._WIPAlert();
 	}
 
@@ -188,7 +196,7 @@ export default class UpdateUserModal extends Component {
 				wordList={this.state.wordList}
 				onPressItem={() => { }}
 				onLongPressItem={() => { }}
-				onEditItem={() => { this._WIPAlert() }}
+				onEditItem={(word) => { this._onEditWord(word) }}
 				onDeleteItem={(word) => { this._onDeleteWord(word) }} />
 		);
 	}
@@ -231,7 +239,7 @@ export default class UpdateUserModal extends Component {
 				commentList={this.state.commentList}
 				onLongPressItem={(comment) => { }}
 				onDeleteItem={(comment) => { this._onDeleteComment(comment) }}
-				onEditItem={(comment) => { this._WIPAlert() }} />
+				onEditItem={(comment) => { this._onEditComment(comment) }} />
 		);
 	}
 
