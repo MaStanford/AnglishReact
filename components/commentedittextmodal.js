@@ -27,8 +27,6 @@ export default class CommentEditTextModal extends Component {
 			info: '',
 			text: props.commentText
 		}
-		console.log('this.state');
-		console.log(this.state);
 	}
 
 	componentDidMount() {
@@ -45,8 +43,6 @@ export default class CommentEditTextModal extends Component {
 			info: '',
 			text: props.commentText
 		});
-		console.log('this.state');
-		console.log(this.state);
 	}
 
 	setModalVisible(success) {

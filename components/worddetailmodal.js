@@ -16,6 +16,7 @@ import CommentList from './commentlist';
 import CommentEditTextModal from './commentedittextmodal';
 import Network from '../modules/network';
 import { store, actions } from '../modules/statemanager'
+import utils from '../modules/utils';
 
 export default class WordDetailModal extends Component {
 
@@ -165,6 +166,43 @@ export default class WordDetailModal extends Component {
 
 	}
 
+	_onDeleteWord(word) {
+		if (store.getState().user.permissions >= utils.permissions.mod || word.createdBy == store.getState().user._id) {
+			// Works on both iOS and Android
+			Alert.alert(
+				`Delete ${word.word}?`,
+				'Do you want to delete this word? This cannot be undone.',
+				[
+					{ text: 'Back', onPress: () => { }, style: 'cancel' },
+					{ text: 'OK', onPress: () => { this._deleteWord(word) } }
+				],
+				{ cancelable: true }
+			)
+		}
+	}
+
+	_onEditWord(word) {
+
+	}
+
+	_deleteWord(word) {
+		Network.deleteWordByID(word._id, store.getState().session.token)
+			.then((res) => {
+				if (res.code == 1) {
+					this.setState({ error: '' });
+					this.setState({ info: 'Word deleted' });
+					setTimeout(() => { this.setModalVisible(false) }, 500);
+				} else {
+					this.setState({ error: res.result });
+					this.setState({ info: '' });
+				}
+			})
+			.catch((err) => {
+				this.setState({ error: err.message });
+				this.setState({ info: '' });
+			});
+	}
+
 	_getCommentEditModal() {
 		return (
 			<CommentEditTextModal
@@ -217,9 +255,9 @@ export default class WordDetailModal extends Component {
 	_getWordListItem() {
 		return (<WordListItem
 			onPressItem={() => { }}
-			onLongPressItem={(word) => { this._WIPAlert() }}
-			onDeleteItem={(word) => { this._WIPAlert() }}
-			onEditItem={(word) => { this._WIPAlert() }}
+			onLongPressItem={(word) => { }}
+			onDeleteItem={(word) => { this._onDeleteWord(word) }}
+			onEditItem={(word) => { this._onEditWord(word) }}
 			word={this.state.word}
 			user={this.state.user}
 		/>);
