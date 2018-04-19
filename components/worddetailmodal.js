@@ -14,6 +14,7 @@ import WordListItem from './wordlistitem';
 
 import CommentList from './commentlist';
 import CommentEditTextModal from './commentedittextmodal';
+import WordAddModal from './wordaddmodal'
 import Network from '../modules/network';
 import { store, actions } from '../modules/statemanager'
 import utils from '../modules/utils';
@@ -30,6 +31,7 @@ export default class WordDetailModal extends Component {
 			editComment: {},
 			newCommentVisible: false,
 			editCommentVisible: false,
+			editWordVisible: false,
 			error: '',
 			info: ''
 		}
@@ -71,6 +73,10 @@ export default class WordDetailModal extends Component {
 
 	_cancelCommentCallback() {
 		this.setState({ editCommentVisible: false, newCommentVisible: false });
+	}
+
+	_editwordCallback(newWord){
+		this.setState({ editWordVisible: false, word: newWord });
 	}
 
 	_fetchComments() {
@@ -182,7 +188,7 @@ export default class WordDetailModal extends Component {
 	}
 
 	_onEditWord(word) {
-
+		this.setState({editWordVisible: true});
 	}
 
 	_deleteWord(word) {
@@ -222,6 +228,15 @@ export default class WordDetailModal extends Component {
 			/>
 		);
 	}
+
+	_getWordEditModal() {
+		return (
+		  <WordAddModal
+			callback={(word)=>this._editwordCallback(word)}
+			word={this.state.word}
+			isEdit={true}
+		  />);
+	  }
 
 	_getBackButton() {
 		return (
@@ -302,6 +317,9 @@ export default class WordDetailModal extends Component {
 		var commentEditModal = this.state.editCommentVisible ? this._getCommentEditModal() : null;
 		var commentNewModal = this.state.newCommentVisible ? this._getCommentNewModal() : null;
 
+		//Word edit modal
+		var wordEditModal = this.state.editWordVisible ? this._getWordEditModal() : null;
+
 		//Buttons, comment makes new comment visible.
 		var backButton = this._getBackButton();
 		var commentButton = this.state.permissions > 0 ? this._getCommentButton() : null;
@@ -340,6 +358,7 @@ export default class WordDetailModal extends Component {
 					</View>
 					{commentEditModal}
 					{commentNewModal}
+					{wordEditModal}
 				</View>
 			</Modal>
 		);

@@ -135,17 +135,19 @@ export default class HomeScreen extends React.Component {
     });
   }
 
-  _addwordCallback() {
+  _addwordCallback(word) {
     this.setState({
       addwordvisible: false
     });
+    this._fetchWordListByWord(word.word);
   }
 
   _getAddWordModal() {
     return (
       <AddWordModal
         visible={this.state.addwordvisible}
-        callback={this._addwordCallback.bind(this)}
+        callback={(word) => {this._addwordCallback(word)}}
+        word={{word:'word',type:'',attested:'',unattested:''}}
       />);
   }
 

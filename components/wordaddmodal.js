@@ -22,59 +22,47 @@ import EditWordTextModal from './wordedittextmodal';
 import Network from '../modules/network';
 import { store, actions } from '../modules/statemanager';
 import { storage, keys } from '../modules/storage';
+import utils from '../modules/utils';
 
 export default class AddWord extends Component {
 
 	constructor(props) {
 		super(props);
 
-		word = props.word;
-		if(!props.word){
-			word = {
-				word: '',
-				type: '',
-				attested: '',
-				unattested: ''
-			}
-		}
-		
 		this.state = {
 			edittextmodalvisible: false,
 			editTextModalParentState: 'attested',
+			isEdit: props.isEdit,
 			text: '',
 			error: '',
 			info: '',
-			word: word.word,
-			type: word.type,
-			attested: word.attested,
-			unattested: word.unattested
+			word: props.word
 		};
 
-		//Sub to state updates
 		store.subscribe(() => {
-			//If we somehow are here and the user is logged out. 
-			if (store.getState().user.permissions < 2) {
+			if (store.getState().user.permissions < utils.permissions.poweruser) {
 				this.setState({ error: 'Invalid permissions to add word.' });
 			}
 		});
 
-		//Edge case that somehow this is launched when we don't have permissions
 		if (!store.getState().session || store.getState().user.permissions < 2) {
-			//this.setModalVisible(visible);
 			this.setState({ error: 'Invalid permissions to add word.' });
 		}
 	}
 
-	setModalVisible(visible) {
-		this.props.callback(visible);
+	componentWillReceiveProps(props) {
+		this.setState({
+			word: props.word
+		});
+	}
+
+	setModalVisible() {
+		this.props.callback(this.state.word);
 	}
 
 	onPressButton() {
 		this.setState({
-			word: this.state.word,
-			type: this.state.type,
-			attested: this.state.attested,
-			unattested: this.state.unattested
+			word: this.state.word
 		});
 		Keyboard.dismiss();
 		this._addword();
@@ -93,20 +81,13 @@ export default class AddWord extends Component {
 			return;
 		}
 
-		if (props.word) {
-			word = this.props.word;
-			word.word = this.state.word;
-			word.type = this.state.type;
-			word.attested = this.state.attested;
-			word.unattested = this.state.unattested;
-
+		if (this.props.isEdit) {
 			Network.updateWord(word)
 				.then((result) => {
 					if (result.code == 1) {
 						this.setState({ info: result.data.word + ' updated!' });
 						this.setState({ error: '' });
-						this._clear();
-						setTimeout(() => { this.setModalVisible(false) }, 500);
+						setTimeout(() => { this.setModalVisible() }, 500);
 					} else {
 						this.setState({ info: '' });
 						this.setState({ error: 'Failed to add word!' });
@@ -121,8 +102,7 @@ export default class AddWord extends Component {
 					if (result.code == 1) {
 						this.setState({ info: result.data.word + ' added!' });
 						this.setState({ error: '' });
-						this._clear();
-						setTimeout(() => { this.setModalVisible(false) }, 500);
+						setTimeout(() => { this.setModalVisible() }, 500);
 					} else {
 						this.setState({ info: '' });
 						this.setState({ error: 'Failed to add word!' });
@@ -139,11 +119,19 @@ export default class AddWord extends Component {
 			text: '',
 			error: '',
 			info: '',
-			word: '',
-			type: '',
-			attested: '',
-			unattested: ''
+			word: {word:'',type:'', attested:'',unattested:''}
 		})
+	}
+
+	_resetState(){
+		console.log('state:');
+		console.log(this.state);
+		console.log(this.props.word);
+		if(this.state.isEdit){
+			this.props.callback(this.props.word);
+		}else{
+			this.props.callback(this.state.word);
+		}
 	}
 
 	_openLargeEdit(state, currentText) {
@@ -155,19 +143,28 @@ export default class AddWord extends Component {
 	}
 
 	_editTextModalCallback(state, inputText) {
+		newWord = this.state.word;
+		newWord[state] = inputText;
 		this.setState({
-			[state]: inputText,
+			word: newWord,
 			edittextmodalvisible: false,
+		});
+	}
+
+	_updateText(state, inputText){
+		newWord = this.state.word;
+		newWord[state] = inputText;
+		this.setState({
+			word: newWord
 		});
 	}
 
 	_getEditTextModal() {
 		return (
 			<EditWordTextModal
-				visible={this.state.edittextmodalvisible}
 				parentState={this.state.editTextModalParentState}
 				text={this.state.text}
-				callback={this._editTextModalCallback.bind(this)}
+				callback={(state, input) => this._editTextModalCallback(state, input)}
 			/>);
 	}
 
@@ -195,17 +192,19 @@ export default class AddWord extends Component {
 		var editTextModel = this.state.edittextmodalvisible ? this._getEditTextModal() : null;
 		var error = this.state.error == '' ? null : this._getErrorText();
 		var info = this.state.info == '' ? null : this._getInfoText();
+
+		title = this.state.isEdit ? 'Update word: ' + this.props.word.word : "Add New Word";
 		return (
 			<Modal
 				animationType="slide"
 				transparent={true}
 				visible={this.props.visible}
 				onRequestClose={() => {
-					this.setModalVisible(false);
+					this.setModalVisible();
 				}
 				}>
 				<View style={styles.containerModalAddNewWordBackground}>
-					<Titlebar title="Add New Word" />
+					<Titlebar title={title} />
 					<View style={styles.containerModalContent}>
 						<View style={{ flexDirection: 'column', alignContent: 'center' }}>
 							{error}
@@ -216,8 +215,8 @@ export default class AddWord extends Component {
 							ref='word'
 							style={styles.textinputaddtop}
 							placeholder="Word"
-							value={this.state.word}
-							onChangeText={(text) => this.setState({ word: text })}
+							value={this.state.word.word}
+							onChangeText={(text) => this._updateText('word', text)}
 							onSubmitEditing={(event) => {
 								this.refs.type.focus();
 							}
@@ -228,8 +227,8 @@ export default class AddWord extends Component {
 							ref='type'
 							style={styles.textinputaddtop}
 							placeholder="Type"
-							value={this.state.type}
-							onChangeText={(text) => this.setState({ type: text })}
+							value={this.state.word.type}
+							onChangeText={(text) => this._updateText('type', text)}
 							onSubmitEditing={(event) => {
 								this.refs.attested.focus();
 							}
@@ -240,9 +239,9 @@ export default class AddWord extends Component {
 								returnKeyType='next'
 								ref='attested'
 								style={styles.textinputaddbot}
-								value={this.state.attested}
+								value={this.state.word.attested}
 								placeholder="Attested"
-								onChangeText={(text) => this.setState({ attested: text })}
+								onChangeText={(text) => this._updateText('attested', text)}
 								onSubmitEditing={(event) => {
 									this.refs.unattested.focus();
 								}
@@ -250,7 +249,7 @@ export default class AddWord extends Component {
 							<TouchableHighlight
 								style={styles.textinputrowaddwordbutton}
 								onPress={() => {
-									this._openLargeEdit('attested', this.state.attested);
+									this._openLargeEdit('attested', this.state.word.attested);
 								}}>
 								<Icon name="wrap-text" style={styles.buttonModalOpenEdit} />
 							</TouchableHighlight>
@@ -260,16 +259,16 @@ export default class AddWord extends Component {
 							<TextInput
 								ref='unattested'
 								style={styles.textinputaddbot}
-								value={this.state.unattested}
+								value={this.state.word.unattested}
 								placeholder="Unattested"
-								onChangeText={(text) => this.setState({ unattested: text })}
+								onChangeText={(text) => this._updateText('unattested', text)}
 								onSubmitEditing={this.onPressButton.bind(this)}
 								returnKeyType='go'
 							/>
 							<TouchableHighlight
 								style={styles.textinputrowaddwordbutton}
 								onPress={() => {
-									this._openLargeEdit('unattested', this.state.unattested);
+									this._openLargeEdit('unattested', this.state.word.unattested);
 								}}>
 								<Icon name="wrap-text" style={styles.buttonModalOpenEdit} />
 							</TouchableHighlight>
@@ -279,7 +278,7 @@ export default class AddWord extends Component {
 							<TouchableHighlight
 								style={styles.buttonModal}
 								onPress={() => {
-									this.setModalVisible(false);
+									this._resetState();
 								}}>
 								<Text style={styles.textTranslate}>
 									Back
@@ -288,7 +287,7 @@ export default class AddWord extends Component {
 							<TouchableHighlight
 								style={styles.buttonModalAddComment}
 								underlayColor="black"
-								onPress={this.onPressButton.bind(this)}>
+								onPress={() => { this.onPressButton() }}>
 								<Text style={styles.textTranslate}>
 									Add Word
           						</Text>
@@ -296,7 +295,7 @@ export default class AddWord extends Component {
 							<TouchableHighlight
 								style={styles.buttonModal}
 								underlayColor="black"
-								onPress={this._clear.bind(this)}>
+								onPress={() => { this._clear() }}>
 								<Text style={styles.textTranslate}>
 									Clear
           						</Text>
