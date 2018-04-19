@@ -46,8 +46,8 @@ export default class App extends React.Component {
       session = JSON.parse(result);
       if (result !== null) {
         store.dispatch({
-          type: actions.SESSION,
-          session: session
+          type: actions.SESSION_NEW,
+          token: session.token
         });
       }
     }).catch((error) => {
@@ -59,7 +59,7 @@ export default class App extends React.Component {
       user = JSON.parse(result);
       if (result !== null) {
         store.dispatch({
-          type: actions.USER,
+          type: actions.USER_LOGGED_IN,
           user: user
         });
       }

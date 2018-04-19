@@ -3,10 +3,32 @@ import {createStore, combineReducers} from 'redux';
 
 //Actions
 export const actions = {
-	SESSION : 0,
-	USER :1,
-	LOGGED_OUT: 2,
-	NEW_WORD : 3
+	//Session Actions
+	SESSION_NEW : 				0, //New Session
+	SESSION_EXPIRED: 			1, //Session expired
+	
+	//User Actions
+	USER_NEW:					2,
+	USER_LOGGED_IN: 			3,
+	USER_LOGGED_OUT: 			4,
+	USER_UPDATED:				5,
+
+	//Modal Actions
+	MODAL_SHOW_NEW_WORD:		6,
+	MODAL_CLOSE_NEW_WORD:		7,
+	MODAL_SHOW_NEW_COMMENT: 	8,
+	MODAL_CLOSE_NEW_COMMENT:	9,
+	MODAL_SHOW_DETAIL_VIEW: 	10,
+	MODAL_CLOSE_DETAIL_VIEW:	11,
+	MODAL_SHOW_USER_WORDS:		12,
+	MODAL_CLOSE_USER_WORDS: 	13,
+	MODAL_SHOW_USER_COMMENTS:	14,
+	MODAL_CLOSE_USER_COMMENTS:	15,
+
+	//Network actions
+	NETWORK_FETCH_WORD_WORD:	16,
+	NETWORK_RECEIVE_WORD_WORD:	17,
+	//Continue on in this fashion.
 }
 
 //Default state.
@@ -18,21 +40,24 @@ var state = {
 		permissions: -1
 	},
 	session:{
-		user:'',
 		token:''
 	},
-	word: {}
+	modal:{
+		showNewWord: false,
+		showNewComment: false,
+		showDetailView:false,
+		showUserWords:false,
+		showUserComments:false
+	}
 }
 
 const user = (user = state.user, action) => {
 	switch(action.type){
-		case actions.USER:
-			user = action.user;
-			return user;
+		case actions.USER_LOGGED_IN:
+			return {...user, ...action.user};
 			break;
-		case actions.LOGGED_OUT:
-			user = state.user;
-			return user;
+		case actions.USER_LOGGED_OUT:
+		return {...user, ...state.user};
 			break;
 		default:
 			return user;
@@ -41,33 +66,33 @@ const user = (user = state.user, action) => {
 
 const session = (session = state.session, action) => {
 	switch(action.type){
-		case actions.SESSION:
-			session = action.session;
-			return session;
+		case actions.SESSION_NEW:
+		return {...session, token:action.token};
 			break;
-		case actions.LOGGED_OUT:
-			session = state.session;
-			return session;
+		case actions.SESSION_EXPIRED:
+		return {...session, ...state.session};
 			break;
 		default:
 			return session;
 	}
 };
 
-const word = (word = state.word, action) => {
+const modal = (modal = state.modal, action) => {
 	switch(action.type){
-		case actions.NEW_WORD:
-			word = action.word;
-			return word;
+		case actions.MODAL_SHOW_NEW_WORD:
+			return {...modal, showNewWord:true}; //... syntax is object spread operator, same as Object.assign https://redux.js.org/recipes/using-object-spread-operator
+			break;
+		case actions.MODAL_CLOSE_NEW_WORD:
+			return {...modal, showNewWord:false};
 			break;
 		default:
-			return word;
+			return modal;
 	}
 };
 
 const combinedReducers = combineReducers({
 	user: user,
-	word: word,
+	modal: modal,
 	session: session
 });
 
