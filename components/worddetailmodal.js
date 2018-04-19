@@ -168,10 +168,6 @@ export default class WordDetailModal extends Component {
 		this.setState({ editCommentVisible: true, editComment: comment });
 	}
 
-	_onLongPressComment(comment) {
-
-	}
-
 	_onDeleteWord(word) {
 		if (store.getState().user.permissions >= utils.permissions.mod || word.createdBy == store.getState().user._id) {
 			// Works on both iOS and Android
@@ -281,7 +277,7 @@ export default class WordDetailModal extends Component {
 	_getCommentList() {
 		return (<CommentList
 			commentList={this.state.commentList}
-			onLongPressItem={(comment) => { this._onLongPressComment(comment) }}
+			onLongPressItem={(comment) => { }}
 			onDeleteItem={(comment) => { this._onDeleteComment(comment) }}
 			onEditItem={(comment) => this._onEditComment(comment)} />
 		);
