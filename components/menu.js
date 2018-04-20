@@ -18,13 +18,13 @@ import { store } from '../modules/statemanager';
 import utils from '../modules/utils';
 
 var MenuActions = {
-	Add:'Add Word',
-	Admin:'Admin',
-	Login:'Login',
-	Logout:'Logout',
-	Mod:'Mod',
-	Register:'Register',
-	Info:'Info'
+	Add: 'Add Word',
+	Admin: 'Admin',
+	Login: 'Login',
+	Logout: 'Logout',
+	Mod: 'Mod',
+	Register: 'Register',
+	Info: 'Info'
 }
 
 export default class Menu extends React.Component {
@@ -75,7 +75,7 @@ export default class Menu extends React.Component {
 		);
 	}
 
-	getUserButton(callback){
+	getUserButton(callback) {
 		return (
 			<ActionButton.Item key="Info" buttonColor='#3498db' title={MenuActions.Info} onPress={() => { callback(MenuActions.Info) }}>
 				<Icon name="info" style={styles.buttonActionIcon} />
@@ -93,22 +93,22 @@ export default class Menu extends React.Component {
 
 	build(user, callback) {
 		let menu = [];
-		switch(user.permissions){
+		switch (user.permissions) {
 			case utils.permissions.owner:
 				menu.push(this.getAdminButton(callback));
 			case utils.permissions.admin:
 			case utils.permissions.mod:
-			case utils.permissions.poweruser:	
+			case utils.permissions.poweruser:
 				menu.push(this.getAddButton(callback));
 			case utils.permissions.basicuser:
-			case utils.permissions.punisheduser: 
-					menu.push(this.getLogoutButton(callback));
-					menu.push(this.getUserButton(callback));
-					break;
-			case 0:
-			case -1:
+			case utils.permissions.punisheduser:
+				menu.push(this.getLogoutButton(callback));
+				menu.push(this.getUserButton(callback));
+				break;
+			case utils.permissions.guest:
 				menu.push(this.getLoginButton(callback));
 				menu.push(this.getRegisterButton(callback));
+				menu.push(this.getUserButton(callback));
 		}
 		return menu;
 	}

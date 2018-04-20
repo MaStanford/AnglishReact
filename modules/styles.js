@@ -152,6 +152,17 @@ var styles = StyleSheet.create({
 		borderWidth: 1,
 		margin: 10,
 	},
+	textappinfoheader:{
+		borderBottomWidth: 3,
+		fontSize: 15,
+		fontWeight: 'bold',
+		margin: 10,
+	},
+	textappinfo:{
+		borderWidth: 1,
+		fontSize: 12,
+		width: '80%'
+	},
 	buttonActionIcon: {
 		fontSize: 20,
 		height: 30,
@@ -172,6 +183,37 @@ var styles = StyleSheet.create({
 		backgroundColor: '#FFFFFF',
 		flexWrap: 'wrap',
 		marginRight: 15
+	},
+	buttonModal: {
+		backgroundColor: '#DCDCDC',
+		borderWidth: 1,
+		width: 85,
+		margin: 10
+	},
+	buttonModalAddComment: {
+		backgroundColor: '#DCDCDC',
+		borderWidth: 1,
+		width: 100,
+		margin: 10
+	},
+	buttonModalOpenEdit: {
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		alignItems: 'center',
+		width: 40,
+		height: 40,
+	},
+	buttonSelectPermissions: {
+		backgroundColor: '#DCDCDC',
+		borderWidth: 1,
+		alignItems: 'center',
+		width: 100,
+		height: 50,
+	},
+	buttonShowInfo: {
+		backgroundColor: '#DCDCDC',
+		borderWidth: 1,
+		alignItems: 'center',
 	},
 	containerModalMain: {
 		flex: 1,
@@ -206,32 +248,6 @@ var styles = StyleSheet.create({
 		flexDirection: 'column',
 		alignItems: 'center'
 	},
-	buttonModal: {
-		backgroundColor: '#DCDCDC',
-		borderWidth: 1,
-		width: 85,
-		margin: 10
-	},
-	buttonModalAddComment: {
-		backgroundColor: '#DCDCDC',
-		borderWidth: 1,
-		width: 100,
-		margin: 10
-	},
-	buttonModalOpenEdit: {
-		backgroundColor: '#FFFFFF',
-		borderWidth: 1,
-		alignItems: 'center',
-		width: 40,
-		height: 40,
-	},
-	buttonSelectPermissions: {
-		backgroundColor: '#DCDCDC',
-		borderWidth: 1,
-		alignItems: 'center',
-		width: 100,
-		height: 50,
-	},
 	containerUpdateUserModalButtons:{
 		flex: 1,
 		flexDirection: 'row',
@@ -262,6 +278,17 @@ var styles = StyleSheet.create({
 		justifyContent: 'center',
 		backgroundColor: '#FFFFFF',
 		borderWidth: 1,
+		marginLeft: 20,
+		marginRight: 20,
+		marginTop: '18%', 
+		marginBottom: '18%',
+	},
+	containerInfoScreen:{
+		flex: 1,
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#FFFFFF',
 		marginLeft: 20,
 		marginRight: 20,
 		marginTop: '18%', 

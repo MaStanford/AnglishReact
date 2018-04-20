@@ -58,7 +58,7 @@ var NetworkUtils = {
 	},
 	deleteWordByID: function (wordId, sessionToken){
 		return fetch(`https://${server}${wordAPI}/${wordId}`, {
-			method: 'POST',
+			method: 'DELETE',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',

@@ -28,7 +28,7 @@ import { store, actions } from '../modules/statemanager';
 import { storage, keys } from '../modules/storage';
 import utils from '../modules/utils';
 
-export default class UpdateUserModal extends Component {
+export default class UserUpdateModal extends Component {
 
 	constructor(props) {
 		super(props);

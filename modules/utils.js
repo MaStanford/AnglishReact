@@ -19,7 +19,8 @@ Utils = {
 		'mod'			:4,
 		'poweruser'		:3,
 		'basicuser'		:2,
-		'punisheduser'	:1
+		'punisheduser'	:1,
+		'guest'			:-1
 	},
 	getKeyFromValue: function(map, value){
 		for(key in map){

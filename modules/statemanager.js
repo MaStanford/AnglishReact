@@ -1,5 +1,6 @@
 //Redux
 import {createStore, combineReducers} from 'redux';
+import utils from './utils';
 
 //Actions
 export const actions = {
@@ -37,7 +38,7 @@ var state = {
 		_id: 'guest',
 		handle:'Guest',
 		email:'Guest',
-		permissions: -1
+		permissions: utils.permissions.guest
 	},
 	session:{
 		token:''

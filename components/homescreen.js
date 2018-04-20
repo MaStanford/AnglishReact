@@ -175,7 +175,7 @@ export default class HomeScreen extends React.Component {
 	}
 
 	_deleteWord(word) {
-		Network.deleteWordByID(word._id, store.getState().session.token)
+		NetworkUtils.deleteWordByID(word._id, store.getState().session.token)
 			.then((res) => {
 				if (res.code == 1) {
 					this.setState({ error: '' });
