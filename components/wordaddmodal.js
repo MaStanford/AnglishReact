@@ -24,12 +24,13 @@ import { store, actions } from '../modules/statemanager';
 import { storage, keys } from '../modules/storage';
 import utils from '../modules/utils';
 
-export default class AddWord extends Component {
+export default class WordAddModal extends Component {
 
 	constructor(props) {
 		super(props);
 
 		this.state = {
+			visible: props.visible,
 			edittextmodalvisible: false,
 			editTextModalParentState: 'attested',
 			isEdit: props.isEdit,
@@ -52,7 +53,8 @@ export default class AddWord extends Component {
 
 	componentWillReceiveProps(props) {
 		this.setState({
-			word: props.word
+			word: props.word,
+			visible: props.visible
 		});
 	}
 
@@ -162,6 +164,7 @@ export default class AddWord extends Component {
 	_getEditTextModal() {
 		return (
 			<EditWordTextModal
+				visible={this.state.edittextmodalvisible}
 				parentState={this.state.editTextModalParentState}
 				text={this.state.text}
 				callback={(state, input) => this._editTextModalCallback(state, input)}
@@ -198,7 +201,7 @@ export default class AddWord extends Component {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={this.props.visible}
+				visible={this.state.visible}
 				onRequestClose={() => {
 					this.setModalVisible();
 				}

@@ -22,6 +22,8 @@ import UserComponent from './usercomponent';
 import Network from '../modules/network';
 import WordList from './wordlist';
 import CommentList from './commentlist';
+import CommentEditTextModal from './commentedittextmodal';
+import WordAddModal from './wordaddmodal'
 import { store, actions } from '../modules/statemanager';
 import { storage, keys } from '../modules/storage';
 import utils from '../modules/utils';
@@ -31,12 +33,18 @@ export default class UpdateUserModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			visible: props.visible,
 			error: '',
 			info: '',
-			user: props.user,
+			user: props.user, //User to update, not the current user.
 			permissions: props.user.permissions,
 			wordsVisible: false,
 			commentsVisible: false,
+			editWord: {},
+			editComment: {},
+			editCommentVisible: false,
+			editWordVisible: false,
+			editWord: {},
 			wordList: [],
 			commentList: []
 		};
@@ -50,7 +58,15 @@ export default class UpdateUserModal extends Component {
 		this._mounted = false;
 	}
 
+	componentWillReceiveProps(props){
+		this.setState({
+			user:props.user, 
+			permissions:props.permissions
+		});
+	}
+
 	setModalVisible() {
+		this.setState({visible:false});
 		this.props.callback();
 	}
 
@@ -63,7 +79,7 @@ export default class UpdateUserModal extends Component {
 			.then((res) => {
 				if (res.code == 1) {
 					this.setState({ info: 'Successfully updated user' });
-					setTimeout(() => { this.setModalVisible() }, 1000);
+					setTimeout(() => { this.setModalVisible() }, 500);
 				} else {
 					this.setState({ error: res.result });
 				}
@@ -75,29 +91,29 @@ export default class UpdateUserModal extends Component {
 
 	_fetchCommentsByUser() {
 		Network.fetchCommentsByUserID(this.state.user._id)
-		.then((res) => {
-			if(res.code ==1){
-				this.setState({commentList:res.data});
-			}else{
-				this.setState({error: res.result});
-			}
-		})
-		.catch((err) => {
-			this.setState({error:err.message});
-		});
+			.then((res) => {
+				if (res.code == 1) {
+					this.setState({ commentList: res.data });
+				} else {
+					this.setState({ error: res.result });
+				}
+			})
+			.catch((err) => {
+				this.setState({ error: err.message });
+			});
 	}
 
 	_fetchWordsByUser() {
 		Network.fetchWordsbyUserId(this.state.user._id)
-		.then((res)=>{
-			if(res.code ==1){
-				this.setState({wordList:res.data});
-			}else{
-				this.setState({error: res.result});
-			}
-		}).catch((err)=>{
-			this.setState({error:err.message});
-		});
+			.then((res) => {
+				if (res.code == 1) {
+					this.setState({ wordList: res.data });
+				} else {
+					this.setState({ error: res.result });
+				}
+			}).catch((err) => {
+				this.setState({ error: err.message });
+			});
 	}
 
 	_onDeleteComment(comment) {
@@ -123,27 +139,73 @@ export default class UpdateUserModal extends Component {
 		}
 	}
 
-	_onEditComment(comment){
-		this._WIPAlert();
+	_onEditComment(comment) {
+		this.setState({ editCommentVisible: true, editComment: comment });
 	}
 
 	_onDeleteWord(word) {
-		this._WIPAlert();
+		var wordyword = word;
+		if (store.getState().user.permissions >= utils.permissions.mod || word.createdBy == store.getState().user._id) {
+			// Works on both iOS and Android
+			Alert.alert(
+				`Delete ${word.word}?`,
+				'Do you want to delete this word? This cannot be undone.',
+				[
+					{ text: 'Back', onPress: () => { }, style: 'cancel' },
+					{ text: 'OK', onPress: (word) => { this._deleteWord(wordyword) } }
+				],
+				{ cancelable: true }
+			)
+		}
 	}
 
-	_onEditWord(word){
-		this._WIPAlert();
+	_onEditWord(word) {
+		this.setState({ editWordVisible: true, editWord: word });
 	}
 
-	_WIPAlert() {
-		Alert.alert(
-			'Feature Incomplete',
-			'This feature is no complete yet, I\'m working on getting it done, so keep an eye out for updates',
-			[
-				{ text: 'OK', onPress: () => { } }
-			],
-			{ cancelable: false }
-		)
+	_deleteWord(word) {
+		console.log('Word:');
+		console.log(word);
+		Network.deleteWordByID(word._id, store.getState().session.token)
+			.then((res) => {
+				if (res.code == 1) {
+					this.setState({ error: '' });
+					this.setState({ info: 'Word deleted' });
+					setTimeout(() => { this.setModalVisible(false) }, 500);
+				} else {
+					this.setState({ error: res.result });
+					this.setState({ info: '' });
+				}
+			})
+			.catch((err) => {
+				this.setState({ error: err.message });
+				this.setState({ info: '' });
+			});
+	}
+
+	_updateComment(text) {
+		var comment = this.state.editComment;
+		if (comment.user._id == store.getState().user._id) {
+			comment.comment = text;
+			Network.updateCommentbyID(comment, store.getState().session.token)
+				.then((res) => {
+					if (res.code == 1) {
+						this.setState({ info: 'Comment updated!' });
+						this.setState({ error: '' });
+						this._fetchComments();
+					} else {
+						this.setState({ error: 'Error updating comment: ' + res.result });
+						this.setState({ info: '' });
+					}
+				})
+				.catch((error) => {
+					this.setState({ error: 'Error updating comment: ' + error.message });
+					this.setState({ info: '' });
+				});
+		} else {
+			this.setState({ error: 'Invalid permissions' });
+			this.setState({ info: '' });
+		}
 	}
 
 	_showPermissionPicker() {
@@ -196,8 +258,12 @@ export default class UpdateUserModal extends Component {
 				wordList={this.state.wordList}
 				onPressItem={() => { }}
 				onLongPressItem={() => { }}
-				onEditItem={(word) => { this._onEditWord(word) }}
-				onDeleteItem={(word) => { this._onDeleteWord(word) }} />
+				onEditItem={(word) => { 
+					this._onEditWord(word) 
+				}}
+				onDeleteItem={(word) => { 
+					this._onDeleteWord(word) 
+				}} />
 		);
 	}
 
@@ -238,8 +304,13 @@ export default class UpdateUserModal extends Component {
 			<CommentList
 				commentList={this.state.commentList}
 				onLongPressItem={(comment) => { }}
-				onDeleteItem={(comment) => { this._onDeleteComment(comment) }}
-				onEditItem={(comment) => { this._onEditComment(comment) }} />
+				onDeleteItem={(comment) => { 
+					this._onDeleteComment(comment);
+				}}
+				onEditItem={(comment) => { 
+					this._onEditComment(comment);
+				}}
+				user={store.getState().user} />
 		);
 	}
 
@@ -263,11 +334,45 @@ export default class UpdateUserModal extends Component {
 						onPress={() => { this.setState({ commentsVisible: false }) }}>
 						<Text style={styles.textTranslate}>
 							Back
-					</Text>
+						</Text>
 					</TouchableHighlight>
 				</View>
 			</Modal>
 		);
+	}
+
+	_editCommentCallback(text) {
+		this.setState({ editCommentVisible: false });
+		this._updateComment(text);
+	}
+
+	_cancelCommentCallback() {
+		this.setState({ editCommentVisible: false });
+	}
+
+	_editwordCallback(newWord) {
+		this.setState({ editWordVisible: false});
+	}
+
+	_getCommentEditModal() {
+		return (
+			<CommentEditTextModal
+				visible={this.state.editCommentVisible}
+				commentCallBack={(text) => this._editCommentCallback(text)}
+				cancelCallback={() => this._cancelCommentCallback()}
+				commentText={this.state.editComment.comment}
+			/>
+		);
+	}
+
+	_getWordEditModal() {
+		return (
+			<WordAddModal
+				visible={this.state.editWordVisible}
+				callback={(word) => this._editwordCallback(word)}
+				word={this.state.editWord}
+				isEdit={true}
+			/>);
 	}
 
 	_getInfoText() {
@@ -295,16 +400,22 @@ export default class UpdateUserModal extends Component {
 		var info = this.state.info == '' ? null : this._getInfoText();
 		var wordsModal = this.state.wordsVisible ? this._getWordListModal() : null;
 		var commentsModal = this.state.commentsVisible ? this._getCommentListModal() : null;
+		var commentEditModal = this.state.editCommentVisible ? this._getCommentEditModal() : null;
+		var wordEditModal = this.state.editWordVisible ? this._getWordEditModal() : null;
 		return (
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={this.props.visible}
+				visible={this.state.visible}
 				onRequestClose={() => {
 					this.setModalVisible(false);
 				}
 				}>
 				<View style={styles.containerModalPickerPermissions}>
+					{wordEditModal}
+					{wordsModal}
+					{commentEditModal}
+					{commentsModal}
 					<Titlebar title='Update User' />
 					<UserComponent user={this.state.user} />
 					<View style={{ flexDirection: 'column', alignContent: 'center' }}>
@@ -355,8 +466,6 @@ export default class UpdateUserModal extends Component {
 							</Text>
 						</TouchableHighlight>
 					</View>
-					{wordsModal}
-					{commentsModal}
 				</View>
 			</Modal>
 		);

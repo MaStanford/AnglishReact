@@ -24,6 +24,7 @@ export default class WordDetailModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			visible: props.visible,
 			permissions: store.getState().user.permissions,
 			user: store.getState().user,
 			word: props.word,
@@ -57,6 +58,14 @@ export default class WordDetailModal extends Component {
 		this._mounted = false;
 	}
 
+	componentWillReceiveProps(props){
+		this.setState({
+			visible: props.visible,
+			word: props.word
+		});
+		this._fetchComments();
+	}
+
 	setModalVisible(visible) {
 		this.props.callback(visible);
 	}
@@ -75,7 +84,7 @@ export default class WordDetailModal extends Component {
 		this.setState({ editCommentVisible: false, newCommentVisible: false });
 	}
 
-	_editwordCallback(newWord){
+	_editwordCallback(newWord) {
 		this.setState({ editWordVisible: false, word: newWord });
 	}
 
@@ -184,7 +193,7 @@ export default class WordDetailModal extends Component {
 	}
 
 	_onEditWord(word) {
-		this.setState({editWordVisible: true});
+		this.setState({ editWordVisible: true });
 	}
 
 	_deleteWord(word) {
@@ -208,7 +217,8 @@ export default class WordDetailModal extends Component {
 	_getCommentEditModal() {
 		return (
 			<CommentEditTextModal
-				commentCallBack={(commentSuccess) => this._editCommentCallback(commentSuccess)}
+				visible={this.state.editCommentVisible}
+				commentCallBack={(text) => this._editCommentCallback(text)}
 				cancelCallback={() => this._cancelCommentCallback()}
 				commentText={this.state.editComment.comment}
 			/>
@@ -218,7 +228,8 @@ export default class WordDetailModal extends Component {
 	_getCommentNewModal() {
 		return (
 			<CommentEditTextModal
-				commentCallBack={(commentSuccess) => this._newCommentCallback(commentSuccess)}
+				visible={this.state.newCommentVisible}
+				commentCallBack={(text) => this._newCommentCallback(text)}
 				cancelCallback={() => this._cancelCommentCallback()}
 				commentText={null}
 			/>
@@ -227,12 +238,13 @@ export default class WordDetailModal extends Component {
 
 	_getWordEditModal() {
 		return (
-		  <WordAddModal
-			callback={(word)=>this._editwordCallback(word)}
-			word={this.state.word}
-			isEdit={true}
-		  />);
-	  }
+			<WordAddModal
+				visible={this.state.editWordVisible}
+				callback={(word) => this._editwordCallback(word)}
+				word={this.state.word}
+				isEdit={true}
+			/>);
+	}
 
 	_getBackButton() {
 		return (
@@ -279,7 +291,8 @@ export default class WordDetailModal extends Component {
 			commentList={this.state.commentList}
 			onLongPressItem={(comment) => { }}
 			onDeleteItem={(comment) => { this._onDeleteComment(comment) }}
-			onEditItem={(comment) => this._onEditComment(comment)} />
+			onEditItem={(comment) => this._onEditComment(comment)}
+			user={this.state.user} />
 		);
 	}
 
@@ -330,7 +343,7 @@ export default class WordDetailModal extends Component {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={this.props.visible}
+				visible={this.state.visible}
 				onRequestClose={() => {
 					this.setModalVisible(false);
 				}

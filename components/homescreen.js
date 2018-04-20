@@ -34,7 +34,7 @@ import { store, actions } from '../modules/statemanager';
 import { storage, keys } from '../modules/storage';
 
 //Dialog/Modals
-import WordDetail from './worddetailmodal';
+import WordDetailModal from './worddetailmodal';
 import WordAddModal from './wordaddmodal';
 
 import utils from '../modules/utils';
@@ -81,7 +81,7 @@ export default class HomeScreen extends React.Component {
       case MenuActions.Logout:
         storage.clear(keys.session);
         storage.clear(keys.user);
-        store.dispatch({ type: actions.LOGGED_OUT });
+        store.dispatch({ type: actions.USER_LOGGED_OUT });
         break;
       case MenuActions.Add:
         this.setState({ addwordvisible: true });
@@ -194,7 +194,7 @@ export default class HomeScreen extends React.Component {
   
   _getWordDetail() {
     return (
-      <WordDetail
+      <WordDetailModal
         visible={this.state.detailVisible}
         word={this.state.detailWord}
         callback={this._detailCallback.bind(this)} />);
@@ -212,6 +212,7 @@ export default class HomeScreen extends React.Component {
   _getWordEditModal() {
 		return (
 		  <WordAddModal
+      visible={this.state.editWordVisible}
 			callback={(word)=>this._editwordCallback(word)}
 			word={this.state.editWord}
 			isEdit={true}

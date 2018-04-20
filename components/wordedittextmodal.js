@@ -20,6 +20,7 @@ export default class EditWordTextModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			visible: props.visible,
 			error: '',
 			text: props.text
 		}
@@ -35,6 +36,7 @@ export default class EditWordTextModal extends Component {
 
 	componentWillReceiveProps(props) {
 		this.setState({
+			visible: props.visible,
 			error: '',
 			text: props.text
 		});
@@ -54,7 +56,7 @@ export default class EditWordTextModal extends Component {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={this.props.visible}
+				visible={this.state.visible}
 				onRequestClose={() => {
 					this.setModalVisible(false);
 				}

@@ -84,8 +84,8 @@ export default class Login extends Component {
 					});
 
 					store.dispatch({
-						type: actions.SESSION,
-						session: res.data
+						type: actions.SESSION_NEW,
+						token: res.data.token
 					});
 					
 					return res.data;
@@ -106,7 +106,7 @@ export default class Login extends Component {
 					});
 
 					store.dispatch({
-						type: actions.USER,
+						type: actions.USER_LOGGED_IN,
 						user: res.data
 					});
 					

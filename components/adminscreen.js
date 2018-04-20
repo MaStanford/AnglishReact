@@ -32,7 +32,7 @@ export default class AdminScreen extends Component {
 			info: '',
 			userLookupSearch: '',
 			userFound: { handle: '', email: '', permissions: '' },
-			pickerVisible: false
+			userupdatemodalvisible: false
 		};
 	}
 
@@ -41,21 +41,21 @@ export default class AdminScreen extends Component {
 	});
 
 	_handleUserSelected = (user) => {
-		this.setState({ userFound: user, pickerModalVisible: true });
+		this.setState({ userFound: user, userupdatemodalvisible: true });
 	}
 
 	_updateUserCallback = () => {
-		this.setState({pickerModalVisible:false});
+		this.setState({userupdatemodalvisible:false});
 	}
 
-	_getPickerModal() {
+	_getUserUpdateModal() {
 		return (
-			<UpdateUserModal user={this.state.userFound} callback={this._updateUserCallback}/>
+			<UpdateUserModal visible={this.state.userupdatemodalvisible} user={this.state.userFound} callback={this._updateUserCallback}/>
 		);
 	}
 
 	render() {
-		var picker = this.state.pickerModalVisible ? this._getPickerModal() : null;
+		var picker = this.state.userupdatemodalvisible ? this._getUserUpdateModal() : null;
 		return (
 			<View style={styles.containermain}>
 				<Titlebar title="Admin Portal" />

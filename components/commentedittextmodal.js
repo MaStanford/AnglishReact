@@ -23,6 +23,7 @@ export default class CommentEditTextModal extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			visible: props.visible,
 			error: '',
 			info: '',
 			text: props.commentText
@@ -39,6 +40,7 @@ export default class CommentEditTextModal extends Component {
 
 	componentWillReceiveProps(props) {
 		this.setState({
+			visible:props.visible,
 			error: '',
 			info: '',
 			text: props.commentText
@@ -59,7 +61,7 @@ export default class CommentEditTextModal extends Component {
 			<Modal
 				animationType="slide"
 				transparent={true}
-				visible={this.props.visible}
+				visible={this.state.visible}
 				onRequestClose={() => {
 					this.setModalVisible(false);
 				}

@@ -14,12 +14,13 @@ export default class CommentList extends React.PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
-			dataSource: props.commentList
+			dataSource: props.commentList,
+			user: props.user
 		};
 	}
 
 	componentWillReceiveProps(props) {
-		this.setState({dataSource: props.commentList});
+		this.setState({dataSource: props.commentList, user:props.user});
 	}
 
 	_onLongPressItem = (comment) => {
@@ -53,7 +54,7 @@ export default class CommentList extends React.PureComponent {
 			onDeleteItem={(comment) => {this._deleteCommentAlert(comment)}}
 			onEditItem={(item)=>{this._onEditItem(item)}}
 			item={item}
-			user={store.getState().user}
+			user={this.props.user}
 		/>
 	);
 
