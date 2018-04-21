@@ -41,11 +41,10 @@ export default class InfoScreen extends Component {
 			showChangePassword: true,
 			wordsVisible: false,
 			commentsVisible: false,
-			editWord: {},
 			editComment: {},
 			editCommentVisible: false,
-			editWordVisible: false,
 			editWord: {},
+			editWordVisible: false,
 			wordList: [],
 			commentList: []
 		};
@@ -205,6 +204,7 @@ export default class InfoScreen extends Component {
 
 	_getWordListModal() {
 		var wordList = this._getWordList();
+		var wordEditModal = this.state.editWordVisible ? this._getWordEditModal() : null;
 		return (
 			<Modal
 				animationType="slide"
@@ -214,6 +214,7 @@ export default class InfoScreen extends Component {
 					this.setState({ wordsVisible: false });
 				}
 				}>
+				{wordEditModal}
 				<View style={styles.containerModalUserCommentList}>
 					<Titlebar title='Words' />
 					{wordList}
@@ -252,6 +253,7 @@ export default class InfoScreen extends Component {
 
 	_getCommentListModal() {
 		var commentList = this._getCommentList();
+		var commentEditModal = this.state.editCommentVisible ? this._getCommentEditModal() : null;
 		return (
 			<Modal
 				animationType="slide"
@@ -261,6 +263,7 @@ export default class InfoScreen extends Component {
 					this.setState({ commentsVisible: false });
 				}
 				}>
+				{commentEditModal}
 				<View style={styles.containerModalUserCommentList}>
 					<Titlebar title='Comments' />
 					{commentList}
@@ -320,8 +323,10 @@ export default class InfoScreen extends Component {
 	}
 
 	_getWordContainer() {
+		var wordsModal = this.state.wordsVisible ? this._getWordListModal() : null;
 		return (
 			<View>
+				{wordsModal}
 				<Text style={styles.textappinfoheader}>Your Word List</Text>
 				<TouchableHighlight
 					style={styles.buttonShowInfo}
@@ -329,15 +334,17 @@ export default class InfoScreen extends Component {
 					onPress={() => { this._showWordList() }}>
 					<Text style={styles.textTranslate}>
 						Press to Show
-				</Text>
+					</Text>
 				</TouchableHighlight>
 			</View>
 		);
 	}
 
 	_getCommentContainer() {
+		var commentsModal = this.state.commentsVisible ? this._getCommentListModal() : null;
 		return (
 			<View>
+				{commentsModal}
 				<Text style={styles.textappinfoheader}>Your Comment List</Text>
 				<TouchableHighlight
 					style={styles.buttonShowInfo}
@@ -345,7 +352,7 @@ export default class InfoScreen extends Component {
 					onPress={() => { this._showCommentList() }}>
 					<Text style={styles.textTranslate}>
 						Press to Show
-				</Text>
+					</Text>
 				</TouchableHighlight>
 			</View>
 		);
@@ -392,12 +399,8 @@ export default class InfoScreen extends Component {
 	render() {
 		var error = this.state.error == '' ? null : this._getErrorText();
 		var info = this.state.info == '' ? null : this._getInfoText();
-		var wordsModal = this.state.wordsVisible ? this._getWordListModal() : null;
 		var wordContainer = this.state.user.permissions != -1 ? this._getWordContainer() : null;
-		var commentsModal = this.state.commentsVisible ? this._getCommentListModal() : null;
-		var commentEditModal = this.state.editCommentVisible ? this._getCommentEditModal() : null;
 		var commentContainer = this.state.user.permissions != -1 ? this._getCommentContainer() : null;
-		var wordEditModal = this.state.editWordVisible ? this._getWordEditModal() : null;
 		var changePasswordContainer = this.state.user.permissions != -1 ? this._getChangePasswordContainer() : null;
 		return (
 			<ScrollView>
@@ -409,11 +412,6 @@ export default class InfoScreen extends Component {
 						<UserComponent user={this.state.user} onPressItem={() => { }} />
 					</View>
 
-					{wordEditModal}
-					{wordsModal}
-					{commentEditModal}
-					{commentsModal}
-
 					<Text style={styles.textappinfoheader}>App info</Text>
 					<Text style={styles.textappinfo}>
 						{appinfo.description}
@@ -423,11 +421,8 @@ export default class InfoScreen extends Component {
 					<Text style={styles.textappinfo}>
 						{appinfo.privacy}
 					</Text>
-
 					{wordContainer}
-
 					{commentContainer}
-
 					{changePasswordContainer}
 				</View>
 			</ScrollView>

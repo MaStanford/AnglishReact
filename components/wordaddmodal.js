@@ -126,9 +126,6 @@ export default class WordAddModal extends Component {
 	}
 
 	_resetState(){
-		console.log('state:');
-		console.log(this.state);
-		console.log(this.props.word);
 		if(this.state.isEdit){
 			this.props.callback(this.props.word);
 		}else{
