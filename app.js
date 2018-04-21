@@ -88,4 +88,4 @@ const AppNavigation = () => (
   <AnglishWordbookNavigator />
 );
 
-AppRegistry.registerComponent('App', () => App);
+AppRegistry.registerComponent('AnglishWordbook', () => App);
