@@ -110,20 +110,21 @@ export default class HomeScreen extends React.Component {
   }]
 
   _fetchWordListByWord(word = 'language') {
-    if (word != null || word != '') {
-      NetworkUtils.fetchWord(word, 0)
-        .then((res) => {
-          if (res.data.length > 0) {
-            this.setState({ wordList: res.data });
-          } else {
-            var nowordfound = this.defTemplate;
-            nowordfound[0].word = this.props.word + ' not found!';
-            this.setState({ dataSource: nowordfound });
-          }
-        }).catch((error) => {
-          console.log(error);
-        });
+    if (word === null || word === '') {
+      return;
     }
+    NetworkUtils.fetchWord(word, 0)
+      .then((res) => {
+        if (res.data.length > 0) {
+          this.setState({ wordList: res.data });
+        } else {
+          var nowordfound = this.defTemplate;
+          nowordfound[0].word = this.props.word + ' not found!';
+          this.setState({ dataSource: nowordfound });
+        }
+      }).catch((error) => {
+        console.log(error);
+      });
   }
 
   _wordDetailSelectCallback(word) {
@@ -205,7 +206,7 @@ export default class HomeScreen extends React.Component {
       <WordAddModal
         visible={this.state.addwordvisible}
         callback={(word) => {this._addwordCallback(word)}}
-        word={{word:'word',type:'',attested:'',unattested:''}}
+        word={{word:'', type:'', attested:'', unattested:''}}
       />);
   }
 

@@ -11,12 +11,91 @@ var styles = StyleSheet.create({
 	},
 	containerWordsList: {
 		flex: 1,
-		flexDirection:'row',
+		flexDirection: 'row',
 		alignItems: 'stretch', //Children cannot have width if you use stretch
-		justifyContent: 'center', 
+		justifyContent: 'center',
 		width: '90%', //You need a width in order to have flex in the children.
 		backgroundColor: 'white',
 		borderWidth: 1
+	},
+	containerModalMain: {
+		flex: 1,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'stretch',
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		marginLeft: 20,
+		marginRight: 20,
+		marginTop: '18%',
+		marginBottom: '18%',
+	},
+	containerModalEditTextBackground: {
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		marginLeft: 20,
+		marginRight: 20,
+		marginTop: '18%',
+		marginBottom: '18%',
+	},
+	containerModalAddNewWordBackground: {
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		marginLeft: 20,
+		marginRight: 20,
+		marginTop: '18%',
+		marginBottom: '18%',
+	},
+	containerModalContent: {
+		backgroundColor: '#FFFFFF',
+		flexDirection: 'column',
+		alignItems: 'center'
+	},
+	containerUpdateUserModalButtons: {
+		flex: 1,
+		flexDirection: 'row',
+		width: '95%',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		marginLeft: 20,
+		marginRight: 20,
+	},
+	containerModalUserCommentList: {
+		flex: 1,
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		marginLeft: 20,
+		marginRight: 20,
+		marginTop: '18%',
+		marginBottom: '18%',
+	},
+	containerModalPickerPermissions: {
+		flex: 1,
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#FFFFFF',
+		borderWidth: 1,
+		marginLeft: 20,
+		marginRight: 20,
+		marginTop: '18%',
+		marginBottom: '18%',
+	},
+	containerInfoScreen: {
+		flex: 1,
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#FFFFFF',
+		marginLeft: 20,
+		marginRight: 20,
+		marginTop: '18%',
+		marginBottom: '18%',
 	},
 	flatListWords: {
 		width: '90%',
@@ -76,11 +155,11 @@ var styles = StyleSheet.create({
 		textAlign: 'left',
 		fontSize: 24
 	},
-	textCommentHeader: { 
+	textCommentHeader: {
 		marginTop: 7,
 		marginBottom: 7,
-		fontSize: 16, 
-		fontWeight: 'bold' 
+		fontSize: 16,
+		fontWeight: 'bold'
 	},
 	textInfo: {
 		textAlign: 'center',
@@ -94,12 +173,6 @@ var styles = StyleSheet.create({
 		alignItems: 'center',
 		flexWrap: 'wrap',
 		color: 'red',
-	},
-	buttonTranslate: {
-		backgroundColor: '#DCDCDC',
-		borderWidth: 1,
-		width: 85,
-		margin: 10
 	},
 	textTranslate: {
 		fontSize: 15,
@@ -138,6 +211,21 @@ var styles = StyleSheet.create({
 		alignItems: 'center',
 		margin: 10,
 	},
+	textinputpassword: {
+		height: 40,
+		width: '50%',
+		borderWidth: 1,
+		textAlign: 'center',
+		alignItems: 'center',
+		margin: 10,
+	},
+	textinputpasswordchange: {
+		height: 40,
+		borderWidth: 1,
+		textAlign: 'center',
+		alignItems: 'center',
+		margin: 10,
+	},
 	textinputbigedit: {
 		height: '55%',
 		width: '85%',
@@ -152,16 +240,28 @@ var styles = StyleSheet.create({
 		borderWidth: 1,
 		margin: 10,
 	},
-	textappinfoheader:{
+	textappinfoheader: {
 		borderBottomWidth: 3,
 		fontSize: 15,
 		fontWeight: 'bold',
+		alignSelf: 'center',
 		margin: 10,
 	},
-	textappinfo:{
+	textappinfo: {
 		borderWidth: 1,
 		fontSize: 12,
 		width: '80%'
+	},
+	buttonTranslate: {
+		backgroundColor: '#DCDCDC',
+		borderWidth: 1,
+		width: 85,
+		margin: 10
+	},
+	buttonChangePassword: {
+		backgroundColor: '#DCDCDC',
+		borderWidth: 1,
+		margin: 10
 	},
 	buttonActionIcon: {
 		fontSize: 20,
@@ -214,85 +314,6 @@ var styles = StyleSheet.create({
 		backgroundColor: '#DCDCDC',
 		borderWidth: 1,
 		alignItems: 'center',
-	},
-	containerModalMain: {
-		flex: 1,
-		flexDirection: 'column',
-		justifyContent: 'center',
-		alignItems: 'stretch',
-		backgroundColor: '#FFFFFF',
-		borderWidth: 1,
-		marginLeft: 20,
-		marginRight: 20,
-		marginTop: '18%', 
-		marginBottom: '18%',
-	},
-	containerModalEditTextBackground: {
-		backgroundColor: '#FFFFFF',
-		borderWidth: 1,
-		marginLeft: 20,
-		marginRight: 20,
-		marginTop: '18%', 
-		marginBottom: '18%',
-	},
-	containerModalAddNewWordBackground: {
-		backgroundColor: '#FFFFFF',
-		borderWidth: 1,
-		marginLeft: 20,
-		marginRight: 20,
-		marginTop: '18%', 
-		marginBottom: '18%',
-	},
-	containerModalContent: {
-		backgroundColor: '#FFFFFF',
-		flexDirection: 'column',
-		alignItems: 'center'
-	},
-	containerUpdateUserModalButtons:{
-		flex: 1,
-		flexDirection: 'row',
-		width: '95%',
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#FFFFFF',
-		borderWidth: 1,
-		marginLeft: 20,
-		marginRight: 20,
-	},
-	containerModalUserCommentList:{
-		flex: 1,
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#FFFFFF',
-		borderWidth: 1,
-		marginLeft: 20,
-		marginRight: 20,
-		marginTop: '18%', 
-		marginBottom: '18%',
-	},
-	containerModalPickerPermissions:{
-		flex: 1,
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#FFFFFF',
-		borderWidth: 1,
-		marginLeft: 20,
-		marginRight: 20,
-		marginTop: '18%', 
-		marginBottom: '18%',
-	},
-	containerInfoScreen:{
-		flex: 1,
-		flexDirection: 'column',
-		alignItems: 'center',
-		justifyContent: 'center',
-		backgroundColor: '#FFFFFF',
-		marginLeft: 20,
-		marginRight: 20,
-		marginTop: '18%', 
-		marginBottom: '18%',
 	},
 	overlay: {
 		backgroundColor: '#ff5722',

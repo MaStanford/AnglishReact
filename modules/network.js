@@ -64,7 +64,12 @@ var NetworkUtils = {
 				'Content-Type': 'application/json',
 				'sessionToken': sessionToken
 			}
-		}).then((response) => response.json());
+		}).then((response) => {
+			console.log(response);
+			var jsonResponse = response.json();
+			console.log(jsonResponse);
+			return jsonResponse;
+		});
 	},
 	fetchCommentsByWordID: function (wordId) {
 		return fetch(`https://${server}${commentAPI}/word/${wordId}`, {
@@ -170,6 +175,20 @@ var NetworkUtils = {
 	},
 	updateUserPermissions: function (user, permissions, sessionToken) {
 		user.permissions = permissions;
+		return fetch(`https://${server}${UserGetAPI}/${user._id}`, {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'sessionToken': sessionToken
+			},
+			body: JSON.stringify(user)
+		}).then((response) => {
+			return response.json()
+		});
+	},
+	updateUserPassword: function (user, password, sessionToken) {
+		user.password = password;
 		return fetch(`https://${server}${UserGetAPI}/${user._id}`, {
 			method: 'POST',
 			headers: {

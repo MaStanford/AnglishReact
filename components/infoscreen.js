@@ -8,7 +8,8 @@ import {
 	TouchableHighlight,
 	TextInput,
 	Modal,
-	Alert
+	Alert,
+	ScrollView
 } from 'react-native';
 import {
 	StackNavigator,
@@ -59,21 +60,6 @@ export default class InfoScreen extends Component {
 	static navigationOptions = ({ navigation }) => ({
 		title: navigation.state.params.title
 	});
-
-	_updateUser = () => {
-		Network.updateUserPermissions(this.state.user, this.state.permissions, store.getState().session.token)
-			.then((res) => {
-				if (res.code == 1) {
-					this.setState({ info: 'Successfully updated user' });
-					setTimeout(() => { this.setModalVisible() }, 500);
-				} else {
-					this.setState({ error: res.result });
-				}
-			})
-			.catch((err) => {
-				this.setState({ error: err.message });
-			});
-	}
 
 	_fetchCommentsByUser() {
 		Network.fetchCommentsByUserID(this.state.user._id)
@@ -150,20 +136,21 @@ export default class InfoScreen extends Component {
 	}
 
 	_deleteWord(word) {
-		console.log('Word:');
-		console.log(word);
+		console.log('Deleting Word!!!');
 		Network.deleteWordByID(word._id, store.getState().session.token)
 			.then((res) => {
+				console.log(res.data);
 				if (res.code == 1) {
 					this.setState({ error: '' });
 					this.setState({ info: 'Word deleted' });
-					setTimeout(() => { this.setModalVisible(false) }, 500);
+					this._fetchWordsByUser();
 				} else {
 					this.setState({ error: res.result });
 					this.setState({ info: '' });
 				}
 			})
 			.catch((err) => {
+				console.log(err);
 				this.setState({ error: err.message });
 				this.setState({ info: '' });
 			});
@@ -192,12 +179,6 @@ export default class InfoScreen extends Component {
 			this.setState({ error: 'Invalid permissions' });
 			this.setState({ info: '' });
 		}
-	}
-
-	_getChangePasswordComponent() {
-		return (
-			<ChangePasswordComponent />
-		);
 	}
 
 	_showWordList() {
@@ -309,6 +290,14 @@ export default class InfoScreen extends Component {
 		this.setState({ editWordVisible: false });
 	}
 
+	_onChangePassword() {
+
+	}
+
+	_onCancelPassword() {
+
+	}
+
 	_getCommentEditModal() {
 		return (
 			<CommentEditTextModal
@@ -328,6 +317,56 @@ export default class InfoScreen extends Component {
 				word={this.state.editWord}
 				isEdit={true}
 			/>);
+	}
+
+	_getWordContainer() {
+		return (
+			<View>
+				<Text style={styles.textappinfoheader}>Your Word List</Text>
+				<TouchableHighlight
+					style={styles.buttonShowInfo}
+					underlayColor="black"
+					onPress={() => { this._showWordList() }}>
+					<Text style={styles.textTranslate}>
+						Press to Show
+				</Text>
+				</TouchableHighlight>
+			</View>
+		);
+	}
+
+	_getCommentContainer() {
+		return (
+			<View>
+				<Text style={styles.textappinfoheader}>Your Comment List</Text>
+				<TouchableHighlight
+					style={styles.buttonShowInfo}
+					underlayColor="black"
+					onPress={() => { this._showCommentList() }}>
+					<Text style={styles.textTranslate}>
+						Press to Show
+				</Text>
+				</TouchableHighlight>
+			</View>
+		);
+	}
+
+	_getChangePasswordComponent() {
+		return (
+			<ChangePasswordComponent
+				onPasswordChanged={() => { this._onChangePassword() }}
+				onCancelled={() => { this._onCancelPassword() }}
+				user={this.state.user} />
+		);
+	}
+
+	_getChangePasswordContainer() {
+		var changepasswordcomponent = this.state.showChangePassword ? this._getChangePasswordComponent() : null;
+		return (
+			<View style={{ marginTop: 10 }}>
+				{changepasswordcomponent}
+			</View>
+		);
 	}
 
 	_getInfoText() {
@@ -354,54 +393,44 @@ export default class InfoScreen extends Component {
 		var error = this.state.error == '' ? null : this._getErrorText();
 		var info = this.state.info == '' ? null : this._getInfoText();
 		var wordsModal = this.state.wordsVisible ? this._getWordListModal() : null;
+		var wordContainer = this.state.user.permissions != -1 ? this._getWordContainer() : null;
 		var commentsModal = this.state.commentsVisible ? this._getCommentListModal() : null;
 		var commentEditModal = this.state.editCommentVisible ? this._getCommentEditModal() : null;
+		var commentContainer = this.state.user.permissions != -1 ? this._getCommentContainer() : null;
 		var wordEditModal = this.state.editWordVisible ? this._getWordEditModal() : null;
-		var changepasswordcomponent = this.state.showChangePassword ? this._getChangePasswordComponent() : null;
+		var changePasswordContainer = this.state.user.permissions != -1 ? this._getChangePasswordContainer() : null;
 		return (
-			<View style={styles.containermain}>
-				<Titlebar title="User Info" />
-				{error}
-				{info}
-				<View style={{ borderWidth: 1 }}>
-					<UserComponent user={this.state.user} onPressItem={() => { }} />
+			<ScrollView>
+				<View style={styles.containermain}>
+					<Titlebar title="User Info" />
+					{error}
+					{info}
+					<View style={{ borderWidth: 1 }}>
+						<UserComponent user={this.state.user} onPressItem={() => { }} />
+					</View>
+
+					{wordEditModal}
+					{wordsModal}
+					{commentEditModal}
+					{commentsModal}
+
+					<Text style={styles.textappinfoheader}>App info</Text>
+					<Text style={styles.textappinfo}>
+						{appinfo.description}
+					</Text>
+
+					<Text style={styles.textappinfoheader}>Privacy Policy</Text>
+					<Text style={styles.textappinfo}>
+						{appinfo.privacy}
+					</Text>
+
+					{wordContainer}
+
+					{commentContainer}
+
+					{changePasswordContainer}
 				</View>
-
-				{wordEditModal}
-				{wordsModal}
-				{commentEditModal}
-				{commentsModal}
-
-				<Text style={styles.textappinfoheader}>App info</Text>
-				<Text style={styles.textappinfo}>
-					{appinfo.description}
-				</Text>
-
-				<Text style={styles.textappinfoheader}>Privacy Policy</Text>
-
-				<Text style={styles.textappinfoheader}>Change Password</Text>
-				{changepasswordcomponent}
-
-				<Text style={styles.textappinfoheader}>Your Word List</Text>
-				<TouchableHighlight
-					style={styles.buttonShowInfo}
-					underlayColor="black"
-					onPress={() => {this._showWordList()}}>
-					<Text style={styles.textTranslate}>
-						Press to Show
-					</Text>
-				</TouchableHighlight>
-
-				<Text style={styles.textappinfoheader}>Your Comment List</Text>
-				<TouchableHighlight
-					style={styles.buttonShowInfo}
-					underlayColor="black"
-					onPress={() => {this._showCommentList()}}>
-					<Text style={styles.textTranslate}>
-						Press to Show
-					</Text>
-				</TouchableHighlight>
-			</View>
+			</ScrollView>
 		);
 	}
 }
