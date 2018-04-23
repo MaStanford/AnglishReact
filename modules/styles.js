@@ -97,6 +97,14 @@ var styles = StyleSheet.create({
 		marginTop: '18%',
 		marginBottom: '18%',
 	},
+	containerDonate: {
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		backgroundColor: '#FFFFFF',
+		marginLeft: 20,
+		marginRight: 20,
+	},
 	flatListWords: {
 		width: '90%',
 		marginLeft: 5
@@ -186,13 +194,6 @@ var styles = StyleSheet.create({
 		textAlign: 'center',
 		alignItems: 'center',
 		borderWidth: 1,
-	},
-	textinputaddtop: {
-		height: 40,
-		width: '85%',
-		textAlign: 'center',
-		alignItems: 'center',
-		borderWidth: 1,
 		margin: 10,
 	},
 	textinputaddbot: {
@@ -200,6 +201,15 @@ var styles = StyleSheet.create({
 		width: '70%',
 		textAlign: 'center',
 		alignItems: 'center',
+		borderWidth: 1,
+		margin: 10,
+	},
+	textbitcoin: {
+		flexWrap: 'wrap',
+		textAlign: 'center',
+		alignItems: 'center',
+		fontSize: 18,
+		fontWeight: 'bold',
 		borderWidth: 1,
 		margin: 10,
 	},
@@ -242,14 +252,14 @@ var styles = StyleSheet.create({
 	},
 	textappinfoheader: {
 		borderBottomWidth: 3,
-		fontSize: 15,
+		fontSize: 16,
 		fontWeight: 'bold',
 		alignSelf: 'center',
 		margin: 10,
 	},
 	textappinfo: {
 		borderWidth: 1,
-		fontSize: 12,
+		fontSize: 14,
 		width: '80%'
 	},
 	buttonTranslate: {
@@ -311,9 +321,25 @@ var styles = StyleSheet.create({
 		height: 50,
 	},
 	buttonShowInfo: {
+		width: 150,
 		backgroundColor: '#DCDCDC',
 		borderWidth: 1,
 		alignItems: 'center',
+		margin: 10
+	},
+	buttonDonate: {
+		width: 150,
+		backgroundColor: '#DCDCDC',
+		borderWidth: 1,
+		alignItems: 'center',
+		margin: 10
+	},
+	imagedonate: {
+		height: 200,
+		width: 200,
+		borderWidth: 1,
+		alignItems: 'center',
+		alignSelf: 'center'
 	},
 	overlay: {
 		backgroundColor: '#ff5722',

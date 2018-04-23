@@ -20,6 +20,7 @@ import styles from '../modules/styles';
 import Titlebar from './titlebar';
 import UserComponent from './usercomponent';
 import ChangePasswordComponent from './changepasswordcomponent';
+import DonateComponent from './donatecomponent'
 import Network from '../modules/network';
 import WordList from './wordlist';
 import CommentList from './commentlist';
@@ -46,7 +47,8 @@ export default class InfoScreen extends Component {
 			editWord: {},
 			editWordVisible: false,
 			wordList: [],
-			commentList: []
+			commentList: [],
+			showDonate: false
 		};
 
 		store.subscribe(() => {
@@ -164,7 +166,7 @@ export default class InfoScreen extends Component {
 					if (res.code == 1) {
 						this.setState({ info: 'Comment updated!' });
 						this.setState({ error: '' });
-						this._fetchComments();
+						this._fetchCommentsByUser();
 					} else {
 						this.setState({ error: 'Error updating comment: ' + res.result });
 						this.setState({ info: '' });
@@ -376,6 +378,30 @@ export default class InfoScreen extends Component {
 		);
 	}
 
+	_getDonateComponent() {
+		return (
+			<DonateComponent />
+		);
+	}
+
+	_getDonateContainer() {
+		var buttonTitle = this.state.showDonate ? 'Hide Donate' : 'Show Donate';
+		var donatecomponent = this.state.showDonate ? this._getDonateComponent() : null;
+		return (
+			<View style={styles.containerDonate}>
+				<TouchableHighlight
+					style={styles.buttonDonate}
+					underlayColor="black"
+					onPress={() => { this.setState({ showDonate: !this.state.showDonate }) }}>
+					<Text style={styles.textTranslate}>
+						{buttonTitle}
+					</Text>
+				</TouchableHighlight>
+				{donatecomponent}
+			</View>
+		);
+	}
+
 	_getInfoText() {
 		return (
 			<View style={{ flexDirection: 'column', alignContent: 'center' }}>
@@ -402,6 +428,7 @@ export default class InfoScreen extends Component {
 		var wordContainer = this.state.user.permissions != -1 ? this._getWordContainer() : null;
 		var commentContainer = this.state.user.permissions != -1 ? this._getCommentContainer() : null;
 		var changePasswordContainer = this.state.user.permissions != -1 ? this._getChangePasswordContainer() : null;
+		var donateContainer = this._getDonateContainer();
 		return (
 			<ScrollView>
 				<View style={styles.containermain}>
@@ -417,6 +444,12 @@ export default class InfoScreen extends Component {
 						{appinfo.description}
 					</Text>
 
+					<Text style={styles.textappinfoheader}>Donate Bitcoin</Text>
+					<Text style={styles.textappinfo}>
+						Please support Anglish wordbook by donating.
+					</Text>
+					{donateContainer}
+					
 					<Text style={styles.textappinfoheader}>Privacy Policy</Text>
 					<Text style={styles.textappinfo}>
 						{appinfo.privacy}

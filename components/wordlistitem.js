@@ -66,19 +66,19 @@ export default class WordListItem extends React.PureComponent {
 				<View style={{marginTop:3}} key={this.state.word._id}>
 					<View style={styles.rowWords}>
 						<Text style={styles.textRowLabel}>Word             :</Text>
-						<Text style={styles.textdef}>{this.state.word.word}</Text>
+						<Text style={styles.textdef} selectable={true}>{this.state.word.word}</Text>
 					</View>
 					<View style={styles.rowWords}>
 						<Text style={styles.textRowLabel}>Type              :</Text>
-						<Text style={styles.textdef}>{this.state.word.type}</Text>
+						<Text style={styles.textdef} selectable={true}>{this.state.word.type}</Text>
 					</View>
 					<View style={styles.rowWords}>
 						<Text style={styles.textRowLabel}>Attested       :</Text>
-						<Text style={styles.textdef}>{this.state.word.attested.split(',').join('\n').split(';').join('\n')}</Text>
+						<Text style={styles.textdef} selectable={true}>{this.state.word.attested.split(',').join('\n').split(';').join('\n')}</Text>
 					</View>
 					<View style={styles.rowWords}>
 						<Text style={styles.textRowLabel}>Unattested  :</Text>
-						<Text style={styles.textdef}>{this.state.word.unattested.split(',').join('\n').split(';').join('\n')}</Text>
+						<Text style={styles.textdef} selectable={true}>{this.state.word.unattested.split(',').join('\n').split(';').join('\n')}</Text>
 					</View>
 					<View style={{flexDirection: 'row', justifyContent: 'flex-start', alignContent: 'flex-start'}}>
 						{editButton}

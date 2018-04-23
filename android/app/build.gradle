@@ -94,14 +94,21 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
+    signingConfigs {
+        RisingStoneSoftworks {
+            keyAlias 'Anglishwordbook'
+            keyPassword '3headedhydralion'
+            storeFile file('/Users/m.stanford/Workspace/risingstonekeystore.jks')
+            storePassword '3headedhydralion'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion '23.0.1'
-
     defaultConfig {
         applicationId "com.anglishwordbook"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 1
+        versionCode 2
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -126,7 +133,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =

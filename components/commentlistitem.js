@@ -60,15 +60,15 @@ export default class CommentListItem extends React.PureComponent {
 				<View key={this.props.item._id}>
 					<View style={styles.rowComments}>
 						<Text style={styles.textRowLabel}>Handle: </Text>
-						<Text style={styles.textdef}>{this.props.item.user.handle}</Text>
+						<Text style={styles.textdef} selectable={true}>{this.props.item.user.handle}</Text>
 					</View>
 					<View style={styles.rowComments}>
 						<Text style={styles.textRowLabel}>Date: </Text>
-						<Text style={styles.textdef}>{this._formatDate(this.props.item.createdAt)}</Text>
+						<Text style={styles.textdef} selectable={true}>{this._formatDate(this.props.item.createdAt)}</Text>
 					</View>
 					<View style={styles.rowComments}>
 						<Text style={styles.textRowLabel}>Comment: </Text>
-						<Text style={styles.textdef}>{this.props.item.comment}</Text>
+						<Text style={styles.textdef} selectable={true}>{this.props.item.comment}</Text>
 					</View>
 					<View style={{flexDirection: 'row', justifyContent: 'flex-start', alignContent: 'flex-start'}}>
 						{editButton}
