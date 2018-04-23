@@ -60,7 +60,7 @@ export default class Register extends Component {
 					throw new Error('Store User failed');
 				});
 				store.dispatch({
-					type: actions.USER,
+					type: actions.USER_LOGGED_IN,
 					user: result
 				});
 				return result;
@@ -74,7 +74,7 @@ export default class Register extends Component {
 						throw new Error('Store Session failed');
 					});
 					store.dispatch({
-						type: actions.SESSION,
+						type: actions.SESSION_NEW,
 						session: res.data
 					});
 					return res.data;
