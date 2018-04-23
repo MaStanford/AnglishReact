@@ -95,8 +95,8 @@ export default class Menu extends React.Component {
 		let menu = [];
 		switch (user.permissions) {
 			case utils.permissions.owner:
-				menu.push(this.getAdminButton(callback));
 			case utils.permissions.admin:
+				menu.push(this.getAdminButton(callback));
 			case utils.permissions.mod:
 			case utils.permissions.poweruser:
 				menu.push(this.getAddButton(callback));
