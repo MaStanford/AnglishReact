@@ -37,12 +37,13 @@ export default class CommentList extends React.PureComponent {
 
 	_deleteCommentAlert(comment) {
 		// Works on both iOS and Android
+		var delComment = comment;
 		Alert.alert(
 			'Delete Comment?',
 			'Do you want to delete this comment? This cannot be undone.',
 			[
 				{ text: 'Back', onPress: () => {}, style: 'cancel' },
-				{ text: 'OK', onPress: () => {this._onDeleteComment(comment)}}
+				{ text: 'OK', onPress: () => {this._onDeleteComment(delComment)}}
 			],
 			{ cancelable: true }
 		)
